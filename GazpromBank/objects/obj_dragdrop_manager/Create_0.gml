@@ -1,0 +1,1 @@
+dragged_sprite = noone;
