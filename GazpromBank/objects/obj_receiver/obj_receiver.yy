@@ -10,8 +10,8 @@
   "name":"obj_receiver",
   "overriddenProperties":[],
   "parent":{
-    "name":"DragAndDrop",
-    "path":"folders/Objects/DragAndDrop.yy",
+    "name":"DragAndDrop(Unused)",
+    "path":"folders/Objects/DragAndDrop(Unused).yy",
   },
   "parentObjectId":null,
   "persistent":false,

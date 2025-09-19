@@ -1,17 +1,20 @@
 {
   "$GMObject":"",
-  "%Name":"obj_generator",
+  "%Name":"obj_savings_account",
   "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_generator",
+  "name":"obj_savings_account",
   "overriddenProperties":[],
   "parent":{
-    "name":"DragAndDrop(Unused)",
-    "path":"folders/Objects/DragAndDrop(Unused).yy",
+    "name":"Assets",
+    "path":"folders/Objects/Assets.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_parent_asset",
+    "path":"objects/obj_parent_asset/obj_parent_asset.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -30,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_slot",
-    "path":"sprites/spr_slot/spr_slot.yy",
+    "name":"spr_safe_temp",
+    "path":"sprites/spr_safe_temp/spr_safe_temp.yy",
   },
   "spriteMaskId":null,
   "visible":true,

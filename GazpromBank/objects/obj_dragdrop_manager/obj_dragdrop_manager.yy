@@ -9,8 +9,8 @@
   "name":"obj_dragdrop_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"managers",
-    "path":"folders/managers.yy",
+    "name":"DragAndDrop(Unused)",
+    "path":"folders/Objects/DragAndDrop(Unused).yy",
   },
   "parentObjectId":null,
   "persistent":true,

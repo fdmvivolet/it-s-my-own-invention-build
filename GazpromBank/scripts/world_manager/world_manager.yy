@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"SaveLoad",
+  "%Name":"world_manager",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"SaveLoad",
+  "name":"world_manager",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

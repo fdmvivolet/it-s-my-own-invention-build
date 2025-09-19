@@ -69,7 +69,3 @@ function EventBusBroadcast(_event_name, _data = {}) { // Используем {}
     }
 }
 
-enum EVENT_NAMES{
-	SEND_MESSAGE,
-	DEACTIVATE_RECIEVER
-}

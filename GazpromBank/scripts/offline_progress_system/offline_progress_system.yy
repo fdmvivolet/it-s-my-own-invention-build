@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"EventBus",
+  "%Name":"offline_progress_system",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"EventBus",
+  "name":"offline_progress_system",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",
