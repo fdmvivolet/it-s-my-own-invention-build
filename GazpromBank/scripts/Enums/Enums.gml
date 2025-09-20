@@ -10,3 +10,8 @@ enum EVENT_NAMES{
 	DEACTIVATE_RECIEVER
 }
 
+enum UIState {
+    HIDDEN,           // Никакие окна не открыты
+    SHOP_WINDOW,      // Открыто окно Магазина
+    ASSET_WINDOW      // Открыто окно Актива (для улучшения)
+}

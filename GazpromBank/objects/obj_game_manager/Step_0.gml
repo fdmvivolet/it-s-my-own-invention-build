@@ -1,12 +1,10 @@
 switch (game_state) {
     case GameState.GAMEPLAY:
-        // В состоянии геймплея мы обрабатываем ввод для игрового мира
         input_system_process();
         break;
-        
     case GameState.SHOP_OPEN:
-        // Когда магазин открыт, мы можем обрабатывать ввод по-другому
-        // (например, только для кнопок UI)
+        // Мир заморожен для ввода
+		//show_debug_message("ahahahahha")
         break;
 }
 
