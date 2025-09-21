@@ -1,4 +1,5 @@
 /// @description Обработка кликов по кнопкам в UI
+process_tab_bar_input();
 
 // Если никакое окно не открыто, нам нечего делать.
 if (current_ui_state == UIState.HIDDEN) {
@@ -27,7 +28,7 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
 	                tile_id: current_context_id // Мы сохранили ID ячейки при открытии
 	            };
 	            EventBusBroadcast("PurchaseAssetRequested", _purchase_data);
-            
+				
 	            // Закрываем магазин после покупки
 	            current_ui_state = UIState.HIDDEN;
 	            obj_game_manager.game_state = GameState.GAMEPLAY;
@@ -79,3 +80,4 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         }
     }
 }
+

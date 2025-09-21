@@ -13,7 +13,7 @@ function world_init_tiles() {
 		array_push(_all_elements, instance_find(obj_tile, i))	
 	}
 
-	show_debug_message(_all_elements)
+	//show_debug_message(_all_elements)
     // 2. ФИЛЬТРАЦИЯ: Создаем НОВЫЙ массив, куда сложим только объекты
     /*var _tile_instances = [];
     for (var i = 0; i < array_length(_all_elements); i++) {

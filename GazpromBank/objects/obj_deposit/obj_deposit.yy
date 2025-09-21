@@ -11,7 +11,10 @@
     "name":"Assets",
     "path":"folders/Objects/Assets.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_parent_asset",
+    "path":"objects/obj_parent_asset/obj_parent_asset.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

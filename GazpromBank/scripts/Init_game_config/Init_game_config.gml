@@ -48,5 +48,39 @@ function init_game_config() {
         // Здесь будут кривые опыта, награды за уровни и т.д.
     };
     
+	// В вашем скрипте, где инициализируется global.game_config
+
+	// --- Конфигурация Заданий ---
+	global.game_config.quests = {
+    
+	    // Задание 1: Сбор дохода (ежедневное)
+	    collect_income_daily: {
+	        type: "daily",
+	        event_name: "IncomeCollected", // Название события в EventBus
+	        target_value: 5,               // Цель
+	        reward_coins: 150,
+	        reward_diamonds: 0
+	    },
+    
+	    // Задание 2: Покупка актива (ежедневное)
+	    buy_asset_daily: {
+	        type: "daily",
+	        event_name: "AssetPurchased",
+	        target_value: 1,
+	        reward_coins: 50,
+	        reward_diamonds: 0
+	    },
+    
+	    // Задание 3: Достижение уровня (еженедельное, с премиальной наградой)
+	    reach_level_weekly: {
+	        type: "weekly",
+	        event_name: "PlayerLeveledUp", // Будем отслеживать, когда игрок повышает уровень
+	        target_value: 5,               // Цель - достигнуть 5-го уровня
+	        reward_coins: 0,
+	        reward_diamonds: 1
+	    }
+    
+	};
+	
     show_debug_message("CONFIG: Игровой баланс инициализирован.");
 }

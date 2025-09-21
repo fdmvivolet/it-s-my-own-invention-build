@@ -7,6 +7,8 @@ if (is_ready_to_collect) {
     global.game_data.player_coins += base_income;
     show_debug_message("СОБРАНО: " + string(base_income) + " монет! Всего: " + string(global.game_data.player_coins));
     
+	EventBusBroadcast("IncomeCollected", {event_name: "IncomeCollected"});
+	
     // 2. КЛЮЧЕВОЕ ИЗМЕНЕНИЕ: Сбрасываем состояние и АВТОМАТИЧЕСКИ перезапускаем таймер.
     // Мы больше НЕ УДАЛЯЕМ актив. Он продолжает работать.
     is_ready_to_collect = false;

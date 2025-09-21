@@ -73,6 +73,12 @@ function on_purchase_asset_requested(_event_data) {
         var _asset_obj_index = asset_get_index("obj_" + _asset_key);
         var _new_asset = instance_create_layer(_tile_id.x, _tile_id.y, "Instances", _asset_obj_index);
         
+		EventBusBroadcast("AssetPurchased", {
+			asset_key: _asset_key,
+			asset_instance: _new_asset,
+			event_name: "AssetPurchased" 
+		}); //подписчики узнают, что была совершена покупка ассета		
+		
         _tile_id.is_empty = false;
         _tile_id.asset_instance_id = _new_asset;
         

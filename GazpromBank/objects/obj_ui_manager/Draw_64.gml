@@ -1,17 +1,22 @@
 // --- obj_ui_manager: Draw GUI Event ---
 /// @description Отрисовка всего пользовательского интерфейса
 // --- 1. ОТРИСОВКА HUD (ИНФОРМАЦИОННОЙ ПАНЕЛИ) ---
-var _coins = global.game_data.player_coins;
 
 
-draw_set_halign(fa_right);
-draw_set_valign(fa_top);
-draw_set_color(c_white);
+var _width = display_get_gui_width()
+var _height = display_get_gui_height()
 
-var _display_text = "Монеты: " + string(_coins);
-draw_text(display_get_gui_width() - 20, 20, _display_text);
+draw_set_alpha(0.6)
+draw_roundrect_color_ext(0, -32, _width, 200, 128, 32, c_black, c_black, false)
+draw_set_alpha(1)
 
-draw_set_halign(fa_left);
+draw_rectangle_color(0, _height-256, _width, _height, c_black, c_black, c_black, c_black, false)
+
+draw_set_font(Font1)
+draw_counter() //счетчик монет
+draw_hud_level_and_xp() 
+draw_tab_bar()
+
 
 // --- 2. ОТРИСОВКА ОКОН ---
 switch (current_ui_state) {

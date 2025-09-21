@@ -15,3 +15,9 @@ enum UIState {
     SHOP_WINDOW,      // Открыто окно Магазина
     ASSET_WINDOW      // Открыто окно Актива (для улучшения)
 }
+
+enum ButtonState {
+    IDLE,     // Покой
+    HOVER,    // Наведение
+    PRESSED   // Нажата
+}

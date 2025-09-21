@@ -41,7 +41,10 @@ window_set_rectangle(0, 0, display_w, display_h);
 
 // --- ИЗМЕНЕНИЕ ЗДЕСЬ ---
 // 6. НАСТРОЙКА GUI (теперь на вертикальном холсте 1080x1920)
-display_set_gui_size(base_w, base_h);
+
+//display_set_gui_size(base_w, base_h);!!
+display_set_gui_size(cam_w, cam_h)
+
 // --- КОНЕЦ ИЗМЕНЕНИЯ ---
 
 show_debug_message("Rubber Window Portrait Display Manager Initialized.");

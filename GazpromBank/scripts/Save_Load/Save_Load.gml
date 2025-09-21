@@ -15,7 +15,8 @@ function start_new_game() {
         last_save_timestamp: 0,
         // Создаем пустой массив для хранения данных об активах на 10 ячейках
         assets_on_tiles: array_create(10, noone), 
-        achievements_unlocked: []
+        achievements_unlocked: [],
+		quest_progress: {} // Просто создаем пустую структуру (struct)
     };
 }
 
