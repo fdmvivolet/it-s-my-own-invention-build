@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"Save_Load",
+  "%Name":"trigger_one_time_event",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Save_Load",
+  "name":"trigger_one_time_event",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

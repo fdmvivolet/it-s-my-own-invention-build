@@ -2,7 +2,8 @@ enum GameState {
     LOADING,    // Инициализация и загрузка игры
     GAMEPLAY,   // Основной игровой процесс
     SHOP_OPEN,  // Открыто окно магазина
-    PAUSED      // Пауза (если понадобится)
+    PAUSED,     // Пауза (если понадобится)
+	//TUTORIAL
 }
 
 enum EVENT_NAMES{
@@ -13,7 +14,9 @@ enum EVENT_NAMES{
 enum UIState {
     HIDDEN,           // Никакие окна не открыты
     SHOP_WINDOW,      // Открыто окно Магазина
-    ASSET_WINDOW      // Открыто окно Актива (для улучшения)
+    ASSET_WINDOW,     // Открыто окно Актива (для улучшения)
+	QUESTS_WINDOW,
+	TUTORIAL_CLOUD
 }
 
 enum ButtonState {

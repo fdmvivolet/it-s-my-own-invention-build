@@ -57,6 +57,7 @@ function init_game_config() {
 	    collect_income_daily: {
 	        type: "daily",
 	        event_name: "IncomeCollected", // Название события в EventBus
+			description: "Собрать доход",
 	        target_value: 5,               // Цель
 	        reward_coins: 150,
 	        reward_diamonds: 0
@@ -66,6 +67,7 @@ function init_game_config() {
 	    buy_asset_daily: {
 	        type: "daily",
 	        event_name: "AssetPurchased",
+			description: "Купить 1 актив",
 	        target_value: 1,
 	        reward_coins: 50,
 	        reward_diamonds: 0
@@ -75,6 +77,7 @@ function init_game_config() {
 	    reach_level_weekly: {
 	        type: "weekly",
 	        event_name: "PlayerLeveledUp", // Будем отслеживать, когда игрок повышает уровень
+			description: "Достигнуть 5 уровня",
 	        target_value: 5,               // Цель - достигнуть 5-го уровня
 	        reward_coins: 0,
 	        reward_diamonds: 1

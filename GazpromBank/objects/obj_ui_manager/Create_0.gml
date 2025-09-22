@@ -5,7 +5,7 @@
 current_ui_state = UIState.HIDDEN;
 current_context_id = noone;
 tab_bar_buttons = [];
-
+tooltip_message_to_show = "";
 
 
 function create_tab_bar_buttons(array){
@@ -20,17 +20,17 @@ function create_tab_bar_buttons(array){
 
 	// --- Данные кнопок ---
 	var _button_data = [
-	    { id: "farm",         label: "Ферма",       color: c_green },
-	    { id: "shop",         label: "Магазин",     color: c_aqua },
-	    { id: "quests",       label: "Задания",     color: c_yellow },
-	    { id: "achievements", label: "Достижения",  color: c_fuchsia },
-	    { id: "help",         label: "Подсказка",   color: c_silver }
+	    { id: "farm",         label: "Ферма",       color: c_green,		callback: function() { show_debug_message("Нажата кнопка: " + self.label); } },
+	    { id: "shop",         label: "Магазин",     color: c_aqua,		callback: function() { show_debug_message("Нажата кнопка: " + self.label); } },
+	    { id: "quests",       label: "Задания",     color: c_yellow,	callback: function() { EventBusBroadcast("RequestQuestsWindow", {});	   } },
+	    { id: "achievements", label: "Достижения",  color: c_fuchsia,	callback: function() { show_debug_message("Нажата кнопка: " + self.label); } },
+	    { id: "help",         label: "Подсказка",   color: c_silver,	callback: function() { show_debug_message("Нажата кнопка: " + self.label); } }
 	];
 
 	var _button_count = array_length(_button_data);
 
 	var _button_scale_idle = 1.0;
-	var _button_scale_hover = 1.1; // Сделаем чуть заметнее
+	var _button_scale_hover = 1.0; // Сделаем чуть заметнее
 	var _button_scale_pressed = 0.9;
 
 	// --- Создаем кнопки в цикле, используя ВАШУ логику расчета координат ---
@@ -50,7 +50,7 @@ function create_tab_bar_buttons(array){
 	        height: _button_size,
 	        color: _data.color,
 	        state: ButtonState.IDLE,
-	        callback: function() { show_debug_message("Нажата кнопка: " + self.label); },
+	        callback: _data.callback,
 			scale_idle: _button_scale_idle,
 			scale_hover: _button_scale_hover,
 			scale_pressed: _button_scale_pressed,

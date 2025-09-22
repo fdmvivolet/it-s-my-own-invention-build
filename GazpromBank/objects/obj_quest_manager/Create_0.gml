@@ -59,6 +59,43 @@ function on_game_event(data) {
     }
 }
 
+/// @function                claim_quest_reward(quest_id)
+/// @param {struct} quest_id ID задания, за которое нужно выдать награду
+function claim_quest_reward(data) {
+    
+	var quest_id = data.quest_id
+	
+	show_debug_message(data)
+	
+    show_debug_message("Quest Manager: Попытка забрать награду за '" + string(quest_id) + "'");
+    
+    // --- 1. ПРОВЕРКИ БЕЗОПАСНОСТИ ---
+    // Убедимся, что такое задание и его прогресс существуют
+    if (!variable_struct_exists(global.game_config.quests, quest_id) || !variable_struct_exists(global.game_data.quest_progress, quest_id)) {
+        show_debug_message("Quest Manager: ОШИБКА! Попытка забрать награду за несуществующее задание.");
+        return;
+    }
+    
+    var _quest_config = global.game_config.quests[$ quest_id];
+    var _quest_progress = global.game_data.quest_progress[$ quest_id];
+    
+    // Убедимся, что задание выполнено, а награда еще не получена
+    if (_quest_progress.completed && !_quest_progress.claimed) {
+        
+        // --- 2. ВЫДАЧА НАГРАДЫ ---
+        global.game_data.player_coins += _quest_config.reward_coins;
+        // global.game_data.player_diamonds += _quest_config.reward_diamonds; // Когда добавим алмазы
+        
+        show_debug_message("Quest Manager: Награда выдана! +" + string(_quest_config.reward_coins) + " монет.");
+        
+        // --- 3. ОБНОВЛЕНИЕ СТАТУСА ---
+        // Отмечаем, что награда получена, чтобы ее нельзя было забрать дважды
+        _quest_progress.claimed = true;
+        
+    } else {
+        show_debug_message("Quest Manager: ОШИБКА! Награда за это задание не может быть получена.");
+    }
+}
 
 // --- 1. Синхронизация прогресса с конфигом (код без изменений, он корректен) ---
 var _all_quest_ids = variable_struct_get_names(global.game_config.quests);
@@ -108,6 +145,9 @@ for (var i = 0; i < array_length(_unique_events); i++) {
     // нужно вызвать наш метод on_game_event
     EventBusSubscribe(_event_name, id, on_game_event);
 }
+
+show_debug_message("Quest Manager: Подписка на событие 'ClaimQuestRewardRequested'");
+EventBusSubscribe("ClaimQuestRewardRequested", id, claim_quest_reward);
 
 show_debug_message("Quest Manager: Инициализация завершена.");
 

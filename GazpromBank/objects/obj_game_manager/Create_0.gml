@@ -51,6 +51,12 @@ function on_empty_tile_tapped(_event_data) {
             _tile_id.is_empty = false;
             _tile_id.asset_instance_id = _new_asset;
             
+		    var _tooltip_data = {
+		        message: "Отлично! Это ваш первый игровой 'Вклад'. Он будет приносить вам пассивный доход. Не забывайте заходить в игру, чтобы собрать его!"
+		    };
+		    
+			//trigger_one_time_event("FirstAssetPurchased", _tooltip_data);		
+			
             // Сохраняем игру после покупки
             save_game();
             
@@ -81,6 +87,12 @@ function on_purchase_asset_requested(_event_data) {
 		
         _tile_id.is_empty = false;
         _tile_id.asset_instance_id = _new_asset;
+		
+		var _tooltip_data = {
+		    message: "Отлично! Это ваш первый игровой 'Вклад'. Он будет приносить вам пассивный доход. Не забывайте заходить в игру, чтобы собрать его!"
+		};
+		    
+		trigger_one_time_event("FirstAssetPurchased", _tooltip_data);		
         
         save_game();
     }
