@@ -37,6 +37,7 @@ switch (current_ui_state) {
 		break;
 }
 
+/*
 if (current_ui_state == UIState.TUTORIAL_CLOUD) {
 
         var radius = 80

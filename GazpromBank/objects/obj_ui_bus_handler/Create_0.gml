@@ -32,8 +32,8 @@ function on_request_quests_window(_event_data) {
     obj_game_manager.game_state = GameState.SHOP_OPEN; // Или SHOP_OPEN, как вам удобнее
 }
 
-// --- НОВЫЕ МЕТОДЫ ДЛЯ СИСТЕМЫ ПОДСКАЗОК ---
 
+/*
 // 1. Главный метод, который решает, показывать подсказку или ставить в очередь.
 function show_tooltip(data) {
     // Проверяем, что UI свободен
@@ -74,8 +74,66 @@ function on_ui_window_closed(data) {
         obj_ui_bus_handler.show_tooltip({ message: _next_message });
     }
 }
+*/
+
+tutorial_queue = [];
+
+// МЕТОД №1: Главный метод, который ПОКАЗЫВАЕТ СЛЕДУЮЩИЙ ШАГ
+function show_next_tutorial_step() {
+	var bus_id = obj_ui_bus_handler.id
+    // Проверяем два условия: есть ли что-то в очереди И свободен ли UI
+    if (array_length(bus_id.tutorial_queue) > 0 && obj_ui_manager.current_ui_state == UIState.HIDDEN) {
+        
+        // Берем следующий шаг (самую первую реплику) из очереди
+        var _next_step_message = bus_id.tutorial_queue[0];
+        array_delete(bus_id.tutorial_queue, 0, 1); // И сразу удаляем ее из очереди
+        
+        show_debug_message("UI Bus Handler: Показ шага обучения: '" + _next_step_message + "'");
+        
+        // Отдаем команду UI Manager'у
+        obj_ui_manager.current_ui_state = UIState.TUTORIAL_CLOUD;
+        obj_ui_manager.tooltip_message_to_show = _next_step_message;
+        obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир
+    }
+}
+
+// МЕТОД №2: Метод-триггер, который ЗАПУСКАЕТ целый сценарий
+function on_tutorial_triggered(data) {
+    var _tutorial_id = data.tutorial_id;
+    
+	var bus_id = obj_ui_bus_handler.id
+	
+    // Проверяем, есть ли такой сценарий в конфиге
+    if (variable_struct_exists(global.game_config.tutorials, _tutorial_id)) {
+        
+        // Копируем ВЕСЬ массив реплик из конфига в нашу внутреннюю очередь
+
+        //bus_id.tutorial_queue = array_clone(global.game_config.tutorials[$ _tutorial_id]);
+		var _source_array = global.game_config.tutorials[$ _tutorial_id];
+		//bus_id.tutorial_queue = _source_array
+		array_copy(bus_id.tutorial_queue, 0, _source_array, 0, array_length(_source_array));
+		show_debug_message("UI Bus Handler: Загружен сценарий '" + _tutorial_id + "' с " + string(array_length(bus_id.tutorial_queue)) + " шагами.");
+        
+        // Сразу же пытаемся показать ПЕРВЫЙ шаг
+        bus_id.show_next_tutorial_step();
+    }
+}
+
+// МЕТОД №3: Метод, который срабатывает, когда игрок закрывает одно облачко
+function on_tooltip_acknowledged(data) {
+    show_debug_message("UI Bus Handler: Шаг обучения подтвержден. Попытка показать следующий.");
+    // Просто пытаемся показать СЛЕДУЮЩИЙ шаг из очереди
+    obj_ui_bus_handler.show_next_tutorial_step();
+}
 
 
+// Подписываемся на универсальный триггер обучения от game_manager
+EventBusSubscribe("TutorialTriggered", id, on_tutorial_triggered);
+
+// Подписываемся на событие, которое ui_manager отправит при клике на облачко
+EventBusSubscribe("TooltipAcknowledged", id, on_tooltip_acknowledged);
+
+//////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!new up
 
 // --- 3. ПОДПИСКА на события от игрового мира ---
 // Теперь, когда функции объявлены, мы можем безопасно на них подписаться.
@@ -89,8 +147,8 @@ show_debug_message("UI Bus Handler: Подписка на триггеры об�
 
 // Подписываемся на игровой триггер, который запускает обучение.
 // Метод on_tutorial_trigger мы создадим на следующем шаге.
-EventBusSubscribe("FirstAssetPurchased", id, on_tutorial_trigger);
+//EventBusSubscribe("FirstAssetPurchased", id, on_tutorial_trigger);
 
 // Подписываемся на служебное событие, которое сообщает, что UI освободился.
 // Метод on_ui_window_closed мы тоже создадим.
-EventBusSubscribe("UIWindowClosed", id, on_ui_window_closed);
+//EventBusSubscribe("UIWindowClosed", id, on_ui_window_closed);

@@ -21,7 +21,8 @@ if (current_ui_state == UIState.TUTORIAL_CLOUD) {
             obj_game_manager.game_state = GameState.GAMEPLAY;
             
             // Сообщаем, что UI освободился
-            EventBusBroadcast("UIWindowClosed", {});
+            //EventBusBroadcast("UIWindowClosed", {});
+			EventBusBroadcast("TooltipAcknowledged", {});
         }
     }
     // Выходим, чтобы не обрабатывать другие окна под подсказкой
@@ -39,28 +40,6 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
     
     var _touch_x = device_mouse_x_to_gui(0);
     var _touch_y = device_mouse_y_to_gui(0);
-	
-	if (current_ui_state == UIState.TUTORIAL_CLOUD) {
-	        // Рассчитываем координаты облака
-	        var _npc_x = 150;
-	        var _npc_y = display_get_gui_height() - 250;
-	        var _tooltip_x1 = _npc_x + 100;
-	        var _tooltip_y1 = _npc_y - 150;
-	        var _tooltip_x2 = display_get_gui_width() - 100;
-	        var _tooltip_y2 = _npc_y + 150;
-        
-	        // Проверяем клик внутри области
-	        if (point_in_rectangle(_touch_x, _touch_y, _tooltip_x1, _tooltip_y1, _tooltip_x2, _tooltip_y2)) {
-	            // Закрываем подсказку
-	            current_ui_state = UIState.HIDDEN;
-	            obj_game_manager.game_state = GameState.GAMEPLAY;
-            
-	            // Сообщаем, что UI освободился, на случай если в очереди есть другие подсказки
-	            EventBusBroadcast("UIWindowClosed", {});
-	        }
-	        // ВАЖНО: Ничего больше не делаем в этом кадре
-	        exit;
-	    }	
     
 	// --- Логика для Окна МАГАЗИНА ---
 	if (current_ui_state == UIState.SHOP_WINDOW) {
@@ -175,9 +154,11 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         // Проверяем, попал ли клик в область кнопки "Закрыть"
         if (point_in_rectangle(_touch_x, _touch_y, _btn_close_x - 150, _btn_close_y - 50, _btn_close_x + 150, _btn_close_y + 50)) {
             // Закрываем окно
+			
             current_ui_state = UIState.HIDDEN;
             // Возвращаем игру в активное состояние
             obj_game_manager.game_state = GameState.GAMEPLAY;
+			//trigger_one_time_event("TutorialTriggered", { tutorial_id: "FirstAssetPurchase" });
         }
 			
     }
