@@ -8,6 +8,8 @@ if (is_ready_to_collect) {
 	add_earnings_and_check_level(base_income)//base_income;
     show_debug_message("СОБРАНО: " + string(base_income) + " монет! Всего: " + string(global.game_data.player_coins));
     
+	obj_sound_manager.play_sfx("collect_income");
+	
 	EventBusBroadcast("IncomeCollected", {event_name: "IncomeCollected"});
 	
     // 2. КЛЮЧЕВОЕ ИЗМЕНЕНИЕ: Сбрасываем состояние и АВТОМАТИЧЕСКИ перезапускаем таймер.

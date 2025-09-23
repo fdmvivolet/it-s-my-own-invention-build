@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_safe_temp_3",
-    "path":"sprites/spr_safe_temp_3/spr_safe_temp_3.yy",
+    "name":"spr_bond",
+    "path":"sprites/spr_bond/spr_bond.yy",
   },
   "spriteMaskId":null,
   "visible":true,

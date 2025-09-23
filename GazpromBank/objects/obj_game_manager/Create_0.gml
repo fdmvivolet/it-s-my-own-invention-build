@@ -34,6 +34,8 @@ function on_purchase_asset_requested(_event_data) {
     if (instance_exists(_tile_id) && _tile_id.is_empty && global.game_data.player_coins >= _cost) {
         global.game_data.player_coins -= _cost;
 
+		obj_sound_manager.play_sfx("purchase");
+
         var _asset_obj_index = asset_get_index("obj_" + _asset_key);
         var _new_asset = instance_create_layer(_tile_id.x, _tile_id.y, "Instances", _asset_obj_index);
         

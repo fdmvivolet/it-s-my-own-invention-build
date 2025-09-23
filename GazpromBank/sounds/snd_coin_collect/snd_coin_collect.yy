@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"snd_coin_collect",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":0.749977,
+  "name":"snd_coin_collect",
+  "parent":{
+    "name":"Sounds",
+    "path":"folders/Sounds.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_coin_collect.ogg",
+  "type":0,
+  "volume":1.0,
+}

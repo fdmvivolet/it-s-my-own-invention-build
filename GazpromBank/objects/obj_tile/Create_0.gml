@@ -36,11 +36,11 @@ function update_lock_status() {
         
         if (is_locked) {
             // Ячейка заблокирована
-            sprite_index = spr_tile_temp_locked; // Меняем спрайт на "замок"
+            sprite_index = spr_tile_locked//spr_tile_temp_locked; // Меняем спрайт на "замок"
             // Можно добавить другие эффекты, например, image_alpha = 0.5
         } else {
             // Ячейка разблокирована
-            sprite_index = spr_tile_temp; // Меняем на обычный спрайт
+            sprite_index = spr_tile; // Меняем на обычный спрайт
             // Можно добавить эффект "появления", анимацию и т.д.
         }
     }

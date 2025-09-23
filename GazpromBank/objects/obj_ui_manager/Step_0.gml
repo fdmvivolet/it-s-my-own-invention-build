@@ -83,8 +83,9 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
 
 	    // Проверка кнопки "Закрыть"
 	    if (point_in_rectangle(_touch_x, _touch_y, _win_x + 300, _win_y + 850, _win_x + 500, _win_y + 950)) {
-	        current_ui_state = UIState.HIDDEN;
+			current_ui_state = UIState.HIDDEN;
 	        obj_game_manager.game_state = GameState.GAMEPLAY;
+			obj_sound_manager.play_sfx("ui_click_low");
 	    }
 	}	
 	
@@ -120,10 +121,9 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         
         // Проверяем, попал ли клик в область кнопки "Закрыть"
         if (point_in_rectangle(_touch_x, _touch_y, _btn_close_x - 200, _btn_close_y - 50, _btn_close_x + 200, _btn_close_y + 50)) {
-            // Закрываем окно
             current_ui_state = UIState.HIDDEN;
-            // Возвращаем игру в активное состояние
             obj_game_manager.game_state = GameState.GAMEPLAY;
+			obj_sound_manager.play_sfx("ui_click_low");
         }
     }
 	if (current_ui_state == UIState.QUESTS_WINDOW) {
@@ -173,11 +173,9 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         // Проверяем, попал ли клик в область кнопки "Закрыть"
         if (point_in_rectangle(_touch_x, _touch_y, _btn_close_x - 150, _btn_close_y - 50, _btn_close_x + 150, _btn_close_y + 50)) {
             // Закрываем окно
-			
             current_ui_state = UIState.HIDDEN;
-            // Возвращаем игру в активное состояние
             obj_game_manager.game_state = GameState.GAMEPLAY;
-			//trigger_one_time_event("TutorialTriggered", { tutorial_id: "FirstAssetPurchase" });
+			obj_sound_manager.play_sfx("ui_click_low");
         }
 			
     }
@@ -200,6 +198,7 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
             // Стандартная процедура закрытия
             current_ui_state = UIState.HIDDEN;
             obj_game_manager.game_state = GameState.GAMEPLAY;
+			obj_sound_manager.play_sfx("ui_click_low");
          
         }
     }	

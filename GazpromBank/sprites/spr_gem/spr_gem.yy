@@ -26,7 +26,7 @@
   "origin":0,
   "parent":{
     "name":"DragAndDrop",
-    "path":"folders/Sprites/DragAndDrop.yy",
+    "path":"folders/unused/DragAndDrop.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

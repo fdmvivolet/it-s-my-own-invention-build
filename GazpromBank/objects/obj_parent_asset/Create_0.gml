@@ -56,3 +56,5 @@ function perform_upgrade() {
 
 // Вызываем расчет в первый раз при создании
 calculate_next_upgrade();
+
+depth = -y

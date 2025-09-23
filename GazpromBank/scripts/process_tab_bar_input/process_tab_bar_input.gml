@@ -43,6 +43,7 @@ function process_tab_bar_input() {
                         if (is_method(_button.callback)) {
                             // Вызываем метод, передавая ему саму структуру в качестве аргумента.
                             // Это может быть полезно в будущем.
+							obj_sound_manager.play_sfx("ui_click_high");
                             _button.callback(_button);
                         }
                     }

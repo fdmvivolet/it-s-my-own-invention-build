@@ -10,11 +10,11 @@ if (timer_current > 0 && !is_ready_to_collect) {
     var _time_elapsed = base_timer_seconds - timer_current;
     var _progress_percent = (_time_elapsed / base_timer_seconds) * 100;
     
-    var _bar_width = sprite_get_width(sprite_index);
+    var _bar_width = sprite_get_width(sprite_index)*0.4;
     var _bar_height = 16;
     
     var _bar_x1 = x - _bar_width / 2;
-    var _bar_y1 = bbox_bottom + 8;
+    var _bar_y1 = bbox_top - 32;
     
     var _bar_x2 = x + _bar_width / 2;
     var _bar_y2 = _bar_y1 + _bar_height;
@@ -36,9 +36,9 @@ if (timer_current > 0 && !is_ready_to_collect) {
 
 // 3. ОТРИСОВКА ИНДИКАТОРА ГОТОВНОСТИ
 if (is_ready_to_collect) {
-    draw_set_color(c_yellow);
-    draw_circle(x, y, sprite_width/2+2, false);
-    draw_set_color(c_white);
+    //draw_set_color(c_yellow);
+    //draw_circle(x, y, sprite_width/2+2, false);
+    //draw_set_color(c_white);
 }
 
 //draw_text(x+25, y-150, is_ready_to_collect)

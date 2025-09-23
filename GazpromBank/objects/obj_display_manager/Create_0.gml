@@ -46,5 +46,8 @@ window_set_rectangle(0, 0, display_w, display_h);
 display_set_gui_size(cam_w, cam_h)
 
 // --- КОНЕЦ ИЗМЕНЕНИЯ ---
+if webgl_enabled {gpu_set_texfilter(true)} else {gpu_set_texfilter(false)}
+	
+
 
 show_debug_message("Rubber Window Portrait Display Manager Initialized.");

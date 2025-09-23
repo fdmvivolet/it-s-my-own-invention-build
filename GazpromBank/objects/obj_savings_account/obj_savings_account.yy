@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_safe_temp",
-    "path":"sprites/spr_safe_temp/spr_safe_temp.yy",
+    "name":"spr_savings_account",
+    "path":"sprites/spr_savings_account/spr_savings_account.yy",
   },
   "spriteMaskId":null,
   "visible":true,
