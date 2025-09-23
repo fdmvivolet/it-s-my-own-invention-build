@@ -10,7 +10,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"DragAndDrop(Unused)",
-    "path":"folders/Objects/DragAndDrop(Unused).yy",
+    "path":"folders/unused/DragAndDrop(Unused).yy",
   },
   "parentObjectId":null,
   "persistent":true,

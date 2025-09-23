@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"add_earnings_and_check_level",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"add_earnings_and_check_level",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

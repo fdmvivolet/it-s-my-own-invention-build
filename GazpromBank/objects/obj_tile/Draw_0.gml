@@ -11,3 +11,5 @@ if (is_hovered) {
     //draw_set_alpha(1)
 	draw_self();
 }
+draw_set_font(Font1)
+draw_text(x, y, tile_id)

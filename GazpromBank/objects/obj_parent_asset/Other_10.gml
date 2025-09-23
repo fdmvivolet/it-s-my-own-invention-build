@@ -4,7 +4,8 @@
 // --- Если доход готов к сбору ---
 if (is_ready_to_collect) {
     // 1. Собираем доход (эта часть остается без изменений)
-    global.game_data.player_coins += base_income;
+    //global.game_data.player_coins += 
+	add_earnings_and_check_level(base_income)//base_income;
     show_debug_message("СОБРАНО: " + string(base_income) + " монет! Всего: " + string(global.game_data.player_coins));
     
 	EventBusBroadcast("IncomeCollected", {event_name: "IncomeCollected"});

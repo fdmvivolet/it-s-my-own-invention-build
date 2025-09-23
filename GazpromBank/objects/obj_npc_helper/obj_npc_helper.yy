@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"NPC (unused)",
-    "path":"folders/Objects/NPC (unused).yy",
+    "path":"folders/unused/NPC (unused).yy",
   },
   "parentObjectId":null,
   "persistent":true,

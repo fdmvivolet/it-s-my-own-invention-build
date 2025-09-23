@@ -10,7 +10,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Example(Bus)",
-    "path":"folders/Objects/Example(Bus).yy",
+    "path":"folders/unused/Example(Bus).yy",
   },
   "parentObjectId":null,
   "persistent":false,

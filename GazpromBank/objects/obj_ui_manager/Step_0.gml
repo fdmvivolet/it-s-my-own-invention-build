@@ -48,26 +48,45 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
 	        var _win_x = (_gui_w - 800) / 2;
 	        var _win_y = (_gui_h - 1000) / 2;
 
-	        // Проверка кнопки "Купить"
-	        if (point_in_rectangle(_touch_x, _touch_y, _win_x + 550, _win_y + 250, _win_x + 750, _win_y + 350)) {
-	            // Публикуем событие, которое услышит game_manager
-	            var _purchase_data = {
-	                asset_type: "savings_account",
-	                tile_id: current_context_id // Мы сохранили ID ячейки при открытии
-	            };
-	            // Закрываем магазин после покупки
-	            current_ui_state = UIState.HIDDEN;
-	            obj_game_manager.game_state = GameState.GAMEPLAY;
-				
-				EventBusBroadcast("PurchaseAssetRequested", _purchase_data);
-	        }
+        // --- НОВАЯ ЛОГИКА ПРОВЕРКИ КНОПОК "КУПИТЬ" В ЦИКЛЕ ---
+        var _asset_ids = variable_struct_get_names(global.game_config.assets);
+        var _current_y = _win_y + 250;
+        var _item_gap = 150;
+        
+        for (var i = 0; i < array_length(_asset_ids); i++) {
+            var _asset_id = _asset_ids[i];
+            var _asset_config = global.game_config.assets[$ _asset_id];
+            
+            // Проверяем, что товар РАЗБЛОКИРОВАН, прежде чем проверять клик
+            if (global.game_data.player_level >= _asset_config.required_level) {
+                
+                var _btn_x = _win_x + 650;
+                var _btn_y = _current_y;
+                
+                if (point_in_rectangle(_touch_x, _touch_y, _btn_x - 100, _btn_y - 50, _btn_x + 100, _btn_y + 50)) {
+                    // Все проверки пройдены, отправляем запрос
+                    var _purchase_data = {
+                        asset_type: _asset_id, // Используем динамический ID
+                        tile_id: current_context_id
+                    };
+                    EventBusBroadcast("PurchaseAssetRequested", _purchase_data);
+                    
+                    // Закрываем магазин и выходим из цикла/события
+                    current_ui_state = UIState.HIDDEN;
+                    obj_game_manager.game_state = GameState.GAMEPLAY;
+                    exit;
+                }
+            }
+            
+            _current_y += _item_gap; // Смещаемся к следующей кнопке
+        }
 
-	        // Проверка кнопки "Закрыть"
-	        if (point_in_rectangle(_touch_x, _touch_y, _win_x + 300, _win_y + 850, _win_x + 500, _win_y + 950)) {
-	            current_ui_state = UIState.HIDDEN;
-	            obj_game_manager.game_state = GameState.GAMEPLAY;
-	        }
-	    }	
+	    // Проверка кнопки "Закрыть"
+	    if (point_in_rectangle(_touch_x, _touch_y, _win_x + 300, _win_y + 850, _win_x + 500, _win_y + 950)) {
+	        current_ui_state = UIState.HIDDEN;
+	        obj_game_manager.game_state = GameState.GAMEPLAY;
+	    }
+	}	
 	
     // --- Логика для Окна Актива ---
     if (current_ui_state == UIState.ASSET_WINDOW) {
@@ -162,5 +181,28 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         }
 			
     }
+
+	// --- НОВЫЙ БЛОК: Логика для Окна Повышения Уровня ---
+    if (current_ui_state == UIState.LEVEL_UP_WINDOW) {
+        var _gui_w = display_get_gui_width();
+        var _gui_h = display_get_gui_height();
+        var _win_width = 800;
+        var _win_height = 600;
+        var _win_x = (_gui_w - _win_width) / 2;
+        var _win_y = (_gui_h - _win_height) / 2;
+        
+        // Координаты кнопки "Продолжить"
+        var _btn_x = _win_x + _win_width / 2;
+        var _btn_y = _win_y + _win_height - 80;
+        
+        // Проверяем клик по кнопке
+        if (point_in_rectangle(_touch_x, _touch_y, _btn_x - 150, _btn_y - 40, _btn_x + 150, _btn_y + 40)) {
+            // Стандартная процедура закрытия
+            current_ui_state = UIState.HIDDEN;
+            obj_game_manager.game_state = GameState.GAMEPLAY;
+         
+        }
+    }	
+	
 }
 

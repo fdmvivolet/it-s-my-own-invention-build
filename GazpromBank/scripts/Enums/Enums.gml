@@ -3,7 +3,6 @@ enum GameState {
     GAMEPLAY,   // Основной игровой процесс
     SHOP_OPEN,  // Открыто окно магазина
     PAUSED,     // Пауза (если понадобится)
-	//TUTORIAL
 }
 
 enum EVENT_NAMES{
@@ -16,7 +15,8 @@ enum UIState {
     SHOP_WINDOW,      // Открыто окно Магазина
     ASSET_WINDOW,     // Открыто окно Актива (для улучшения)
 	QUESTS_WINDOW,
-	TUTORIAL_CLOUD
+	TUTORIAL_CLOUD,
+	LEVEL_UP_WINDOW,
 }
 
 enum ButtonState {

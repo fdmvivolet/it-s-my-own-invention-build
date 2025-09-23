@@ -80,24 +80,24 @@ function draw_asset_window() {
 
 
 function draw_shop_window() {
-    // --- 1. ОТРИСОВКА ФОНА И ОКНА ---
+
+    
+    // Фон окна
     var _gui_w = display_get_gui_width();
     var _gui_h = display_get_gui_height();
+    var _win_width = 800;
+    var _win_height = 1000;
+    var _win_x = (_gui_w - _win_width) / 2;
+    var _win_y = (_gui_h - _win_height) / 2;
     
     // Затемняющий фон
     draw_set_color(c_black);
     draw_set_alpha(0.7);
     draw_rectangle(0, 0, _gui_w, _gui_h, false);
-    draw_set_alpha(1);
-    
-    // Фон окна
-    var _win_width = 800;
-    var _win_height = 1000;
-    var _win_x = (_gui_w - _win_width) / 2;
-    var _win_y = (_gui_h - _win_height) / 2;
-    draw_set_color(c_dkgray);
-    draw_rectangle(_win_x, _win_y, _win_x + _win_width, _win_y + _win_height, false);
-    
+    draw_set_alpha(1);	
+	draw_set_color(c_dkgray);
+	draw_rectangle(_win_x, _win_y, _win_x + _win_width, _win_y + _win_height, false);
+	
     // --- 2. ОТРИСОВКА КОНТЕНТА ---
     draw_set_color(c_white);
     draw_set_halign(fa_center);
@@ -107,21 +107,69 @@ function draw_shop_window() {
     draw_text(_win_x + _win_width / 2, _win_y + 100, "Магазин");
     
     // --- 3. ОТРИСОВКА ТОВАРОВ (пока только один) ---
-    var _item_y = _win_y + 300;
-    draw_text(_win_x + 200, _item_y, "Накопительный счет");
+    //var _item_y = _win_y + 300;
+    //draw_text(_win_x + 200, _item_y, "Накопительный счет");
     
-    // Кнопка "Купить"
+    /*/ Кнопка "Купить"
     var _cost = global.game_config.assets.savings_account.cost;
     draw_set_color(c_green);
     draw_rectangle(_win_x + 550, _item_y - 50, _win_x + 750, _item_y + 50, false);
     draw_set_color(c_white);
     draw_text(_win_x + 650, _item_y, "Купить (" + string(_cost) + ")");
-    
+    */
+	
     // Кнопка "Закрыть" (временно внизу)
     draw_set_color(c_red);
     draw_rectangle(_win_x + _win_width/2 - 100, _win_y + 850, _win_x + _win_width/2 + 100, _win_y + 950, false);
     draw_set_color(c_white);
     draw_text(_win_x + _win_width/2, _win_y + 900, "Закрыть");
+	
+	
+    /////////////////////////////////////////////////////////////////////////
+    var _asset_ids = variable_struct_get_names(global.game_config.assets);
+    var _current_y = _win_y + 250; // Начальная Y позиция для первого товара
+    var _item_gap = 150; // Расстояние между товарами
     
+    for (var i = 0; i < array_length(_asset_ids); i++) {
+        var _asset_id = _asset_ids[i];
+        var _asset_config = global.game_config.assets[$ _asset_id];
+        
+        // --- Рисуем название товара ---
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_middle);
+        draw_set_color(c_white);
+        draw_text(_win_x + 50, _current_y, _asset_config.name);
+        
+        // --- Проверяем, доступен ли товар по уровню ---
+        var _is_unlocked = (global.game_data.player_level >= _asset_config.required_level);
+        
+        // --- Рисуем кнопку "Купить" / "Заблокировано" ---
+        var _btn_x = _win_x + 650;
+        var _btn_y = _current_y;
+        
+        if (_is_unlocked) {
+            // Товар доступен
+            draw_set_color(c_green);
+            draw_rectangle(_btn_x - 100, _btn_y - 50, _btn_x + 100, _btn_y + 50, false);
+            draw_set_color(c_white);
+            draw_set_halign(fa_center);
+            draw_text(_btn_x, _btn_y, "Купить (" + string(_asset_config.cost) + ")");
+        } else {
+            // Товар заблокирован
+            draw_set_color(c_red);
+            draw_rectangle(_btn_x - 100, _btn_y - 50, _btn_x + 100, _btn_y + 50, false);
+            draw_set_color(c_ltgray);
+            draw_set_halign(fa_center);
+            draw_text(_btn_x, _btn_y, "С Ур. " + string(_asset_config.required_level));
+        }
+        
+        // Смещаемся вниз для следующего товара
+        _current_y += _item_gap;
+    }	
+	/////////////////////////////////////////////////////////////////////////
+	
     draw_set_halign(fa_left);
+    draw_set_valign(fa_top);	
+	
+	
 }

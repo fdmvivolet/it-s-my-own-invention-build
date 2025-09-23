@@ -83,7 +83,8 @@ function claim_quest_reward(data) {
     if (_quest_progress.completed && !_quest_progress.claimed) {
         
         // --- 2. ВЫДАЧА НАГРАДЫ ---
-        global.game_data.player_coins += _quest_config.reward_coins;
+        //global.game_data.player_coins +=
+		add_earnings_and_check_level(_quest_config.reward_coins)//_quest_config.reward_coins;
         // global.game_data.player_diamonds += _quest_config.reward_diamonds; // Когда добавим алмазы
         
         show_debug_message("Quest Manager: Награда выдана! +" + string(_quest_config.reward_coins) + " монет.");

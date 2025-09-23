@@ -11,13 +11,20 @@ function draw_hud_level_and_xp() {
     
     // --- Получаем данные из глобальных структур ---
     var _level = global.game_data.player_level;
-    var _current_xp = global.game_data.player_xp;
-    
+    var _current_xp = global.game_data.total_earnings //global.game_data.player_xp;
+	
     // --- Логика расчета опыта (согласно нашему обсуждению) ---
     // Простая формула-заглушка: 100 XP для 1->2, 200 XP для 2->3 и т.д.
     // В будущем это будет вынесено в game_config или специальную функцию.
-    var _xp_for_next_level = _level * 100; 
+    var _xp_for_next_level = global.game_config.level_thresholds[_level] //_level * 100; 
     
+	var _to_del = global.game_config.level_thresholds[_level-1]
+	
+	//var _to_del_cur = global.game_config.level_thresholds[_level-1]
+	
+	_xp_for_next_level -= _to_del
+	_current_xp -= _to_del
+	
     // Рассчитываем прогресс в диапазоне от 0 до 1.
     // `max(0, ...)` и `min(1, ...)` нужны для защиты от некорректных данных (например, XP > необходимого).
     var _progress = clamp(_current_xp / _xp_for_next_level, 0, 1);
@@ -35,6 +42,8 @@ function draw_hud_level_and_xp() {
     draw_set_valign(fa_middle);
     draw_text(_text_x, _text_y, "Уровень: " + string(_level));
     
+	draw_text(_text_x + 150, _text_y, string(_current_xp) + "/" + string(_xp_for_next_level))
+	
     // 2. Рисуем фон полоски опыта (заглушка - темно-серый прямоугольник)
     draw_set_color(c_dkgray);
     draw_rectangle(_bar_x, _bar_y, _bar_x + _bar_width, _bar_y + _bar_height, false);

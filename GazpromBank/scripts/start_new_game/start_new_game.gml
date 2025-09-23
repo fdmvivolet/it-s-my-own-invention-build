@@ -10,8 +10,9 @@ function start_new_game() {
     
     global.game_data = {
         player_level: 1,
-        player_xp: 0,
+        total_earnings: 0, //вместо xp
         player_coins: 100,
+		unlocked_tile_count: 1,
         last_save_timestamp: 0,
         // Создаем пустой массив для хранения данных об активах на 10 ячейках
         assets_on_tiles: array_create(10, noone), 

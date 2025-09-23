@@ -1,5 +1,8 @@
 // --- obj_tile: User Event 0 (OnTap) ---
 /// @description Обработка тапа: отправляем запрос в UI-систему
+if (is_locked) {
+    exit;
+}
 
 if (is_empty) {
     // Я ПРОШУ открыть окно магазина для СЕБЯ

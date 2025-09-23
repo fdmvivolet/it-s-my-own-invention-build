@@ -35,6 +35,9 @@ switch (current_ui_state) {
 		//show_message("asdasdas")
 		draw_npc_tooltip(tooltip_message_to_show);
 		break;
+    case UIState.LEVEL_UP_WINDOW:
+        draw_level_up_window();
+        break;		
 }
 
 /*
