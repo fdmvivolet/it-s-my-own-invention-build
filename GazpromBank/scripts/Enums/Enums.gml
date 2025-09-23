@@ -21,6 +21,5 @@ enum UIState {
 
 enum ButtonState {
     IDLE,     // Покой
-    HOVER,    // Наведение
     PRESSED   // Нажата
 }

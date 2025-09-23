@@ -4,9 +4,15 @@
 // --- 1. Переменные состояния UI ---
 current_ui_state = UIState.HIDDEN;
 current_context_id = noone;
+
 tab_bar_buttons = [];
+quests_window_buttons = [];
+
 tooltip_message_to_show = "";
 
+
+hud_coins_target_x = 0;
+hud_coins_target_y = 0;
 
 function create_tab_bar_buttons(array){
 	array = []

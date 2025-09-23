@@ -19,6 +19,9 @@ function draw_counter(){
 	var _text_x = _icon_x + _hud_icon_radius + _hud_text_gap;
 	var _text_y = _icon_y;
 
+    hud_coins_target_x = _icon_x;
+    hud_coins_target_y = _icon_y;
+
 	// --- Отрисовка ---
 	// 1. Рисуем заглушку для иконки (простой желтый круг)
 	draw_set_color(c_yellow);

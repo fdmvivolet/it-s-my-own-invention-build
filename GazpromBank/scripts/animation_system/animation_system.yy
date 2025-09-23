@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"process_tab_bar_input",
+  "%Name":"animation_system",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"process_tab_bar_input",
+  "name":"animation_system",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

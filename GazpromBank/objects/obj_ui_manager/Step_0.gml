@@ -29,7 +29,7 @@ if (current_ui_state == UIState.TUTORIAL_CLOUD) {
     exit;
 }
 
-process_tab_bar_input();
+var _clicked_on_tab_bar = process_buttons_input(tab_bar_buttons);
 
 if (current_ui_state == UIState.HIDDEN) {
     exit;
@@ -69,12 +69,14 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
                         asset_type: _asset_id, // Используем динамический ID
                         tile_id: current_context_id
                     };
-                    EventBusBroadcast("PurchaseAssetRequested", _purchase_data);
+
                     
                     // Закрываем магазин и выходим из цикла/события
                     current_ui_state = UIState.HIDDEN;
                     obj_game_manager.game_state = GameState.GAMEPLAY;
-                    exit;
+					EventBusBroadcast("PurchaseAssetRequested", _purchase_data);
+                    
+					exit;
                 }
             }
             
@@ -127,13 +129,14 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         }
     }
 	if (current_ui_state == UIState.QUESTS_WINDOW) {
+		
         // Получаем координаты окна, чтобы рассчитать положение кнопки
         var _gui_w = display_get_gui_width();
         var _gui_h = display_get_gui_height();
-        var _win_width = 800;
-        var _win_height = 1000;
-        var _win_x = (_gui_w - _win_width) / 2;
-        var _win_y = (_gui_h - _win_height) / 2;
+	    var _win_width = _gui_w* 0.9;
+	    var _win_height = _gui_h * 0.6;
+	    var _win_x = (_gui_w - _win_width) / 2;
+	    var _win_y = (_gui_h - _win_height) / 2;
         
 		
         // --- 1. Проверка кнопок "Получить" ---
@@ -154,15 +157,11 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
                 var _btn_claim_y = _card_y + 140;
                 
                 if (point_in_rectangle(_touch_x, _touch_y, _btn_claim_x - 100, _btn_claim_y - 40, _btn_claim_x + 100, _btn_claim_y + 40)) {
-                    // Транслируем событие в шину, а не вызываем менеджер напрямую
                     EventBusBroadcast("ClaimQuestRewardRequested", { quest_id: _quest_id });
-                    
-                    // Выходим из этого блока `if`, чтобы не проверять другие кнопки после успешного клика
-                    // и не провалиться в проверку кнопки "Закрыть".
                     exit; 
                 }
             }
-            _current_y += 150; // Смещаемся вниз для следующего задания
+            _current_y += 150; 
         }		
 		
 		

@@ -58,3 +58,44 @@ function perform_upgrade() {
 calculate_next_upgrade();
 
 depth = -y
+
+image_xscale = 0.1;
+image_yscale = 0.1;
+
+// 2. Запускаем анимацию с помощью нашего нового движка!
+// Мы просим анимировать свойства "image_xscale" и "image_yscale" этого экземпляра (id)
+// до конечного значения 1.0 за 0.4 секунды, используя нашу кривую ac_ease_out.
+
+
+global.Animation.play(id, "image_xscale", 1.0, 0.6, ac_back);
+global.Animation.play(id, "image_yscale", 1.0, 0.6, ac_back);
+
+function ease_out_click(){
+	after_spawn_anim = false
+	image_xscale = 1
+	image_yscale = image_xscale
+	var _target_scale = 1;
+	// Длительность анимации "вдавливания" (очень быстрая)
+	var _duration = 0.2; // 100 миллисекунд
+	
+
+	// Запускаем анимацию масштаба, используя нашу быструю кривую
+	global.Animation.play(id, "image_xscale", _target_scale, _duration, ac_ease_out_cubic_asset);
+	global.Animation.play(id, "image_yscale", _target_scale, _duration, ac_ease_out_cubic_asset);
+	alarm[0] = game_get_speed(gamespeed_fps)
+	
+}
+
+show_debug_message("Parent Asset: Запущена анимация появления.");
+
+// Счетчик времени для синусоиды. У каждого экземпляра будет свой.
+idle_anim_timer = 0; 
+// Случайное смещение, чтобы активы "дышали" не в унисон, а асинхронно.
+idle_anim_phase_offset = random(2 * pi); 
+// Скорость "дыхания". Чем больше, тем быстрее.
+idle_anim_speed = 0.03;
+// Амплитуда "дыхания". 0.02 означает, что масштаб будет меняться на +/- 2%.
+idle_anim_magnitude = 0.02;
+
+after_spawn_anim = false
+alarm[0] = game_get_speed(gamespeed_fps)

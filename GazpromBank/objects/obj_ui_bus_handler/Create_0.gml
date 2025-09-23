@@ -50,7 +50,10 @@ function show_next_tutorial_step() {
         obj_ui_manager.current_ui_state = UIState.TUTORIAL_CLOUD;
         obj_ui_manager.tooltip_message_to_show = _next_step_message;
         obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир
-    }
+    }else
+	{
+		show_debug_message(obj_ui_manager.current_ui_state)
+	}
 }
 
 // МЕТОД №2: Метод-триггер, который ЗАПУСКАЕТ целый сценарий

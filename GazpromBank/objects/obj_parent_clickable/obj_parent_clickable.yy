@@ -11,8 +11,8 @@
   "name":"obj_parent_clickable",
   "overriddenProperties":[],
   "parent":{
-    "name":"managers",
-    "path":"folders/managers.yy",
+    "name":"Assets",
+    "path":"folders/Objects/Assets.yy",
   },
   "parentObjectId":null,
   "persistent":false,
