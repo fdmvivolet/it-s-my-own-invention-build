@@ -1,5 +1,6 @@
 /// @description Слушает UI-запросы и отложенно передает их UI-менеджеру.
-
+#macro WINDOW_OPEN_ANIMATION obj_ui_manager.window_scale = 0.8; global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window) //0.2 sec
+#macro TUTORIAL_OPEN_ANIMATION obj_ui_manager.window_scale = 0.8; global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.3, ac_open_window) //0.2 sec
 // --- 2. ОБЪЯВЛЕНИЕ функций-обработчиков событий (Callbacks) ---
 // Мы должны сначала объявить функции, и только потом их использовать.
 
@@ -11,6 +12,14 @@ tutorial_queue = [];
 
 function on_request_shop_window(_event_data) {
     show_debug_message("UI Manager: Получен запрос на открытие Магазина для ячейки " + string(_event_data.tile_id));
+	
+	
+	//obj_ui_manager.current_ui_state = UIState.HIDDEN;
+	//obj_game_manager.game_state = GameState.GAMEPLAY;	
+	WINDOW_OPEN_ANIMATION
+    //global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window);
+    //global.Animation.play(obj_ui_manager, "window_alpha", 1.0, 1, ac_ease_out);	
+	
 	obj_ui_manager.current_ui_state = UIState.SHOP_WINDOW;
     obj_ui_manager.current_context_id = _event_data.tile_id;
     obj_game_manager.game_state = GameState.SHOP_OPEN;
@@ -18,7 +27,9 @@ function on_request_shop_window(_event_data) {
 
 function on_request_asset_window(_event_data) {
     show_debug_message("UI Manager: Получен запрос на открытие Окна Актива для " + string(_event_data.asset_id));
-    obj_ui_manager.current_ui_state = UIState.ASSET_WINDOW;
+	WINDOW_OPEN_ANIMATION
+    
+	obj_ui_manager.current_ui_state = UIState.ASSET_WINDOW;
     obj_ui_manager.current_context_id = _event_data.asset_id;
     obj_game_manager.game_state = GameState.SHOP_OPEN;
 }
@@ -27,7 +38,7 @@ function on_request_asset_window(_event_data) {
 
 function on_request_quests_window(_event_data) {
     show_debug_message("UI Manager: Получен запрос на открытие Окна Заданий");
-
+	WINDOW_OPEN_ANIMATION
     // Переключаем состояния, как и для других окон
     obj_ui_manager.current_ui_state = UIState.QUESTS_WINDOW;
     obj_ui_manager.current_context_id = noone; // Контекст не нужен
@@ -36,6 +47,7 @@ function on_request_quests_window(_event_data) {
 
 // МЕТОД №1: Главный метод, который ПОКАЗЫВАЕТ СЛЕДУЮЩИЙ ШАГ
 function show_next_tutorial_step() {
+	
 	var bus_id = obj_ui_bus_handler.id
     // Проверяем два условия: есть ли что-то в очереди И свободен ли UI
     if (array_length(bus_id.tutorial_queue) > 0 && obj_ui_manager.current_ui_state == UIState.HIDDEN) {
@@ -46,13 +58,16 @@ function show_next_tutorial_step() {
         
         show_debug_message("UI Bus Handler: Показ шага обучения: '" + _next_step_message + "'");
         
+		
+		
         // Отдаем команду UI Manager'у
         obj_ui_manager.current_ui_state = UIState.TUTORIAL_CLOUD;
         obj_ui_manager.tooltip_message_to_show = _next_step_message;
         obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир
     }else
 	{
-		show_debug_message(obj_ui_manager.current_ui_state)
+		
+		//show_debug_message(obj_ui_manager.current_ui_state)
 	}
 }
 
@@ -73,6 +88,7 @@ function on_tutorial_triggered(data) {
 		array_copy(bus_id.tutorial_queue, 0, _source_array, 0, array_length(_source_array));
 		show_debug_message("UI Bus Handler: Загружен сценарий '" + _tutorial_id + "' с " + string(array_length(bus_id.tutorial_queue)) + " шагами.");
         
+		TUTORIAL_OPEN_ANIMATION
         // Сразу же пытаемся показать ПЕРВЫЙ шаг
         bus_id.show_next_tutorial_step();
     }
@@ -98,7 +114,7 @@ function on_player_leveled_up(data) {
         show_debug_message("UI Bus Handler: UI занят, показ окна Level Up отложен (пока проигнорирован).");
         return; 
     }
-    
+    WINDOW_OPEN_ANIMATION
     // Отдаем команду UI Manager'у
     obj_ui_manager.current_context_id = data; // Сохраняем все данные (уровень и анлоки)
     obj_ui_manager.current_ui_state = UIState.LEVEL_UP_WINDOW;

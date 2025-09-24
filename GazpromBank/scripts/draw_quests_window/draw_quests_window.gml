@@ -8,12 +8,12 @@ function draw_quests_window() {
     draw_rectangle(0, 0, _gui_w, _gui_h, false);
     draw_set_alpha(1);
     
-    var _win_width = 800;
-    var _win_height = 1000;
+    var _win_width = 800  * window_scale;
+    var _win_height = 1000 * window_scale;
     var _win_x = (_gui_w - _win_width) / 2;
     var _win_y = (_gui_h - _win_height) / 2;
     draw_set_color(c_dkgray);
-    draw_rectangle(_win_x, _win_y, _win_x + _win_width, _win_y + _win_height, false);
+    draw_rectangle(_win_x , _win_y, _win_x + _win_width, _win_y + _win_height, false);
     
     draw_set_color(c_white);
     draw_set_halign(fa_center);
@@ -22,8 +22,8 @@ function draw_quests_window() {
     
     // --- 2. ПОДГОТОВКА К ОТРИСОВКЕ СПИСКА ---
     var _quest_ids = variable_struct_get_names(global.game_config.quests);
-    var _list_start_y = _win_y + 120; // Начальная позиция Y для первого задания
-    var _card_height = 200; // Высота одной "карточки" задания
+    var _list_start_y = _win_y + 120 * window_scale; // Начальная позиция Y для первого задания
+    var _card_height = 200 * window_scale; // Высота одной "карточки" задания
     
     // --- 3. ОТРИСОВКА КАЖДОГО ЗАДАНИЯ В ЦИКЛЕ ---
     for (var i = 0; i < array_length(_quest_ids); i++) {
@@ -63,12 +63,12 @@ function draw_quests_window() {
         
         // --- Кнопка "Получить" (визуальная часть) ---
         var _button_x = _win_x + _win_width / 2;
-        var _button_y = _card_y + 140;
-        var _button_w = 150;
+        var _button_y = _card_y  + 150 * window_scale;
+        var _button_w = 150 * window_scale;
         var _button_h = 40;
         
         var _button_text = "";
-        var _button_color = c_gray; // Цвет по умолчанию (неактивна)
+        var _button_color = c_red; // Цвет по умолчанию (неактивна)
         
         if (_progress.claimed) {
             _button_text = "Выполнено";
@@ -78,11 +78,11 @@ function draw_quests_window() {
             _button_color = c_green; // Активна!
         } else {
             _button_text = "В процессе";
-            _button_color = c_gray;
+            _button_color = c_red;
         }
         
         draw_set_color(_button_color);
-        draw_rectangle(_button_x - _button_w, _button_y - _button_h, _button_x + _button_w, _button_y + _button_h, false);
+        draw_rectangle(_button_x - _button_w * window_scale , _button_y - _button_h * window_scale, _button_x + _button_w * window_scale, _button_y + _button_h * window_scale, false);
         
         draw_set_color(c_white);
         draw_set_halign(fa_center);
@@ -94,10 +94,10 @@ function draw_quests_window() {
     
     // --- НОВЫЙ КОД: 3. ОТРИСОВКА КНОПКИ "ЗАКРЫТЬ" ---
     var _btn_close_x = _win_x + _win_width / 2;
-    var _btn_close_y = _win_y + 900; // Расположим ее внизу, как в магазине
+    var _btn_close_y = _win_y + 900 * window_scale; // Расположим ее внизу, как в магазине
     
     draw_set_color(c_red);
-    draw_rectangle(_btn_close_x - 150, _btn_close_y - 50, _btn_close_x + 150, _btn_close_y + 50, false);
+    draw_rectangle(_btn_close_x - 150 * window_scale, _btn_close_y - 50 * window_scale, _btn_close_x + 150 * window_scale, _btn_close_y + 50 * window_scale, false);
     
     draw_set_color(c_white);
     draw_set_halign(fa_center);

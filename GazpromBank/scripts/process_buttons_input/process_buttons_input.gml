@@ -58,6 +58,7 @@ function process_buttons_input(button_array) {
     return _click_handled;
 }
 
+/*
 function process_buttons_input_test(button_array) {
     
     var _mouse_x = device_mouse_x_to_gui(0);

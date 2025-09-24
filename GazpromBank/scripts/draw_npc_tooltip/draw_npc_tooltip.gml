@@ -5,7 +5,7 @@
 function draw_npc_tooltip(message_to_draw) {
     // --- Рисуем заглушку для персонажа ---
     // (Простой синий круг в левом нижнем углу)
-	var radius = 80
+	var radius = 80 * window_scale
     var _npc_x = 150;
     var _npc_y = display_get_gui_height() - 350;
     draw_set_color(c_blue);
@@ -14,7 +14,7 @@ function draw_npc_tooltip(message_to_draw) {
     // --- Рисуем заглушку для облачка с текстом ---
     // Теперь оно будет справа от NPC, а не над ним
     var _tooltip_x1 = _npc_x + 100;
-    var _tooltip_y1 = _npc_y - (radius + 20); // Верхний край
+    var _tooltip_y1 = _npc_y - (radius + 20) * window_scale; // Верхний край
     var _tooltip_x2 = display_get_gui_width() - 100;
     var _tooltip_y2 = _npc_y + radius; // Нижний край, теперь облако центрировано по Y
 	

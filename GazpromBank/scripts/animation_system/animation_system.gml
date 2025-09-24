@@ -7,12 +7,13 @@ global.Animation = {
     // --- Главная функция для ЗАПУСКА анимации ---
     
     /// @function       play(target_instance, property_name, end_value, duration, curve_asset)
-    /// @param {Id.Instance} target_instance   Экземпляр, который нужно анимировать.
-    /// @param {string}      property_name   Имя переменной в виде строки (например, "image_xscale").
-    /// @param {any}         end_value       Конечное значение, к которому стремится переменная.
-    /// @param {real}        duration        Длительность анимации в секундах.
-    /// @param {Id.AnimCurve} curve_asset       Ассет кривой анимации (например, ac_ease_out).
-    play: function(target_instance, property_name, end_value, duration, curve_asset) {
+    /// @param {Id.Instance}	target_instance		Экземпляр, который нужно анимировать.
+    /// @param {string}			property_name		Имя переменной в виде строки (например, "image_xscale").
+    /// @param {any}			end_value			Конечное значение, к которому стремится переменная.
+    /// @param {real}			duration			Длительность анимации в секундах.
+    /// @param {Id.AnimCurve}	curve_asset			Ассет кривой анимации (например, ac_ease_out).
+	/// @param {function}		callback_func       Функция после завершения анимации
+    play: function(target_instance, property_name, end_value, duration, curve_asset, callback_func = noone) {
         
         // --- ЗАЩИТА ---
         if (!instance_exists(target_instance)) return;
@@ -31,7 +32,8 @@ global.Animation = {
             duration: duration * MICROSECOND_IN_SECOND, // Переводим секунды в кадры
             time: 0,                    // Внутренний таймер анимации
             
-            curve: curve_asset          // Какая мелодия (кривая)
+            curve: curve_asset,          // Какая мелодия (кривая)
+			on_complete: callback_func // Сохраняем callback-функцию
         };
         
         // --- 3. Кладем "партитуру" на "рабочий стол" дирижера ---

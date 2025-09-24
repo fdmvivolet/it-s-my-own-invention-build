@@ -1,6 +1,7 @@
 // --- obj_ui_manager: Create Event (ИСПРАВЛЕННАЯ ВЕРСЯ) ---
 /// @description Инициализация UI менеджера, состояний и подписок на события.
-
+#macro WINDOW_CLOSE_ANIMATION	global.Animation.play(obj_ui_manager, "window_scale", 0.95, 0.1, ac_onetozerocubic, function() { current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_sound_manager.play_sfx("ui_click_low"); obj_ui_manager.window_scale = 0.8; })
+#macro TUTORIAL_CLOSE_ANIMATION	global.Animation.play(obj_ui_manager, "window_scale", 1, 0.2, ac_close_tutorial, function() { current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_sound_manager.play_sfx("ui_click_low"); obj_ui_manager.window_scale = 1; EventBusBroadcast("TooltipAcknowledged", {}); })
 // --- 1. Переменные состояния UI ---
 current_ui_state = UIState.HIDDEN;
 current_context_id = noone;
@@ -10,6 +11,8 @@ quests_window_buttons = [];
 
 tooltip_message_to_show = "";
 
+window_scale = 0.8; // Текущий масштаб окна (от 0.0 до 1.0)
+window_alpha = 1; // Текущая прозрачность окна (от 0.0 до 1.0)
 
 hud_coins_target_x = 0;
 hud_coins_target_y = 0;

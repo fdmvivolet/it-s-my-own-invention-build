@@ -23,7 +23,7 @@ switch (current_ui_state) {
     case UIState.SHOP_WINDOW:
 		draw_shop_window();
         break;
-        
+
     case UIState.ASSET_WINDOW:
         draw_asset_window(); 
         break;

@@ -16,8 +16,8 @@ function draw_level_up_window() {
     draw_rectangle(0, 0, _gui_w, _gui_h, false);
     draw_set_alpha(1.0);
     
-    var _win_width = 800;
-    var _win_height = 600; // Окно может быть не таким высоким, как магазин
+    var _win_width = 800 * window_scale;
+    var _win_height = 600 * window_scale; // Окно может быть не таким высоким, как магазин
     var _win_x = (_gui_w - _win_width) / 2;
     var _win_y = (_gui_h - _win_height) / 2;
     draw_set_color(c_dkgray);
@@ -29,8 +29,8 @@ function draw_level_up_window() {
     draw_set_valign(fa_top); // Выравниваем по верху для удобства работы со списком
     
     // Заголовок
-    draw_text(_win_x + _win_width / 2, _win_y + 50, "Поздравляем!");
-    draw_text(_win_x + _win_width / 2, _win_y + 100, "Вы достигли " + string(_new_level) + " уровня!");
+    draw_text(_win_x + _win_width / 2, _win_y + 50 * window_scale, "Поздравляем!");
+    draw_text(_win_x + _win_width / 2, _win_y + 100 * window_scale, "Вы достигли " + string(_new_level) + " уровня!");
     
     // Список наград (рисуем в цикле)
     if (array_length(_unlocks) > 0) {
@@ -48,7 +48,7 @@ function draw_level_up_window() {
     draw_set_valign(fa_middle);
     
     var _btn_x = _win_x + _win_width / 2;
-    var _btn_y = _win_y + _win_height - 80;
+    var _btn_y = _win_y + _win_height - 80 * window_scale;
     draw_set_color(c_green);
     draw_rectangle(_btn_x - 150, _btn_y - 40, _btn_x + 150, _btn_y + 40, false);
     draw_set_color(c_white);

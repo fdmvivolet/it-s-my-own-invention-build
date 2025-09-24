@@ -17,12 +17,13 @@ if (current_ui_state == UIState.TUTORIAL_CLOUD) {
         
         if (point_in_rectangle(_touch_x, _touch_y, _tooltip_x1, _tooltip_y1, _tooltip_x2, _tooltip_y2)) {
             // Закрываем подсказку
-            current_ui_state = UIState.HIDDEN;
-            obj_game_manager.game_state = GameState.GAMEPLAY;
+			TUTORIAL_CLOSE_ANIMATION
+            //current_ui_state = UIState.HIDDEN;
+           // obj_game_manager.game_state = GameState.GAMEPLAY;
             
             // Сообщаем, что UI освободился
             //EventBusBroadcast("UIWindowClosed", {});
-			EventBusBroadcast("TooltipAcknowledged", {});
+			//EventBusBroadcast("TooltipAcknowledged", {});
         }
     }
     // Выходим, чтобы не обрабатывать другие окна под подсказкой
@@ -34,6 +35,7 @@ var _clicked_on_tab_bar = process_buttons_input(tab_bar_buttons);
 if (current_ui_state == UIState.HIDDEN) {
     exit;
 }
+
 // Мы реагируем на НАЖАТИЕ. Так как input_system_process() в game_manager
 // уже отключен, это нажатие не будет "простреливать" в мир.
 if (device_mouse_check_button_pressed(0, mb_left)) {
@@ -85,9 +87,14 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
 
 	    // Проверка кнопки "Закрыть"
 	    if (point_in_rectangle(_touch_x, _touch_y, _win_x + 300, _win_y + 850, _win_x + 500, _win_y + 950)) {
-			current_ui_state = UIState.HIDDEN;
-	        obj_game_manager.game_state = GameState.GAMEPLAY;
-			obj_sound_manager.play_sfx("ui_click_low");
+			WINDOW_CLOSE_ANIMATION/*
+			global.Animation.play(obj_ui_manager, "window_scale", 0.95, 0.1, ac_onetozerocubic, function() {
+					current_ui_state = UIState.HIDDEN;
+			        obj_game_manager.game_state = GameState.GAMEPLAY;
+					obj_sound_manager.play_sfx("ui_click_low");
+					obj_ui_manager.window_scale = 0.8;
+			});
+			*/
 	    }
 	}	
 	
@@ -123,9 +130,10 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         
         // Проверяем, попал ли клик в область кнопки "Закрыть"
         if (point_in_rectangle(_touch_x, _touch_y, _btn_close_x - 200, _btn_close_y - 50, _btn_close_x + 200, _btn_close_y + 50)) {
-            current_ui_state = UIState.HIDDEN;
-            obj_game_manager.game_state = GameState.GAMEPLAY;
-			obj_sound_manager.play_sfx("ui_click_low");
+            WINDOW_CLOSE_ANIMATION
+			//current_ui_state = UIState.HIDDEN;
+            //obj_game_manager.game_state = GameState.GAMEPLAY;
+			//obj_sound_manager.play_sfx("ui_click_low");
         }
     }
 	if (current_ui_state == UIState.QUESTS_WINDOW) {
@@ -171,10 +179,11 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         
         // Проверяем, попал ли клик в область кнопки "Закрыть"
         if (point_in_rectangle(_touch_x, _touch_y, _btn_close_x - 150, _btn_close_y - 50, _btn_close_x + 150, _btn_close_y + 50)) {
-            // Закрываем окно
-            current_ui_state = UIState.HIDDEN;
-            obj_game_manager.game_state = GameState.GAMEPLAY;
-			obj_sound_manager.play_sfx("ui_click_low");
+            WINDOW_CLOSE_ANIMATION
+			// Закрываем окно
+            //current_ui_state = UIState.HIDDEN;
+            //obj_game_manager.game_state = GameState.GAMEPLAY;
+			//obj_sound_manager.play_sfx("ui_click_low");
         }
 			
     }
@@ -195,9 +204,10 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         // Проверяем клик по кнопке
         if (point_in_rectangle(_touch_x, _touch_y, _btn_x - 150, _btn_y - 40, _btn_x + 150, _btn_y + 40)) {
             // Стандартная процедура закрытия
-            current_ui_state = UIState.HIDDEN;
-            obj_game_manager.game_state = GameState.GAMEPLAY;
-			obj_sound_manager.play_sfx("ui_click_low");
+			WINDOW_CLOSE_ANIMATION
+            //current_ui_state = UIState.HIDDEN;
+            //obj_game_manager.game_state = GameState.GAMEPLAY;
+			//obj_sound_manager.play_sfx("ui_click_low");
          
         }
     }	

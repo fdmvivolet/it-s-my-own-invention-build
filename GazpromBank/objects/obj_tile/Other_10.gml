@@ -1,10 +1,10 @@
 // --- obj_tile: User Event 0 (OnTap) ---
 /// @description Обработка тапа: отправляем запрос в UI-систему
 if (is_locked) {
-	var _target_scale = 1
+	var _target_scale = 360
 	var _duration = 1
 	
-	global.Animation.play(id, "image_angle", _target_scale, _duration, ac_elastic_0to0)//ac_elastic_0to0); //потом сделаю
+	//global.Animation.play(id, "image_angle", _target_scale, _duration, ac_elastic_0to0)//ac_elastic_0to0); //потом сделаю
     exit;
 }
 

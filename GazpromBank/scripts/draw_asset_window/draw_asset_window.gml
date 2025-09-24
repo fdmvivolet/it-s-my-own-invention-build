@@ -34,8 +34,8 @@ function draw_asset_window() {
     draw_set_alpha(1); // Возвращаем полную непрозрачность
     
     // Рисуем сам фон окна (пока что простой серый прямоугольник)
-    var _win_width = 800;
-    var _win_height = 1000;
+    var _win_width = 800 * window_scale;
+    var _win_height = 1000 * window_scale;
     var _win_x = (_gui_w - _win_width) / 2;
     var _win_y = (_gui_h - _win_height) / 2;
     draw_set_color(c_dkgray);
@@ -57,20 +57,20 @@ function draw_asset_window() {
     // --- 4. ОТРИСОВКА КНОПОК (ПОКА ЗАГЛУШКИ) ---
     // Кнопка "Улучшить"
     var _btn_upgrade_x = _win_x + _win_width / 2;
-    var _btn_upgrade_y = _win_y + 700;
+    var _btn_upgrade_y = _win_y + 700 * window_scale;
 	
 	var _can_afford = global.game_data.player_coins >= _upgrade_cost;
 	draw_set_color(_can_afford ? c_green : c_gray); // Тернарный оператор для выбора цвета
 
-	draw_rectangle(_btn_upgrade_x - 200, _btn_upgrade_y - 50, _btn_upgrade_x + 200, _btn_upgrade_y + 50, false);
+	draw_rectangle(_btn_upgrade_x - 200 * window_scale, _btn_upgrade_y - 50, _btn_upgrade_x + 200 * window_scale, _btn_upgrade_y + 50, false);
 	draw_set_color(c_white);
-	draw_text(_btn_upgrade_x, _btn_upgrade_y, "Улучшить (" + string(_upgrade_cost) + ")");
+	draw_text(_btn_upgrade_x, _btn_upgrade_y, "Реинвестировать (" + string(_upgrade_cost) + ")");
     
     // Кнопка "Закрыть"
     var _btn_close_x = _win_x + _win_width / 2;
-    var _btn_close_y = _win_y + 850;
+    var _btn_close_y = _win_y + 850 * window_scale;
     draw_set_color(c_red);
-    draw_rectangle(_btn_close_x - 200, _btn_close_y - 50, _btn_close_x + 200, _btn_close_y + 50, false);
+    draw_rectangle(_btn_close_x - 200 * window_scale, _btn_close_y - 50 * window_scale, _btn_close_x + 200 * window_scale, _btn_close_y + 50 * window_scale, false);
     draw_set_color(c_white);
     draw_text(_btn_close_x, _btn_close_y, "Закрыть");
     
@@ -85,11 +85,12 @@ function draw_shop_window() {
     // Фон окна
     var _gui_w = display_get_gui_width();
     var _gui_h = display_get_gui_height();
-    var _win_width = 800;
-    var _win_height = 1000;
+    var _win_width = 800 * window_scale;
+    var _win_height = 1000 * window_scale;
     var _win_x = (_gui_w - _win_width) / 2;
     var _win_y = (_gui_h - _win_height) / 2;
     
+	
     // Затемняющий фон
     draw_set_color(c_black);
     draw_set_alpha(0.7);
@@ -103,26 +104,18 @@ function draw_shop_window() {
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
     
+	
+	
+	draw_set_alpha(1.0 * window_alpha)
     // Заголовок
     draw_text(_win_x + _win_width / 2, _win_y + 100, "Магазин");
     
-    // --- 3. ОТРИСОВКА ТОВАРОВ (пока только один) ---
-    //var _item_y = _win_y + 300;
-    //draw_text(_win_x + 200, _item_y, "Накопительный счет");
-    
-    /*/ Кнопка "Купить"
-    var _cost = global.game_config.assets.savings_account.cost;
-    draw_set_color(c_green);
-    draw_rectangle(_win_x + 550, _item_y - 50, _win_x + 750, _item_y + 50, false);
-    draw_set_color(c_white);
-    draw_text(_win_x + 650, _item_y, "Купить (" + string(_cost) + ")");
-    */
 	
     // Кнопка "Закрыть" (временно внизу)
     draw_set_color(c_red);
-    draw_rectangle(_win_x + _win_width/2 - 100, _win_y + 850, _win_x + _win_width/2 + 100, _win_y + 950, false);
+    draw_rectangle(_win_x + _win_width/2 - 100 * window_scale, _win_y + 850 * window_scale, _win_x + _win_width/2 + 100 * window_scale, _win_y + 950 * window_scale, false);
     draw_set_color(c_white);
-    draw_text(_win_x + _win_width/2, _win_y + 900, "Закрыть");
+    draw_text(_win_x + _win_width/2 , _win_y + 900 * window_scale, "Закрыть");
 	
 	
     /////////////////////////////////////////////////////////////////////////
@@ -144,7 +137,7 @@ function draw_shop_window() {
         var _is_unlocked = (global.game_data.player_level >= _asset_config.required_level);
         
         // --- Рисуем кнопку "Купить" / "Заблокировано" ---
-        var _btn_x = _win_x + 650;
+        var _btn_x = _win_x + 650 * window_scale;
         var _btn_y = _current_y;
         
         if (_is_unlocked) {
@@ -170,6 +163,7 @@ function draw_shop_window() {
 	
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);	
+	draw_set_alpha(1.0);
 	
 	
 }

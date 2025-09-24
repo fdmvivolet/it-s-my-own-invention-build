@@ -51,6 +51,13 @@ for (var i = array_length(active_tweens) - 1; i >= 0; i--) {
     
     // --- 7. Проверяем, завершена ли анимация ---
     if (_progress >= 1.0) {
+		
+        // Если для этой анимации был назначен callback...
+        if (is_method(_tween.on_complete)) {
+            // ...вызываем его.
+            _tween.on_complete();
+        }		
+		
         // Анимация завершена, удаляем ее из списка.
         array_delete(active_tweens, i, 1);
     }
