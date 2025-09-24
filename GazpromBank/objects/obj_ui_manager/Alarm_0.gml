@@ -4,3 +4,4 @@
 tab_bar_buttons = [];
 
 create_tab_bar_buttons()
+create_settings_button()

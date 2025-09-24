@@ -31,6 +31,7 @@ if (current_ui_state == UIState.TUTORIAL_CLOUD) {
 }
 
 var _clicked_on_tab_bar = process_buttons_input(tab_bar_buttons);
+var _clicked_on_settings = process_buttons_input(settings_button);
 
 if (current_ui_state == UIState.HIDDEN) {
     exit;
