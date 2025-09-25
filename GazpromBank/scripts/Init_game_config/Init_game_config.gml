@@ -80,10 +80,10 @@ function init_game_config() {
 	    reach_level_weekly: {
 	        type: "weekly",
 	        event_name: "PlayerLeveledUp", // Будем отслеживать, когда игрок повышает уровень
-			description: "Достигнуть 5 уровня",
-	        target_value: 5,               // Цель - достигнуть 5-го уровня
-	        reward_coins: 0,
-	        reward_diamonds: 1
+			description: "Достигнуть 3 уровня",
+	        target_value: 2,               // Цель - достигнуть 5-го уровня (3 - 1 = 2)
+	        reward_coins: 50,
+	        reward_diamonds: 0
 	    }
     
 	};
@@ -109,7 +109,8 @@ function init_game_config() {
 	    2600,   // [5] -> 6
 	    4200,   // [6] -> 7
 	    6800,   // [7] -> 8
-	    10000   // [8] -> 9
+	    10000,   // [8] -> 9
+		15000
 	];	
 	
 	
@@ -134,5 +135,37 @@ function init_game_config() {
 	    }
 	};
 	
+	global.game_config.cta_windows = {
+			
+			savings_account: {
+				title: "Хорошее начало!",
+                body: "Ваш игровой 'Накопительный счет' работает так же, как наш Накопительный счет 'Ежедневный процент'.",
+                question: "Хотите узнать больше?",
+                confirm_text: "Да, интересно",
+                decline_text: "Не сейчас",
+				context_url: "https://www.gazprombank.ru/accounts/daily-percentage/"
+			},
+		
+		    deposit: {
+                title: "Отлично!",
+                body: "Ваш игровой 'Вклад' работает так же, как наш Накопительный счет 'Ежедневный процент'.",
+                question: "Хотите узнать больше?",
+                confirm_text: "Да, интересно",
+                decline_text: "Не сейчас",
+				context_url: "https://www.gazprombank.ru/personal/increase/deposits/detail/7582023/"
+            },
+            bond: {
+                title: "Шаг вперед!",
+                body: "Игровая 'Облигация' - это упрощенная версия реальных ОФЗ, которые можно купить через 'Газпромбанк Инвестиции'.",
+                question: "Рассказать подробнее?",
+                confirm_text: "Да, рассказать",
+                decline_text: "Не сейчас",
+				context_url: "https://www.gazprombank.ru/personal/page/bond/"
+            }
+	}
+	
     show_debug_message("CONFIG: Игровой баланс инициализирован.");
+	
+	
+
 }

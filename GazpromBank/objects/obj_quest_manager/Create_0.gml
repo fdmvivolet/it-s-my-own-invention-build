@@ -92,6 +92,8 @@ function claim_quest_reward(data) {
         // --- 3. ОБНОВЛЕНИЕ СТАТУСА ---
         // Отмечаем, что награда получена, чтобы ее нельзя было забрать дважды
         _quest_progress.claimed = true;
+		
+		//WINDOW_CLOSE_ANIMATION
         
     } else {
         show_debug_message("Quest Manager: ОШИБКА! Награда за это задание не может быть получена.");

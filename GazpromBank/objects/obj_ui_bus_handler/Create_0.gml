@@ -38,7 +38,9 @@ function on_request_asset_window(_event_data) {
 
 function on_request_quests_window(_event_data) {
     show_debug_message("UI Manager: Получен запрос на открытие Окна Заданий");
+	create_quests_button()
 	WINDOW_OPEN_ANIMATION
+	
     // Переключаем состояния, как и для других окон
     obj_ui_manager.current_ui_state = UIState.QUESTS_WINDOW;
     obj_ui_manager.current_context_id = noone; // Контекст не нужен
@@ -121,6 +123,51 @@ function on_player_leveled_up(data) {
     obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир
 }
 
+/// @description Обрабатывает запрос на показ CTA-окна. Вызывается по подписке EventBus.
+/// @param {struct} data Пакет данных, отправленный с событием. Ожидаем { asset_key: "..." }.
+function on_show_cta_requested(data) {
+    // ШАГ 1: ПРОВЕРКА БЕЗОПАСНОСТИ
+    // Это самая важная часть. Мы должны убедиться, что UI сейчас свободен.
+    // CTA имеет низкий приоритет. Если на экране уже есть магазин или окно улучшения,
+    // мы не должны показывать поверх еще одно окно, чтобы не раздражать игрока.
+	obj_ui_manager.current_ui_state = UIState.HIDDEN
+    if (obj_ui_manager.current_ui_state != UIState.HIDDEN) {
+        // Выводим сообщение в консоль, чтобы понимать, почему окно не появилось.
+        show_debug_message("UI занят (текущее состояние: " + string(obj_ui_manager.current_ui_state) + "). Запрос CTA проигнорирован.");
+        return; // Немедленно выходим из функции. Ничего не делаем.
+    }
+
+    // ШАГ 2: ПОЛУЧЕНИЕ ДАННЫХ
+    // Извлекаем ключ ассета (например, "deposit") из полученных данных.
+    var _asset_key = data.asset_key;
+
+    // На всякий случай проверяем, что для этого ключа есть тексты в конфиге.
+    if (!variable_struct_exists(global.game_config.cta_windows, _asset_key)) {
+        show_debug_message("ОШИБКА: Попытка показать CTA для '" + _asset_key + "', но для него нет записи в global.game_config.cta_windows.");
+        return;
+    }
+    
+    // Получаем всю структуру с текстами (title, body, question и т.д.) из нашего конфига.
+    var _cta_content = global.game_config.cta_windows[$ _asset_key];
+
+    // ШАГ 3: ПЕРЕДАЧА КОМАНД
+    // Мы убедились, что все безопасно и все данные на месте. Теперь отдаем приказы.
+	WINDOW_OPEN_ANIMATION
+    // 1. Передаем все тексты в o_ui_manager. Он будет использовать их для отрисовки.
+    obj_ui_manager.current_context_data = _cta_content;
+	//obj_ui_manager.current_context_url = _cta_content.context_url
+
+    // 2. Даем команду o_ui_manager'у переключить свое состояние на отрисовку нашего нового окна.
+    // (Пока что это вызовет ошибку, т.к. мы еще не добавили CTA_WINDOW в enum, сделаем это на след. шаге)
+    obj_ui_manager.current_ui_state = UIState.CTA_WINDOW;
+
+    // 3. Даем команду o_game_manager'у заблокировать игровой мир.
+    // Состояние SHOP_OPEN идеально подходит, так как оно уже блокирует клики по ассетам и ячейкам.
+    obj_game_manager.game_state = GameState.SHOP_OPEN;
+
+    // Отладочное сообщение
+    show_debug_message("Команды на показ CTA для '" + _asset_key + "' успешно переданы.");
+}
 
 EventBusSubscribe("RequestShopWindow", id, on_request_shop_window);
 EventBusSubscribe("RequestAssetWindow", id, on_request_asset_window);
@@ -129,6 +176,8 @@ EventBusSubscribe("RequestQuestsWindow", id, on_request_quests_window);
 EventBusSubscribe("PlayerLeveledUp", id, on_player_leveled_up);
 EventBusSubscribe("TutorialTriggered", id, on_tutorial_triggered);
 EventBusSubscribe("TooltipAcknowledged", id, on_tooltip_acknowledged);
+
+EventBusSubscribe("ShowCTARequested", id, on_show_cta_requested);
 
 show_debug_message("UI Bus Handler: Подписка на триггеры обучения...");
 

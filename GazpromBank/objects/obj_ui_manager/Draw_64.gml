@@ -9,11 +9,11 @@
 //draw_sprite_ext(spr_rounded_rectangle, -1, _width/2, _bar_render_height/2, 1, 1, 0, c_white, 1)
 //draw_rectangle_color(0, _height-256, _width, _height, c_black, c_black, c_black, c_black, false)
 
-draw_set_font(Font1)
+
 
 draw_hud_level_and_xp() 
 draw_tab_bar()
-
+//draw_background("big")
 
 // --- 2. ОТРИСОВКА ОКОН ---
 switch (current_ui_state) {
@@ -26,6 +26,7 @@ switch (current_ui_state) {
         break;
 		
 	case UIState.QUESTS_WINDOW:
+		draw_background("big")
 		draw_quests_window();
 		break;
 	case UIState.TUTORIAL_CLOUD:
@@ -34,7 +35,10 @@ switch (current_ui_state) {
 		break;
     case UIState.LEVEL_UP_WINDOW:
         draw_level_up_window();
-        break;		
+        break;	
+	case UIState.CTA_WINDOW:
+		draw_cta_window()
+		break;
 }
 
 /*

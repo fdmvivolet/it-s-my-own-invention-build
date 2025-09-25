@@ -295,8 +295,8 @@
   "maintainGms1Font":false,
   "name":"Font1",
   "parent":{
-    "name":"Fonts",
-    "path":"folders/Fonts.yy",
+    "name":"unused",
+    "path":"folders/unused.yy",
   },
   "pointRounding":0,
   "ranges":[

@@ -21,8 +21,10 @@ function add_earnings_and_check_level(amount) {
         var _current_level = global.game_data.player_level;
         var _thresholds = global.game_config.level_thresholds;
         
+		
         if (_current_level >= array_length(_thresholds) - 1) {
-            break; // Достигнут максимальный уровень
+            
+			break; // Достигнут максимальный уровень
         }
         
         var _xp_needed = _thresholds[_current_level];
@@ -66,7 +68,8 @@ function add_earnings_and_check_level(amount) {
         // Теперь мы передаем не только новый уровень, но и список наград
         var _event_data = {
             new_level: global.game_data.player_level,
-            unlocks: _all_unlock_messages 
+            unlocks: _all_unlock_messages,
+			event_name: "PlayerLeveledUp"
         };
         EventBusBroadcast("PlayerLeveledUp", _event_data);
     }

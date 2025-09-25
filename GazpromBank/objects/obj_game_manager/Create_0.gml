@@ -48,20 +48,21 @@ function on_purchase_asset_requested(_event_data) {
         _tile_id.is_empty = false;
         _tile_id.asset_instance_id = _new_asset;
 		
-		//var _tooltip_data = {
-		//    message: "Отлично! Это ваш первый игровой 'Вклад'. Он будет приносить вам пассивный доход. Не забывайте заходить в игру, чтобы собрать его!"
-		//}; //test (work fine)
-		    
-	    var _tutorial_data = {
+		
+		EventBusBroadcast("ShowCTARequested", { asset_key: _asset_key });
+		
+	    show_debug_message("Триггер CTA для ассета '" + string(_asset_key) + "' был успешно отправлен.");
+		/*var _tutorial_data = {
 	        tutorial_id: "FirstAssetPurchase" // <-- Это имя должно ТОЧНО совпадать с ключом в game_config
 	    };			
 			
 		trigger_one_time_event("TutorialTriggered", _tutorial_data);		
-        
+        */
         save_game();
     }
 }
 EventBusSubscribe("PurchaseAssetRequested", id, on_purchase_asset_requested);
+
 
 
 was_focused = true;

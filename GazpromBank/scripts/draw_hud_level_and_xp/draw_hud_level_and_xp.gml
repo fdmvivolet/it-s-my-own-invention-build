@@ -1,7 +1,7 @@
 /// @function draw_hud_level_and_xp()
 /// @description Рисует уровень игрока и полоску опыта в HUD.
 function draw_hud_level_and_xp() {
-    
+    draw_set_font(fnt_main_bold)
 	var _width = display_get_gui_width()
 	var _height = display_get_gui_height()
 	var _white = make_color_rgb(217, 217, 217)
@@ -19,7 +19,7 @@ function draw_hud_level_and_xp() {
 	//draw_roundrect_ext()
 	draw_set_alpha(1)	
 	
-	draw_counter() //счетчик монет
+	
 	
 	draw_set_alpha(0.5)	
 	//draw_roundrect_ext(0, -_bar_render_height, _width, _bar_render_height, 128, 128, true)
@@ -53,43 +53,30 @@ function draw_hud_level_and_xp() {
     // 1. Рисуем текст уровня
     draw_set_halign(fa_left);
     draw_set_valign(fa_middle);
+	
+	
+	_lvl_x = _width*0.305
+	
+	draw_set_color(c_black)
     draw_text(_lvl_x, _lvl_y, string(_level));
     
 	draw_text(_xp_x, _xp_y, string(_current_xp) + "|" + string(_xp_for_next_level))
+	draw_set_color(c_white)
 
 
-    for (var i = 0; i < array_length(settings_button); i++) {
-		var _button = settings_button[i];
+	var _button = settings_button[0];
 		
-		var _place_x  = _button.x_pos
-		var _place_y = _button.y_pos
+	var _place_x  = _button.x_pos
+	var _place_y = _button.y_pos
 		
-		var _current_scale = _button.current_scale;
-		var _w = 0//(_button.width / 2) * _current_scale;
-		var _h = 0//(_button.height / 2) * _current_scale;
+	var _current_scale = _button.current_scale;
+    
+	var sprite_name = "spr_ico_" + _button.id
+	var _sprite_index = asset_get_index(sprite_name)
 		
-		var _x1 = _place_x - _w//_button.x - _w;
-		var _y1 = _place_y - _h;
-		var _x2 = _place_x + _w;
-		var _y2 = _place_y + _h;
-
-		//draw_set_color(_button.color);
+	draw_sprite_ext(_sprite_index, -1, _button.x_pos, _button.y_pos, _button.current_scale*0.75, _button.current_scale*0.75, 0, c_white, 1)
 		
-		//draw_rectangle(_x1, _y1, _x2, _y2, false);
-        
-		 var sprite_name = "spr_ico_" + _button.id
-		 var _sprite_index = asset_get_index(sprite_name)
-		
-		draw_sprite_ext(_sprite_index, -1, _button.x_pos, _button.y_pos, _button.current_scale*0.75, _button.current_scale*0.75, 0, c_white, 1)
-		
-        // Подписываем кнопку для отладки
-        //draw_set_color(c_white);
-        //draw_set_halign(fa_center);
-        //draw_set_valign(fa_top);
-        //draw_text(_place_x, _place_y + _h, _button.label);
-		//draw_text(_place_x, _place_y, "AA")
-    }
-
+	draw_counter() //счетчик монет
     // Сброс настроек
     draw_set_color(c_white);
     draw_set_halign(fa_left);

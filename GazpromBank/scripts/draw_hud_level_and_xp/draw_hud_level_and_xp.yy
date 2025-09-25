@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"draw_hud_level_and_xp",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"draw",
+    "path":"folders/Scripts/draw.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

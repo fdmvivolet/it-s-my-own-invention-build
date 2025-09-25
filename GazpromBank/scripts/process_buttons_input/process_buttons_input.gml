@@ -14,8 +14,10 @@ function process_buttons_input(button_array) {
         var _button = button_array[i];
         
         // --- Логика состояний (упрощенная, без hover) ---
-        var _w_half = _button.width / 2;
-        var _h_half = _button.height / 2;
+		
+		
+        var _w_half = sprite_get_width(_button.sprite_index)/2 / 2;
+        var _h_half = sprite_get_height(_button.sprite_index)/2 / 2;
         var _mouse_over = point_in_rectangle(_mouse_x, _mouse_y, _button.x_pos - _w_half, _button.y_pos - _h_half, _button.x_pos + _w_half, _button.y_pos + _h_half);
         
         switch (_button.state) {
@@ -30,6 +32,9 @@ function process_buttons_input(button_array) {
                     // Если кнопку отпустили над ней же, вызываем действие
                     if (_mouse_over) {
                         if (is_method(_button.callback)) {
+							//current_ui_state = UIState.HIDDEN
+							//show_message_async(_button.callback)
+							//WINDOW_CLOSE_ANIMATION
                             obj_sound_manager.play_sfx("ui_click_high");
                             _button.callback(_button);
                             _click_handled = true;
@@ -45,6 +50,7 @@ function process_buttons_input(button_array) {
         var _target_scale = _button.scale_idle;
         if (_button.state == ButtonState.PRESSED) {
             _target_scale = _button.scale_pressed;
+			_click_handled = true;
         }
         
         var _animation_speed = 0.2;

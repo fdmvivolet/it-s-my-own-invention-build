@@ -27,6 +27,8 @@ function draw_npc_tooltip(message_to_draw) {
     draw_set_valign(fa_top);
     // `string_wrap` автоматически переносит длинный текст на новые строки
     var _text_to_draw = string_wrap(message_to_draw, (_tooltip_x2 - _tooltip_x1) * 0.95);
+
+	draw_set_font(fnt_main_normal)
     draw_text(_tooltip_x1 + 20, _tooltip_y1 + 20, _text_to_draw);
     
     // Сброс настроек
