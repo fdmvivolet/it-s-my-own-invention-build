@@ -7,6 +7,124 @@ function draw_level_up_window() {
     var _new_level = _context.new_level;
     var _unlocks = _context.unlocks;
     
+    var _gui_w = display_get_gui_width();
+    var _gui_h = display_get_gui_height();
+  
+    var _sprite_back_index = spr_small_background_lvl_up
+	var _win_width = sprite_get_width(_sprite_back_index)/2 * window_scale;
+	var _win_height = sprite_get_height(_sprite_back_index)/2 * window_scale;
+
+    
+	var _win_x = _gui_w/2
+	var _win_y = _gui_h/2
+    
+    // --- 3. Рисуем контент ---
+    draw_set_color(c_white);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle); 
+    draw_set_font(fnt_main_bold)
+	
+    var _title_x = _gui_w / 2;
+    var _title_y = _gui_h/2 - _win_height / 2 * 0.8;	
+	
+    // Заголовок
+    draw_text(_title_x, _title_y, "ПОЗДРАВЛЯЕМ!");
+	
+	var _body_y = _title_y + 0.2 * _win_height
+	
+	draw_set_font(fnt_main_normal_big)
+    draw_text(_win_x, _win_y - _win_height / 2 * 0.3, "Вы достигли " + string(_new_level) + " уровня!");
+    
+	//draw_set_font(fnt_main_normal)
+	
+    // Список наград (рисуем в цикле)
+    if (array_length(_unlocks) > 0) {
+        draw_set_halign(fa_left); // Для списка лучше выравнивание по левому краю
+        var _list_y_start =  _win_y //+ _win_height / 2 //* 0.2;
+        
+        for (var i = 0; i < array_length(_unlocks); i++) {
+            var _unlock_text = "• " + _unlocks[i];
+            draw_text(_win_x - _win_width/2 + 50, _list_y_start + (i * 50), _unlock_text);
+        }
+    }
+    
+    // --- 4. Рисуем кнопку "Продолжить" ---
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+    
+    var _btn_x = _win_x;
+    var _btn_y = _win_y + _win_height / 2 * 0.65
+    
+	var _ui = obj_ui_manager.lvl_up_buttons
+	var acc_button_y = _gui_h/2 + 0.3 * _win_height + 50
+	
+	draw_sprite_ext(spr_accept_cta, -1, _ui[0].x_pos, _ui[0].y_pos, 
+	_ui[0].current_scale * window_scale * 1/2,
+	_ui[0].current_scale * window_scale * 1/2, 0, c_white, 1)	
+	
+	draw_set_font(fnt_main_bold)
+	draw_set_color(c_black)
+    draw_text(_btn_x, _btn_y, "Продолжить");
+    draw_set_font(fnt_main_normal)
+	
+    // Сброс настроек
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+}
+
+function create_level_up_button() {
+    obj_ui_manager.lvl_up_buttons = []
+    // --- 1. Получаем данные из контекста, который сохранил bus_handler ---
+	
+	if obj_ui_manager.current_context_id == noone {
+		return
+	}
+	
+    var _context = obj_ui_manager.current_context_id;
+    var _new_level = _context.new_level;
+    var _unlocks = _context.unlocks;
+    
+    var _gui_w = display_get_gui_width();
+    var _gui_h = display_get_gui_height();
+  
+    var _sprite_back_index = spr_small_background_lvl_up
+	var _win_width = sprite_get_width(_sprite_back_index)/2 * obj_ui_manager.window_scale;
+	var _win_height = sprite_get_height(_sprite_back_index)/2 * obj_ui_manager.window_scale;
+
+    
+	var _win_x = _gui_w/2
+	var _win_y = _gui_h/2 
+
+    var _btn_x = _win_x;
+    var _btn_y = _win_y + _win_height / 2 * 0.65
+	
+	var _button_scale_idle = 1.0;
+	var _button_scale_hover = 1.0; 
+	var _button_scale_pressed = 0.9;	
+	
+	array_push(obj_ui_manager.lvl_up_buttons, {
+		x_pos: _win_x,
+		y_pos: _win_y + _win_height / 2 * 0.65, 
+		sprite_index: spr_accept_cta,
+		state: ButtonState.IDLE,
+		callback: function() {
+			WINDOW_CLOSE_ANIMATION
+		},
+		scale_idle: _button_scale_idle,
+		scale_hover: _button_scale_hover,
+		scale_pressed: _button_scale_pressed,
+		current_scale: _button_scale_idle 
+	});	
+}
+
+/*
+function draw_level_up_window() {
+    
+    // --- 1. Получаем данные из контекста, который сохранил bus_handler ---
+    var _context = current_context_id;
+    var _new_level = _context.new_level;
+    var _unlocks = _context.unlocks;
+    
     // --- 2. Рисуем фон и плашку окна (стандартная процедура) ---
     var _gui_w = display_get_gui_width();
     var _gui_h = display_get_gui_height();

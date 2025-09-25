@@ -27,10 +27,16 @@ function on_request_shop_window(_event_data) {
 
 function on_request_asset_window(_event_data) {
     show_debug_message("UI Manager: Получен запрос на открытие Окна Актива для " + string(_event_data.asset_id));
-	WINDOW_OPEN_ANIMATION
+	
+
     
-	obj_ui_manager.current_ui_state = UIState.ASSET_WINDOW;
+
     obj_ui_manager.current_context_id = _event_data.asset_id;
+	
+	create_asset_button()
+	WINDOW_OPEN_ANIMATION	
+	
+	obj_ui_manager.current_ui_state = UIState.ASSET_WINDOW;
     obj_game_manager.game_state = GameState.SHOP_OPEN;
 }
 
@@ -116,10 +122,12 @@ function on_player_leveled_up(data) {
         show_debug_message("UI Bus Handler: UI занят, показ окна Level Up отложен (пока проигнорирован).");
         return; 
     }
+	
     WINDOW_OPEN_ANIMATION
     // Отдаем команду UI Manager'у
     obj_ui_manager.current_context_id = data; // Сохраняем все данные (уровень и анлоки)
     obj_ui_manager.current_ui_state = UIState.LEVEL_UP_WINDOW;
+	create_level_up_button()
     obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир
 }
 
@@ -152,9 +160,11 @@ function on_show_cta_requested(data) {
 
     // ШАГ 3: ПЕРЕДАЧА КОМАНД
     // Мы убедились, что все безопасно и все данные на месте. Теперь отдаем приказы.
+	obj_ui_manager.current_context_data = _cta_content;
+	create_cta_buttons()
 	WINDOW_OPEN_ANIMATION
     // 1. Передаем все тексты в o_ui_manager. Он будет использовать их для отрисовки.
-    obj_ui_manager.current_context_data = _cta_content;
+    
 	//obj_ui_manager.current_context_url = _cta_content.context_url
 
     // 2. Даем команду o_ui_manager'у переключить свое состояние на отрисовку нашего нового окна.

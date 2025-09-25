@@ -35,7 +35,7 @@ function process_buttons_input(button_array) {
 							//current_ui_state = UIState.HIDDEN
 							//show_message_async(_button.callback)
 							//WINDOW_CLOSE_ANIMATION
-                            obj_sound_manager.play_sfx("ui_click_high");
+                            //obj_sound_manager.play_sfx("ui_click_high");
                             _button.callback(_button);
                             _click_handled = true;
                         }

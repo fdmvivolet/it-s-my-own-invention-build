@@ -45,17 +45,52 @@ switch(current_ui_state)
 		
 		var _clicked_on_quest = process_buttons_input(quests_window_buttons);
 		if !_clicked_on_quest {create_quests_button()}
+		exit
+		break;
+		
+	case UIState.SHOP_WINDOW:
+		
+		_clicked_on_quit = process_buttons_input(quit_button);
+		if !_clicked_on_quit {create_quit_button("big")}	
+		
+		var _clicked_on_shop = process_buttons_input(shop_buttons);
+		if !_clicked_on_shop {create_shop_buttons()}		
+	
+		break;
+		
+	case UIState.ASSET_WINDOW:
+	
+		_clicked_on_quit = process_buttons_input(quit_button);
+		if !_clicked_on_quit {create_quit_button("small")}	
+		
+		var _clicked_on_asset = process_buttons_input(asset_button)
+		if !_clicked_on_asset {create_asset_button()}
 		
 		break;
+		
+	case UIState.SETTINGS:
+		_clicked_on_quit = process_buttons_input(quit_button);
+		if !_clicked_on_quit {create_quit_button("small")}		
+		break;
+		
+	case UIState.LEVEL_UP_WINDOW:	
+		_clicked_on_quit = process_buttons_input(lvl_up_buttons);
+		if !_clicked_on_quit {create_level_up_button()}
+		break;
+		
+	case UIState.CTA_WINDOW:
+		_clicked_on_quit = process_buttons_input(cta_buttons);
+		if !_clicked_on_quit {create_cta_buttons()}	
+		break;
 }
-
+/*
 // Мы реагируем на НАЖАТИЕ. Так как input_system_process() в game_manager
 // уже отключен, это нажатие не будет "простреливать" в мир.
 if (device_mouse_check_button_pressed(0, mb_left)) {
     
     var _touch_x = device_mouse_x_to_gui(0);
     var _touch_y = device_mouse_y_to_gui(0);
-    
+    /*
 	// --- Логика для Окна МАГАЗИНА ---
 	if (current_ui_state == UIState.SHOP_WINDOW) {
 	        var _gui_w = display_get_gui_width();
@@ -107,7 +142,7 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
 					obj_sound_manager.play_sfx("ui_click_low");
 					obj_ui_manager.window_scale = 0.8;
 			});
-			*/
+			
 	    }
 	}	
 	
@@ -134,7 +169,7 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
             // Проверяем, что он все еще существует
             if (instance_exists(_asset_to_upgrade)) {
                 // Вызываем его собственную функцию улучшения
-                _asset_to_upgrade.perform_upgrade();
+                //_asset_to_upgrade.perform_upgrade();
             }
         }		
         
@@ -143,7 +178,7 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         
         // Проверяем, попал ли клик в область кнопки "Закрыть"
         if (point_in_rectangle(_touch_x, _touch_y, _btn_close_x - 200, _btn_close_y - 50, _btn_close_x + 200, _btn_close_y + 50)) {
-            WINDOW_CLOSE_ANIMATION
+            //WINDOW_CLOSE_ANIMATION
 			//current_ui_state = UIState.HIDDEN;
             //obj_game_manager.game_state = GameState.GAMEPLAY;
 			//obj_sound_manager.play_sfx("ui_click_low");
@@ -200,7 +235,7 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
         }
 			
     }
-
+	
 	// --- НОВЫЙ БЛОК: Логика для Окна Повышения Уровня ---
     if (current_ui_state == UIState.LEVEL_UP_WINDOW) {
         var _gui_w = display_get_gui_width();
@@ -224,43 +259,6 @@ if (device_mouse_check_button_pressed(0, mb_left)) {
          
         }
     }	
-	if (current_ui_state == UIState.CTA_WINDOW) {
-		
-		//if btn_cta_decline == noone {exit}
-		
-		//show_debug_message(string(_touch_x) + " " + string(_touch_y) + " | " + string(btn_cta_decline.x)
-		//+ " " + btn_cta_decline.y)
-		
-		var _gui_w = display_get_gui_width();
-        var _gui_h = display_get_gui_height();
-        var _win_width = 800 * window_scale;
-        var _win_height = 600 * window_scale;
-        var _win_x = (_gui_w - _win_width) / 2;
-        var _win_y = (_gui_h - _win_height) / 2;
-        
-        // Координаты кнопки "Продолжить"
-        var _btn_x = _win_x + _win_width / 2;
-        var _btn_y = _win_y + _win_height - 80;
-		
-		var _btn_confirm_y = _win_y + 350 * window_scale;
-		
-	    var _btn_w = 400 * window_scale; // Ширина кнопок
-	    var _btn_h = 80 * window_scale;  // Высота кнопок		
-		
-        var _btn_decline_y = _btn_confirm_y + _btn_h + (30 * window_scale);
-		
-        // Проверяем клик по кнопке
-        if (point_in_rectangle(_touch_x, _touch_y, _btn_x - _btn_w/2, _btn_decline_y, _btn_x + _btn_w/2, _btn_decline_y + _btn_h)) {     
-            //current_ui_state = UIState.HIDDEN;
-            //obj_game_manager.game_state = GameState.GAMEPLAY;
-			//obj_sound_manager.play_sfx("ui_click_low");			
-			//show_message("123")
-			var _url = current_context_data.context_url
-			show_message_async("Переход по ссылке\n" + string(_url))
-			//url_open("https://www.gazprombank.ru/accounts/daily-percentage/")
-			WINDOW_CLOSE_ANIMATION 
-        }
-		
-	}
+
 }
 

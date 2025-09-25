@@ -1,6 +1,6 @@
 // --- obj_ui_manager: Create Event (ИСПРАВЛЕННАЯ ВЕРСЯ) ---
 /// @description Инициализация UI менеджера, состояний и подписок на события.
-#macro WINDOW_CLOSE_ANIMATION	global.Animation.play(obj_ui_manager, "window_scale", 0.95, 0.1, ac_onetozerocubic, function() { obj_ui_manager.current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_sound_manager.play_sfx("ui_click_low"); obj_ui_manager.window_scale = 0.8; })
+#macro WINDOW_CLOSE_ANIMATION	global.Animation.play(obj_ui_manager, "window_scale", 0.95, 0.1, ac_onetozerocubic, function() { obj_ui_manager.current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_ui_manager.window_scale = 0.8; })
 #macro TUTORIAL_CLOSE_ANIMATION	global.Animation.play(obj_ui_manager, "window_scale", 1, 0.2, ac_close_tutorial, function() { obj_ui_manager.current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_sound_manager.play_sfx("ui_click_low"); obj_ui_manager.window_scale = 1; EventBusBroadcast("TooltipAcknowledged", {}); })
 // --- 1. Переменные состояния UI ---
 current_ui_state = UIState.HIDDEN;
@@ -8,10 +8,16 @@ current_context_id = noone;
 
 current_context_url = noone
 
+current_context_data = noone
+
 tab_bar_buttons = [];
 settings_button = [];
 quests_window_buttons = [];
 quit_button = [];
+cta_buttons = [];
+shop_buttons = [];
+asset_button = [];
+lvl_up_buttons = [];
 
 tooltip_message_to_show = "";
 

@@ -18,27 +18,48 @@ draw_tab_bar()
 // --- 2. ОТРИСОВКА ОКОН ---
 switch (current_ui_state) {
     case UIState.SHOP_WINDOW:
+		draw_background("big")
+		var _cancel = quit_button[0];
+		var _current_scale = _cancel.current_scale * window_scale		
+		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos, _cancel.y_pos, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)		
 		draw_shop_window();
         break;
 
     case UIState.ASSET_WINDOW:
+		draw_background("")
+		var _cancel = quit_button[0];
+		var _current_scale = _cancel.current_scale * window_scale		
+		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos, _cancel.y_pos, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)			
         draw_asset_window(); 
         break;
 		
 	case UIState.QUESTS_WINDOW:
 		draw_background("big")
+		
+		var _cancel = quit_button[0];
+		var _current_scale = _cancel.current_scale * window_scale		
+		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos, _cancel.y_pos, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)
 		draw_quests_window();
 		break;
 	case UIState.TUTORIAL_CLOUD:
 		//show_message("asdasdas")
 		draw_npc_tooltip(tooltip_message_to_show);
 		break;
-    case UIState.LEVEL_UP_WINDOW:
+    
+	case UIState.LEVEL_UP_WINDOW:
+		draw_background("")
         draw_level_up_window();
         break;	
+	
 	case UIState.CTA_WINDOW:
+		draw_background("small")
 		draw_cta_window()
 		break;
+		
+	case UIState.SETTINGS:
+		draw_background("small")
+		break;
+		
 }
 
 /*

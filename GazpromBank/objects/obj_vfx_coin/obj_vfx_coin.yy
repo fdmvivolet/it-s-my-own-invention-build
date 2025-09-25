@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_tile_temp_locked",
-    "path":"sprites/spr_tile_temp_locked/spr_tile_temp_locked.yy",
+    "name":"spr_ico_coin",
+    "path":"sprites/spr_ico_coin/spr_ico_coin.yy",
   },
   "spriteMaskId":null,
   "visible":true,

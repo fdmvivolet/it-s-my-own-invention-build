@@ -6,6 +6,147 @@ function draw_asset_window() {
     // current_context_id хранит ID актива, для которого открыто окно.
     var _asset_id = obj_ui_manager.current_context_id;
     
+	//show_message(_asset_id)
+    // Проверка на случай, если актив был удален, пока окно открыто
+    if (!instance_exists(_asset_id)) {
+        // Просто закрываем окно
+        obj_ui_manager.current_ui_state = UIState.HIDDEN; //НИХУА НЕ РАБОТЕТ :(
+        obj_game_manager.game_state = GameState.GAMEPLAY;
+        return;
+    }
+    
+    // Считываем все нужные данные с актива
+    var _asset_name = _asset_id.name//object_get_name(_asset_id.object_index); // Покажет "obj_savings_account"
+    var _asset_level = _asset_id.level;
+    var _asset_income = _asset_id.base_income;
+    var _time_left = ceil(_asset_id.timer_current);
+	var _upgrade_cost = _asset_id.upgrade_cost;
+	
+    // --- 2. ОТРИСОВКА ФОНА И ОКНА ---
+    // Получаем размеры UI-холста
+    var _gui_w = display_get_gui_width();
+    var _gui_h = display_get_gui_height();
+    
+    var _sprite_back_index = spr_small_background
+	var _win_width = sprite_get_width(_sprite_back_index)/2 * window_scale;
+	var _win_height = sprite_get_height(_sprite_back_index)/2 * window_scale;
+	
+	
+	var _win_x = _gui_w/2
+	var _win_y = _gui_h/2
+    
+    // --- 3. ОТРИСОВКА ТЕКСТА ---
+    draw_set_color(c_white);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+    
+    // Название (убираем "obj_" для красоты)
+	draw_set_font(fnt_main_bold)
+    draw_text(_win_x, _win_y - _win_height / 2 * 0.8, string_upper(_asset_name));
+    draw_set_font(fnt_main_normal_big)
+	
+	//var coin_per_hour = 60 / _asset_config.timer_seconds * _asset_config.base_income * 60
+    // Информация
+	_time_left = _time_left == -1 ? " готов!" : _time_left
+	
+    draw_text(_win_x, _win_y - _win_height / 2 * 0.3, "Уровень: " + string(_asset_level));
+    draw_text(_win_x, _win_y - _win_height / 2 * 0.1,  "Доход за один сбор: " + string(_asset_income));
+    draw_text(_win_x, _win_y + _win_height / 2 * 0.1,  "Доход в час: " + string(_asset_income));
+	
+	var _sec = _time_left == " готов!" ? "" : " сек."
+	
+	draw_text(_win_x, _win_y + _win_height / 2 * 0.3, "Готов через: " + string(_time_left) + _sec);
+    
+
+	
+	var _can_afford = global.game_data.player_coins >= _upgrade_cost;
+	
+	var _sprite_ind = _can_afford ? spr_accept_cta : spr_no_accept_cta // Тернарный оператор для выбора цвета
+
+	var _scale = 1
+	if asset_button != [] {
+	_sprite_ind = asset_button[0].sprite_index
+	_win_x = asset_button[0].x_pos
+	_win_y = asset_button[0].y_pos
+	_scale = asset_button[0].current_scale
+	}
+
+	draw_sprite_ext(_sprite_ind, -1, _win_x, _win_y, 1/2*_scale, 1/2*_scale, 0, c_white, 1)
+	draw_set_font(fnt_main_bold)
+	draw_set_color(c_black);
+	draw_text(_win_x, _win_y, "Реинвестировать (" + string(_upgrade_cost) + ")");
+    draw_set_font(fnt_main_normal_big)
+    
+    // Сбрасываем выравнивание
+    draw_set_halign(fa_left);
+}
+
+function create_asset_button() {
+	
+	obj_ui_manager.asset_button = []
+	
+    var _gui_w = display_get_gui_width();
+    var _gui_h = display_get_gui_height();
+    
+    var _sprite_back_index = spr_small_background
+	var _win_width = sprite_get_width(_sprite_back_index)/2 * obj_ui_manager.window_scale;
+	var _win_height = sprite_get_height(_sprite_back_index)/2 * obj_ui_manager.window_scale;
+	
+	
+	var _win_x = _gui_w/2
+	var _win_y = _gui_h/2
+	
+	if !instance_exists(obj_ui_manager.current_context_id) {exit}
+	
+	var _upgrade_cost = obj_ui_manager.current_context_id.upgrade_cost;
+	var _can_afford = global.game_data.player_coins >= _upgrade_cost;
+	var _sprite_ind = _can_afford ? spr_accept_cta : spr_no_accept_cta // Тернарный оператор для выбора цвета
+
+	draw_sprite_ext(_sprite_ind, -1, _win_x, _win_y + _win_height / 2 * 0.65, 1/2, 1/2, 0, c_white, 1)
+	
+	var _button_scale_idle = 1.0;
+	var _button_scale_hover = 1.0; // Сделаем чуть заметнее
+	var _button_scale_pressed = 0.95;		
+	
+    // Получаем ID актива, для которого открыто окно
+    var _asset_to_upgrade = obj_ui_manager.current_context_id;	
+	
+	array_push(obj_ui_manager.asset_button, {
+	    x_pos: _win_x, 
+	    y_pos: _win_y + _win_height / 2 * 0.65, 
+		sprite_index: _sprite_ind,
+	    state: ButtonState.IDLE,
+	    callback: method(
+				    // 1. Контекст: создаем новую структуру с одним полем 'quest_id'.
+				    // Это "заморозит" текущее значение _quest_id.
+				    { asset_to_upgrade: _asset_to_upgrade }, 
+        
+				    // 2. Функция: эта функция будет выполнена в контексте структуры выше.
+				    // 'self' будет указывать на эту структуру.
+				    function() {
+						    if (instance_exists(asset_to_upgrade)) {
+						        asset_to_upgrade.perform_upgrade();
+						    }	
+				    }
+				),
+		scale_idle: _button_scale_idle,
+		scale_hover: _button_scale_hover,
+		scale_pressed: _button_scale_pressed,
+		current_scale: _button_scale_idle // Начинаем с обычного размера
+	});	
+
+    
+}
+
+/*
+/// @function draw_asset_window()
+/// @description Отрисовывает модальное окно с информацией об активе.
+function draw_asset_window() {
+    
+    // --- 1. ПОЛУЧАЕМ ДАННЫЕ ---
+    // current_context_id хранит ID актива, для которого открыто окно.
+    var _asset_id = obj_ui_manager.current_context_id;
+    
 	
     // Проверка на случай, если актив был удален, пока окно открыто
     if (!instance_exists(_asset_id)) {
@@ -26,12 +167,6 @@ function draw_asset_window() {
     // Получаем размеры UI-холста
     var _gui_w = display_get_gui_width();
     var _gui_h = display_get_gui_height();
-    
-    // Рисуем полупрозрачный черный фон, чтобы затемнить игру
-    draw_set_color(c_black);
-    draw_set_alpha(0.7);
-    draw_rectangle(0, 0, _gui_w, _gui_h, false);
-    draw_set_alpha(1); // Возвращаем полную непрозрачность
     
     // Рисуем сам фон окна (пока что простой серый прямоугольник)
     var _win_width = 800 * window_scale;
@@ -79,6 +214,9 @@ function draw_asset_window() {
 }
 
 
+
+
+/*
 function draw_shop_window() {
 
     
@@ -89,15 +227,6 @@ function draw_shop_window() {
     var _win_height = 1000 * window_scale;
     var _win_x = (_gui_w - _win_width) / 2;
     var _win_y = (_gui_h - _win_height) / 2;
-    
-	
-    // Затемняющий фон
-    draw_set_color(c_black);
-    draw_set_alpha(0.7);
-    draw_rectangle(0, 0, _gui_w, _gui_h, false);
-    draw_set_alpha(1);	
-	draw_set_color(c_dkgray);
-	draw_rectangle(_win_x, _win_y, _win_x + _win_width, _win_y + _win_height, false);
 	
     // --- 2. ОТРИСОВКА КОНТЕНТА ---
     draw_set_color(c_white);
@@ -168,82 +297,3 @@ function draw_shop_window() {
 	
 }
 
-function draw_background(size){
-	
-	var _gui_w = display_get_gui_width();
-	var _gui_h = display_get_gui_height();
-	
-	draw_set_alpha(0.75)
-	draw_set_color(c_black)
-	draw_rectangle(0, 0, _gui_w, _gui_h, 0)
-	draw_set_color(c_white)
-	draw_set_alpha(1)
-	
-	var _sprite_index = noone
-	
-	if size == "big" { _sprite_index = spr_big_background }
-
-	var _sprite_height = sprite_get_height(_sprite_index)/2
-	var _sprite_width = sprite_get_width(_sprite_index)/2
-
-	draw_sprite_ext(_sprite_index, -1, _gui_w/2, _gui_h/2, 1/2*window_scale, 1/2*window_scale, 0, c_white, 1)
-		
-	var _cancel = quit_button[0];
-	var _current_scale = _cancel.current_scale * window_scale
-	
-	var _w = sprite_get_width(_cancel.sprite_index) / 2
-	var _h = sprite_get_height(_cancel.sprite_index) / 2
-	
-	//draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos, _cancel.y_pos, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)
-	
-	draw_set_color(c_black)
-	//draw_rectangle(_cancel.x_pos - _w/2, _cancel.y_pos - _h/2, _cancel.x_pos + _w/2, _cancel.y_pos + _h/2, false)
-	
-	var _cancel_index = spr_ico_cancel
-	
-	var _cancel_x = _gui_w / 2 + (_sprite_width / 2 * 0.8 * window_scale)
-	var _cancel_y = _gui_h / 2 - (_sprite_height / 2 * 0.85 * window_scale)
-	
-	draw_sprite_ext(_cancel_index, -1, _cancel_x, _cancel_y, 1/2*window_scale, 1/2*window_scale, 0, c_white, 1)
-	
-}
-
-function create_quit_button(size){
-
-	var _gui_w = display_get_gui_width();
-	var _gui_h = display_get_gui_height();
-	
-	var _sprite_index = noone
-	
-	if size == "big" { _sprite_index = spr_big_background }
-
-	var _sprite_height = sprite_get_height(_sprite_index)/2
-	var _sprite_width = sprite_get_width(_sprite_index)/2
-			
-	var _cancel_index = spr_ico_cancel
-	
-	var _cancel_x = _gui_w / 2 + (_sprite_width / 2 * 0.8 * window_scale)
-	var _cancel_y = _gui_h / 2 - (_sprite_height / 2 * 0.85 * window_scale)
-	
-	var _button_scale_idle = 1.0;
-	var _button_scale_hover = 1.0; // Сделаем чуть заметнее
-	var _button_scale_pressed = 1;
-	
-	//draw_sprite_ext(_cancel_index, -1, _cancel_x, _cancel_y, 1/2*window_scale, 1/2*window_scale, 0, c_white, 1)
-
-	array_push(obj_ui_manager.quit_button, {
-		x_pos: _cancel_x, 
-		y_pos: _cancel_y, 
-		sprite_index: _cancel_index,
-		state: ButtonState.IDLE,
-		callback: function() {
-			//show_debug_message()
-			WINDOW_CLOSE_ANIMATION
-		},
-		scale_idle: _button_scale_idle,
-		scale_hover: _button_scale_hover,
-		scale_pressed: _button_scale_pressed,
-		current_scale: _button_scale_idle // Начинаем с обычного размера
-	});
-		
-}

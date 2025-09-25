@@ -138,7 +138,7 @@ function init_game_config() {
 	global.game_config.cta_windows = {
 			
 			savings_account: {
-				title: "Хорошее начало!",
+				title: string_upper("Хорошее начало!"),
                 body: "Ваш игровой 'Накопительный счет' работает так же, как наш Накопительный счет 'Ежедневный процент'.",
                 question: "Хотите узнать больше?",
                 confirm_text: "Да, интересно",

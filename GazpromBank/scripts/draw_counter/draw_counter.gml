@@ -1,7 +1,7 @@
 //--------------------------
 //функции
 function draw_counter(){
-	draw_set_font(fnt_main_bold)
+	draw_set_font(fnt_main_normal)
 
 	
 	var _width = display_get_gui_width()
@@ -22,6 +22,8 @@ function draw_counter(){
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
 	draw_set_color(c_black)
+	
+	draw_sprite_ext(spr_ico_coin, -1, _lvl_x, _lvl_y, 1/2, 1/2, 0, c_white, 1)
 	draw_text(_lvl_x, _lvl_y, string(_coins));
 	draw_set_color(c_white)
 	// Сбрасываем выравнивание к дефолтному, чтобы не влиять на другую отрисовку

@@ -138,13 +138,6 @@ function create_quests_button(){
 		var _button_scale_hover = 1.0; // Сделаем чуть заметнее
 		var _button_scale_pressed = 0.95;		
 		
-		function create_quest_callback(_quest_id) {
-		    return function() {
-		        EventBusBroadcast("ClaimQuestRewardRequested", { quest_id: _quest_id });
-		    }
-		}
-		
-		
 		array_push(obj_ui_manager.quests_window_buttons, {
 	        x_pos: _button_x, 
 	        y_pos: _button_y, 
@@ -161,7 +154,7 @@ function create_quests_button(){
 				        // 'self' будет указывать на эту структуру.
 				        function() {
 				            EventBusBroadcast("ClaimQuestRewardRequested", { quest_id: self.quest_id });
-							create_quests_button()
+							//create_quests_button()
 				        }
 				    ),
 			scale_idle: _button_scale_idle,

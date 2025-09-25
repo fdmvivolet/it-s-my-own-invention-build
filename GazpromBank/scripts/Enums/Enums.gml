@@ -17,7 +17,8 @@ enum UIState {
 	QUESTS_WINDOW,
 	TUTORIAL_CLOUD,
 	LEVEL_UP_WINDOW,
-	CTA_WINDOW 
+	CTA_WINDOW,
+	SETTINGS
 }
 
 enum ButtonState {
