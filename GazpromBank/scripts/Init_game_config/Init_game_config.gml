@@ -19,7 +19,7 @@ function init_game_config() {
             name: "Накопительный счет",
             cost: 100,              // Стоимость покупки Ур. 1
             base_income: 50,        // Базовый доход Ур. 1
-            timer_seconds: 5,	    // Время созревания Ур. 1: 5 минут (60*5)
+            timer_seconds: 1,	    // Время созревания Ур. 1: 5 минут (60*5)
 			required_level: 1
         },		
         
@@ -92,10 +92,14 @@ function init_game_config() {
 	global.game_config.tutorials = {
     
 	    FirstAssetPurchase: [ // Ключ - это ID нашего сценария
-	        "Отлично! Вы разместили свой первый 'Вклад'. Теперь он работает на вас!",
-	        "Кстати, не забывайте заходить в игру, чтобы собрать доход, когда он созреет."
+	        "Привет! Добро пожаловать в \"Уголок благополучия\". Я буду тебе помогать развивать свои финансы!",
+	        "Для начала давай попробуем поставить наш игровой \"Накопительный счет\"."
 	        // В будущем сюда можно будет добавить объекты: { type: "cta_window", ... }
-	    ]
+	    ],
+		FirstAssetUpgrade: [
+			"Ты быстро развиваешься! Теперь давай я помогу тебе увеличить доход с \"Накопительного счета\"!",
+			"Для этого тебе собрать доход с сейфа, затем нажать по нему еще раз и \"реинвестировать\"."
+		]
 	};	
 	
 	global.game_config.level_thresholds = [
@@ -116,23 +120,38 @@ function init_game_config() {
 	
 	global.game_config.rewards_per_level = {
 	    // Ключи теперь - осмысленные строки.
-    
 	    level_2: { 
 	        unlock_message: "Разблокирована новая ячейка!",
 	        unlocks: [{ type: "tile", count: 1 }]
 	    },
-	    level_3: { 
+	    level_3: {
+	        unlock_message: "Разблокирована еще одна ячейка!",
+	        unlocks: [{ type: "tile", count: 1 }]
+	    },		
+	    level_4: { 
 	        unlock_message: "Разблокирован новый актив: Вклад!",
 	        unlocks: [{ type: "asset", id: "savings_account" }]
 	    },
-	    level_4: {
+	    level_5: {
 	        unlock_message: "Разблокирована еще одна ячейка!",
 	        unlocks: [{ type: "tile", count: 1 }]
 	    },
+	    level_6: {
+	        unlock_message: "Разблокирована еще одна ячейка!",
+	        unlocks: [{ type: "tile", count: 1 }]
+	    },	
 	    level_7: {
 	        unlock_message: "Разблокирован новый актив: Облигация!",
 	        unlocks: [{ type: "asset", id: "bond" }]
-	    }
+	    },
+	    level_8: {
+	        unlock_message: "Разблокирована еще одна ячейка!",
+	        unlocks: [{ type: "tile", count: 1 }]
+	    },
+	    level_9: {
+	        unlock_message: "Разблокирована еще одна ячейка!",
+	        unlocks: [{ type: "tile", count: 1 }]
+	    },			
 	};
 	
 	global.game_config.cta_windows = {
@@ -141,7 +160,7 @@ function init_game_config() {
 				title: string_upper("Хорошее начало!"),
                 body: "Ваш игровой 'Накопительный счет' работает так же, как наш Накопительный счет 'Ежедневный процент'.",
                 question: "Хотите узнать больше?",
-                confirm_text: "Да, интересно",
+                confirm_text: "Узнать больше",
                 decline_text: "Не сейчас",
 				context_url: "https://www.gazprombank.ru/accounts/daily-percentage/"
 			},
@@ -150,7 +169,7 @@ function init_game_config() {
                 title: "Отлично!",
                 body: "Ваш игровой 'Вклад' работает так же, как наш Накопительный счет 'Ежедневный процент'.",
                 question: "Хотите узнать больше?",
-                confirm_text: "Да, интересно",
+                confirm_text: "Узнать больше",
                 decline_text: "Не сейчас",
 				context_url: "https://www.gazprombank.ru/personal/increase/deposits/detail/7582023/"
             },
@@ -158,7 +177,7 @@ function init_game_config() {
                 title: "Шаг вперед!",
                 body: "Игровая 'Облигация' - это упрощенная версия реальных ОФЗ, которые можно купить через 'Газпромбанк Инвестиции'.",
                 question: "Рассказать подробнее?",
-                confirm_text: "Да, рассказать",
+                confirm_text: "Узнать больше",
                 decline_text: "Не сейчас",
 				context_url: "https://www.gazprombank.ru/personal/page/bond/"
             }

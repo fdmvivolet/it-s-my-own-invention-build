@@ -20,24 +20,25 @@ if (is_ready_to_collect) {
 	var _target_world_x = camera_get_view_x(_camera) + _target_gui_x;
 	// Конвертируем Y
 	var _target_world_y = camera_get_view_y(_camera) + _target_gui_y;			
-	
+	var _duration_first = random_range(0.5, 1);
     for (var i = 0; i < _vfx_count; i++) {
         
         // Создаем экземпляр "снаряда" в текущей позиции актива
-        var _vfx_coin = instance_create_layer(x, y, "Instances", obj_vfx_coin);
+        var _vfx_coin = instance_create_depth(x, y, depth, obj_vfx_coin);
 		
         _vfx_coin.target_x = _target_world_x;
         _vfx_coin.target_y = _target_world_y;
        
         // --- ЗАПУСК АНИМАЦИИ ---
         // Анимируем X и Y до цели за случайное время, чтобы монетки летели не синхронно
-        var _duration = random_range(0.5, 1); // от 0.4 до 0.7 секунд
+        var _duration = _duration_first + 0.1*i//random_range(0.2, 1.1); // от 0.4 до 0.7 секунд
         
         global.Animation.play(_vfx_coin, "x", _vfx_coin.target_x, _duration, ac_ease_out);
         global.Animation.play(_vfx_coin, "y", _vfx_coin.target_y, _duration, ac_ease_out);
         
         // Дополнительная "сочность": монетки могут исчезать по пути
-        global.Animation.play(_vfx_coin, "image_alpha", 0, _duration + 0.1, ac_ease_out);
+        global.Animation.play(_vfx_coin, "image_alpha", 0, _duration + 0.1, ac_ease_out, 
+		function () {obj_sound_manager.play_sfx("coin_hud")});
     }	
 	alarm[1] = -1; 
 	ease_out_click()

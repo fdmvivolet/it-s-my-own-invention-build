@@ -14,8 +14,8 @@
   "name":"obj_parent_asset",
   "overriddenProperties":[],
   "parent":{
-    "name":"Assets",
-    "path":"folders/Objects/Assets.yy",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "parentObjectId":{
     "name":"obj_parent_clickable",

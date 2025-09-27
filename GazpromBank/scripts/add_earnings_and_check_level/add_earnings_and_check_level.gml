@@ -5,14 +5,23 @@
 function add_earnings_and_check_level(amount) {
     
     if (amount <= 0) return;
-    
+	
     show_debug_message("Game Manager: Начислено " + string(amount) + " монет.");
     
     // --- 1. Начисляем доход ---
     global.game_data.player_coins += amount;
     global.game_data.total_earnings += amount;
     
-    
+	if global.game_data.player_coins == 150{
+	    var _tutorial_data = {
+			tutorial_id: "FirstAssetUpgrade" // <-- Это имя должно ТОЧНО совпадать с ключом в game_config
+		};		
+		
+		trigger_one_time_event("FirstAssetUpgrade", _tutorial_data);
+	}
+			
+
+	
     // --- 2. Проверяем повышение уровня (в цикле) ---
     var _leveled_up = false;
     var _original_level = global.game_data.player_level; // Запоминаем стартовый уровень

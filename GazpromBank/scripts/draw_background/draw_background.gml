@@ -73,6 +73,7 @@ function create_quit_button(size){
 		state: ButtonState.IDLE,
 		callback: function() {
 			//show_debug_message()
+			
 			WINDOW_CLOSE_ANIMATION
 		},
 		scale_idle: _button_scale_idle,

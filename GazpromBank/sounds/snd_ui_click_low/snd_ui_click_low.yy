@@ -2,14 +2,14 @@
   "$GMSound":"",
   "%Name":"snd_ui_click_low",
   "audioGroupId":{
-    "name":"audiogroup_default",
-    "path":"audiogroups/audiogroup_default",
+    "name":"sfx_group",
+    "path":"audiogroups/sfx_group",
   },
   "bitDepth":1,
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.081542,
+  "duration":0.0,
   "name":"snd_ui_click_low",
   "parent":{
     "name":"Sounds",
@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_ui_click_low.ogg",
   "type":0,
-  "volume":1.0,
+  "volume":0.55,
 }

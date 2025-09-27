@@ -16,7 +16,10 @@ function trigger_one_time_event(event_name, data = {}) {
     show_debug_message("One-Time Event: Впервые срабатывает событие '" + event_name + "'");
     
     // Отправляем событие в EventBus
-    EventBusBroadcast(event_name, data);
+	
+
+    
+	EventBusBroadcast(event_name, data);
     
     // 3. Запоминаем, что это событие произошло, чтобы оно не сработало снова
     array_push(global.game_data.triggered_one_time_events, event_name);

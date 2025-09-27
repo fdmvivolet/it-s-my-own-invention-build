@@ -9,8 +9,8 @@
   "name":"obj_vfx_coin",
   "overriddenProperties":[],
   "parent":{
-    "name":"Assets",
-    "path":"folders/Objects/Assets.yy",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

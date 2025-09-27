@@ -9,7 +9,7 @@ level = 1;
 // --- Переменные баланса, общие для всех активов ---
 // Эти значения по умолчанию будут перезаписаны в дочерних объектах
 // данными из global.game_config.
-base_cost = 0;
+base_cost = 150;
 base_income = 0;
 base_timer_seconds = 60;
 
@@ -28,7 +28,7 @@ function calculate_next_upgrade() {
     // Простая формула для примера:
     // Стоимость = базо_стоимость * уровень * 1.5
     // Доход = базо_доход * (уровень + 1)
-    upgrade_cost = floor(base_cost * level * 1.5);
+    upgrade_cost = floor(base_cost * level);
     next_level_income = base_income * (level + 1);
 }
 

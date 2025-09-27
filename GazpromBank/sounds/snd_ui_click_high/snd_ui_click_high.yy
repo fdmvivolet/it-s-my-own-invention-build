@@ -2,8 +2,8 @@
   "$GMSound":"",
   "%Name":"snd_ui_click_high",
   "audioGroupId":{
-    "name":"audiogroup_default",
-    "path":"audiogroups/audiogroup_default",
+    "name":"sfx_group",
+    "path":"audiogroups/sfx_group",
   },
   "bitDepth":1,
   "bitRate":128,
@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_ui_click_high.ogg",
   "type":0,
-  "volume":1.0,
+  "volume":0.77,
 }

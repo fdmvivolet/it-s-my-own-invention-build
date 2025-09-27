@@ -3,37 +3,38 @@
 
 // Если никакое окно не открыто, нам нечего делать.
 if (current_ui_state == UIState.TUTORIAL_CLOUD) {
+	
     if (device_mouse_check_button_pressed(0, mb_left)) {
-        var _touch_x = device_mouse_x_to_gui(0);
-        var _touch_y = device_mouse_y_to_gui(0);
-        var radius = 80
-        // Рассчитываем координаты облака (они должны совпадать с draw_npc_tooltip)
-        var _npc_x = 150;
-        var _npc_y = display_get_gui_height() - 350;
-	    var _tooltip_x1 = _npc_x + 100;
-	    var _tooltip_y1 = _npc_y - (radius + 20); // Верхний край
-	    var _tooltip_x2 = display_get_gui_width() - 100;
-	    var _tooltip_y2 = _npc_y + radius; // Нижний край, теперь облако центрировано по Y
-        
-        if (point_in_rectangle(_touch_x, _touch_y, _tooltip_x1, _tooltip_y1, _tooltip_x2, _tooltip_y2)) {
-            // Закрываем подсказку
+
+		
+		var _text_string = string_join_ext("", tooltip_array_to_show, 0, tooltip_array_size)
+		
+		
+		
+		if _text_string != tooltip_message_to_show //&& is_skippable
+		{
+			if is_skippable{
+			array_delete(obj_animation_manager.active_tweens, 0, array_length(obj_animation_manager.active_tweens)) //какая-то проблемная хуйня!!!
+			tooltip_array_size = array_length(tooltip_array_to_show)
+			}
+		}else
+		{
+			
+			tooltip_array_size = 0
+			tooltip_array_to_show = []
 			TUTORIAL_CLOSE_ANIMATION
-            //current_ui_state = UIState.HIDDEN;
-           // obj_game_manager.game_state = GameState.GAMEPLAY;
-            
-            // Сообщаем, что UI освободился
-            //EventBusBroadcast("UIWindowClosed", {});
-			//EventBusBroadcast("TooltipAcknowledged", {});
-        }
+		}
+
     }
-    // Выходим, чтобы не обрабатывать другие окна под подсказкой
     exit;
 }
 
-var _clicked_on_tab_bar = process_buttons_input(tab_bar_buttons);
-var _clicked_on_settings = process_buttons_input(settings_button);
+//var _clicked_on_tab_bar = process_buttons_input(tab_bar_buttons);
+//var _clicked_on_settings = process_buttons_input(settings_button);
 
 if (current_ui_state == UIState.HIDDEN) {
+	var _clicked_on_tab_bar = process_buttons_input(tab_bar_buttons);
+	var _clicked_on_settings = process_buttons_input(settings_button);	
     exit;
 }
 
@@ -70,7 +71,11 @@ switch(current_ui_state)
 		
 	case UIState.SETTINGS:
 		_clicked_on_quit = process_buttons_input(quit_button);
-		if !_clicked_on_quit {create_quit_button("small")}		
+		if !_clicked_on_quit {create_quit_button("small")}	
+		
+		_clicked_on_settings = process_buttons_input(settings_buttons)
+		if !_clicked_on_settings {create_settings_buttons()}
+		
 		break;
 		
 	case UIState.LEVEL_UP_WINDOW:	
@@ -79,10 +84,28 @@ switch(current_ui_state)
 		break;
 		
 	case UIState.CTA_WINDOW:
-		_clicked_on_quit = process_buttons_input(cta_buttons);
-		if !_clicked_on_quit {create_cta_buttons()}	
+	
+		var _clicked_on_cta = process_buttons_input(cta_buttons);
+		if !_clicked_on_cta {create_cta_buttons()}	
 		break;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 // Мы реагируем на НАЖАТИЕ. Так как input_system_process() в game_manager
 // уже отключен, это нажатие не будет "простреливать" в мир.

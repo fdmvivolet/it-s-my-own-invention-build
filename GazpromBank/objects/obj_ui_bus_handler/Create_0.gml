@@ -1,6 +1,6 @@
 /// @description Слушает UI-запросы и отложенно передает их UI-менеджеру.
-#macro WINDOW_OPEN_ANIMATION obj_ui_manager.window_scale = 0.8; global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window) //0.2 sec
-#macro TUTORIAL_OPEN_ANIMATION obj_ui_manager.window_scale = 0.8; global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.3, ac_open_window) //0.2 sec
+#macro WINDOW_OPEN_ANIMATION obj_ui_manager.window_scale = 0.8; global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window) obj_sound_manager.play_sfx("ui_click_high") //0.2 sec
+#macro TUTORIAL_OPEN_ANIMATION obj_ui_manager.window_scale = 0.8;   global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.4, ac_open_window, function () {obj_ui_manager.is_skippable = true}) //0.2 sec
 // --- 2. ОБЪЯВЛЕНИЕ функций-обработчиков событий (Callbacks) ---
 // Мы должны сначала объявить функции, и только потом их использовать.
 
@@ -16,6 +16,7 @@ function on_request_shop_window(_event_data) {
 	
 	//obj_ui_manager.current_ui_state = UIState.HIDDEN;
 	//obj_game_manager.game_state = GameState.GAMEPLAY;	
+	//TUTORIAL_OPEN_ANIMATION
 	WINDOW_OPEN_ANIMATION
     //global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window);
     //global.Animation.play(obj_ui_manager, "window_alpha", 1.0, 1, ac_ease_out);	
@@ -53,6 +54,17 @@ function on_request_quests_window(_event_data) {
     obj_game_manager.game_state = GameState.SHOP_OPEN; // Или SHOP_OPEN, как вам удобнее
 }
 
+function on_request_settings_window(_event_data) {
+    show_debug_message("UI Manager: Получен запрос на открытие Окна Настроек");
+	create_settings_buttons()
+	WINDOW_OPEN_ANIMATION
+	
+    // Переключаем состояния, как и для других окон
+    obj_ui_manager.current_ui_state = UIState.SETTINGS;
+    obj_ui_manager.current_context_id = noone; // Контекст не нужен
+    obj_game_manager.game_state = GameState.SHOP_OPEN; // Или SHOP_OPEN, как вам удобнее
+}
+
 // МЕТОД №1: Главный метод, который ПОКАЗЫВАЕТ СЛЕДУЮЩИЙ ШАГ
 function show_next_tutorial_step() {
 	
@@ -68,13 +80,69 @@ function show_next_tutorial_step() {
         
 		
 		
+		array_delete(obj_ui_manager.tooltip_array_to_show, 0, array_length(obj_ui_manager.tooltip_array_to_show))
         // Отдаем команду UI Manager'у
+		//obj_ui_manager.window_scale = 1
+		//global.Animation.play(obj_ui_manager, "window_scale", 1, 0.2, ac_close_tutorial)
+		//WINDOW_OPEN_ANIMATION
+
+			
         obj_ui_manager.current_ui_state = UIState.TUTORIAL_CLOUD;
-        obj_ui_manager.tooltip_message_to_show = _next_step_message;
-        obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир
+        
+		//show_debug_message(_next_step_message)
+		draw_set_font(fnt_main_normal)
+		_next_step_message = string_wrap(_next_step_message, sprite_get_width(spr_text_background)/4 + 300)
+		
+		//show_debug_message(_next_step_message)	
+		
+		
+		//show_debug_message(string_width("Привет! Добро пожаловать в \"Уголок благополучия\". Я буду"))
+		//draw_set_font(fnt_main_normal)
+		//show_debug_message(sprite_get_width(spr_text_background)/4)
+		
+		obj_ui_manager.tooltip_message_to_show = _next_step_message;
+		
+		for (var i = 1; i <= string_length(_next_step_message); i++) {
+		    // Получаем символ на текущей позиции `i`
+		    var _char = string_char_at(_next_step_message, i);
+    
+		    // Добавляем этот символ в конец нашего массива
+		    array_push(obj_ui_manager.tooltip_array_to_show, _char);
+		}		
+		
+		//obj_ui_manager.tooltip_array_to_show = string_split(_next_step_message, " ");
+		obj_ui_manager.tooltip_array_size = 0
+		
+		var _array_size = array_length(obj_ui_manager.tooltip_array_to_show)
+		var _total_duration = _array_size/30
+		
+		
+	    global.Animation.play(
+	        obj_ui_manager.id,                         // Цель: этот самый экземпляр контроллера
+	        "tooltip_array_size",       // Анимируемая переменная
+	        _array_size,                // Конечное значение
+	        _total_duration,            // Длительность
+	        ac_linear,                  // Кривая анимации
+	        function() {
+	            show_debug_message("Dialogue Controller: Анимация текста завершена.");
+	        },
+	    );		
+		
+		//obj_ui_manager.tooltip_array_size = _next_step_message;
+        
+		obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир
+		
+		
+		//obj_ui_manager.window_scale = 1
+		//global.Animation.play(obj_ui_manager, "window_scale", 1, 0.2, ac_close_tutorial)		
+		
     }else
 	{
-		
+		obj_ui_manager.current_ui_state = UIState.HIDDEN; 
+		obj_game_manager.game_state = GameState.GAMEPLAY; 
+		obj_ui_manager.window_alpha = 0
+		obj_ui_manager.window_scale = 0.8
+		obj_ui_manager.is_skippable = false
 		//show_debug_message(obj_ui_manager.current_ui_state)
 	}
 }
@@ -89,16 +157,24 @@ function on_tutorial_triggered(data) {
     if (variable_struct_exists(global.game_config.tutorials, _tutorial_id)) {
         
         // Копируем ВЕСЬ массив реплик из конфига в нашу внутреннюю очередь
-
+		if audio_group_is_loaded(sfx_group) {obj_sound_manager.play_sfx("purchase");} 
+		TUTORIAL_OPEN_ANIMATION
+		//obj_ui_manager.window_scale = 1
+		//global.Animation.play(obj_ui_manager, "window_alpha", 1.0, 2, ac_open_window)
         //bus_id.tutorial_queue = array_clone(global.game_config.tutorials[$ _tutorial_id]);
 		var _source_array = global.game_config.tutorials[$ _tutorial_id];
 		//bus_id.tutorial_queue = _source_array
 		array_copy(bus_id.tutorial_queue, 0, _source_array, 0, array_length(_source_array));
 		show_debug_message("UI Bus Handler: Загружен сценарий '" + _tutorial_id + "' с " + string(array_length(bus_id.tutorial_queue)) + " шагами.");
         
-		TUTORIAL_OPEN_ANIMATION
+
+		//global.Animation.play(obj_ui_manager, "window_alpha", 1, 1, ac_linear, function() {obj_ui_bus_handler.show_next_tutorial_step()})
+		//obj_ui_manager.window_scale = 1
+		//obj_ui_manager.window_alpha = 0				
+		//global.Animation.play(obj_ui_manager, "window_alpha", 1, 1, ac_linear)			
         // Сразу же пытаемся показать ПЕРВЫЙ шаг
         bus_id.show_next_tutorial_step();
+		
     }
 }
 
@@ -182,9 +258,11 @@ function on_show_cta_requested(data) {
 EventBusSubscribe("RequestShopWindow", id, on_request_shop_window);
 EventBusSubscribe("RequestAssetWindow", id, on_request_asset_window);
 EventBusSubscribe("RequestQuestsWindow", id, on_request_quests_window);
+EventBusSubscribe("RequestSettingsWindow", id, on_request_settings_window);
 
 EventBusSubscribe("PlayerLeveledUp", id, on_player_leveled_up);
 EventBusSubscribe("TutorialTriggered", id, on_tutorial_triggered);
+EventBusSubscribe("FirstAssetUpgrade", id, on_tutorial_triggered);
 EventBusSubscribe("TooltipAcknowledged", id, on_tooltip_acknowledged);
 
 EventBusSubscribe("ShowCTARequested", id, on_show_cta_requested);

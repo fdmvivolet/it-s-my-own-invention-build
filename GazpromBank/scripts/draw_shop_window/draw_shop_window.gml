@@ -11,9 +11,9 @@ function draw_shop_window() {
     draw_set_color(c_white);
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
-    
+    draw_set_font(fnt_main_bold)
     draw_text(_gui_w/2, _gui_h/2 - (_win_height / 2 * 0.85), "МАГАЗИН")
-
+	draw_set_font(fnt_main_normal)
     var _asset_ids = variable_struct_get_names(global.game_config.assets);
 	
 	var _win_x = _gui_w/2
@@ -37,7 +37,7 @@ function draw_shop_window() {
         //draw_text(_win_x, _card_y, _asset_config.name);
         
         // --- Проверяем, доступен ли товар по уровню ---
-        var _is_unlocked = (global.game_data.player_level >= _asset_config.required_level);
+        var _is_unlocked = (global.game_data.player_level >= _asset_config.required_level) && global.game_data.player_coins >= _asset_config.cost;
         
 		var empty_icon = spr_ico_empty_shop
 		

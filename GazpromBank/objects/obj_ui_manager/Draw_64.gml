@@ -29,7 +29,7 @@ switch (current_ui_state) {
 		draw_background("")
 		var _cancel = quit_button[0];
 		var _current_scale = _cancel.current_scale * window_scale		
-		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos, _cancel.y_pos, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)			
+		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos - 10, _cancel.y_pos + 10, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)			
         draw_asset_window(); 
         break;
 		
@@ -42,8 +42,21 @@ switch (current_ui_state) {
 		draw_quests_window();
 		break;
 	case UIState.TUTORIAL_CLOUD:
+	
+		var _gui_w = display_get_gui_width();
+		var _gui_h = display_get_gui_height();
+	
+		draw_set_alpha(0.75)
+		draw_set_color(c_black)
+		draw_rectangle(0, 0, _gui_w, _gui_h, 0)
+		draw_set_color(c_white)
+		draw_set_alpha(1)	
+	
 		//show_message("asdasdas")
-		draw_npc_tooltip(tooltip_message_to_show);
+		//draw_npc_tooltip(tooltip_message_to_show);
+		//draw_set_alpha(window_alpha)
+		draw_npc_tooltip()
+		//draw_set_alpha(1)
 		break;
     
 	case UIState.LEVEL_UP_WINDOW:
@@ -58,6 +71,11 @@ switch (current_ui_state) {
 		
 	case UIState.SETTINGS:
 		draw_background("small")
+		var _cancel = quit_button[0];
+		var _current_scale = _cancel.current_scale * window_scale		
+		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos - 10, _cancel.y_pos + 10, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)
+		draw_settings_window()
+		
 		break;
 		
 }

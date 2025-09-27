@@ -22,8 +22,10 @@ function draw_cta_window() {
     draw_set_valign(fa_top); // Выравниваем по верху для удобства позиционирования
     
     // Заголовок
+	draw_set_font(fnt_main_bold)
     draw_text(_title_x, _title_y, _context.title);
-    
+    draw_set_font(fnt_main_normal)
+	
     var _body_text_width = _win_width - 170; // Ширина текста = ширина окна минус отступы
     
 	var _body_y = _title_y + 0.2 * _win_height
@@ -51,11 +53,15 @@ function draw_cta_window() {
 	//draw_sprite_ext(spr_no_accept_cta, -1, _gui_w/2, no_acc_button_y, window_scale * 1/2, window_scale * 1/2, 0, c_white, 1)
 	draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
+	
+	draw_set_font(fnt_main_bold)
 	draw_text(_gui_w/2, _ui[0].y_pos, _context.decline_text)
 
 	//draw_sprite_ext(spr_accept_cta, -1, _gui_w/2, acc_button_y, window_scale * 1/2, window_scale * 1/2, 0, c_white, 1)
 	draw_text(_gui_w/2, _ui[1].y_pos, _context.confirm_text)
-    draw_set_color(c_black)
+    draw_set_font(fnt_main_normal)
+	
+	draw_set_color(c_black)
 	// --- 5. Сброс настроек отрисовки ---
     // Важно, чтобы не повлиять на другие элементы UI, которые рисуются после
     draw_set_halign(fa_left);
@@ -86,7 +92,7 @@ function create_cta_buttons() {
 
 	var _button_scale_idle = 1.0;
 	var _button_scale_hover = 1.0; 
-	var _button_scale_pressed = 1;
+	var _button_scale_pressed = 0.9;
 
 	array_push(obj_ui_manager.cta_buttons, {
 		x_pos: _gui_w/2, 
@@ -111,7 +117,7 @@ function create_cta_buttons() {
 		state: ButtonState.IDLE,
 		callback: function() {
 			var _url = obj_ui_manager.current_context_data.context_url
-			show_message_async("Переход по ссылке\n" + string(_url))
+			show_message("Переход по ссылке\n" + string(_url))
 			WINDOW_CLOSE_ANIMATION
 		},
 		scale_idle: _button_scale_idle,

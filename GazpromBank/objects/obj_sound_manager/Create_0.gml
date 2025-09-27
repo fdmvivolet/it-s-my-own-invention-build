@@ -11,7 +11,8 @@ sfx = {
     ui_click_high:      snd_ui_click_high,        // Обычный клик по кнопке
     purchase:			snd_purchase,        // Звук покупки/улучшения
     //level_up:			snd_level_up         // Джингл повышения уровня
-	ui_click_low:      snd_ui_click_low,
+	ui_click_low:		snd_ui_click_low,
+	coin_hud:			snd_coin_hud
 };
 
 
@@ -44,5 +45,25 @@ function play_sfx(sfx_struct_key) {
     audio_play_sound(_sound_to_play, 10, false);
 	
 }
+
+audio_group_load(sfx_group)
+audio_group_load(audiogroup_default)
+ 
+function play_background(){
+	show_debug_message("try to play music")
+	if audio_group_is_loaded(audiogroup_default) && !is_loaded{
+		show_debug_message("start to play music")
+		audio_play_sound(snd_ambient, 1, true)
+		is_loaded = true
+	}	
+}
+
+alarm[0] = 60
+is_loaded = false
+
+//if audio_group_get_gain(audiogroup_default) != 0 {audio_group_set_gain(audiogroup_default, 0, 250)} else {audio_group_set_gain(audiogroup_default, 1, 250)}
+//if audio_group_get_gain(sfx_group) != 0 {audio_group_set_gain(sfx_group, 0, 250)} else {audio_group_set_gain(sfx_group, 1, 250)}
+//
+//audio_group_set_gain(sfx, 0, 250)
 
 show_debug_message("Sound Manager: Инициализация завершена.");

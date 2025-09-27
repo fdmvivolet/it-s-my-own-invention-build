@@ -1,7 +1,7 @@
 // --- obj_ui_manager: Create Event (ИСПРАВЛЕННАЯ ВЕРСЯ) ---
 /// @description Инициализация UI менеджера, состояний и подписок на события.
-#macro WINDOW_CLOSE_ANIMATION	global.Animation.play(obj_ui_manager, "window_scale", 0.95, 0.1, ac_onetozerocubic, function() { obj_ui_manager.current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_ui_manager.window_scale = 0.8; })
-#macro TUTORIAL_CLOSE_ANIMATION	global.Animation.play(obj_ui_manager, "window_scale", 1, 0.2, ac_close_tutorial, function() { obj_ui_manager.current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_sound_manager.play_sfx("ui_click_low"); obj_ui_manager.window_scale = 1; EventBusBroadcast("TooltipAcknowledged", {}); })
+#macro WINDOW_CLOSE_ANIMATION	obj_sound_manager.play_sfx("ui_click_low"); global.Animation.play(obj_ui_manager, "window_scale", 0.95, 0.1, ac_onetozerocubic, function() { obj_ui_manager.current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_ui_manager.window_scale = 0.8;  })
+#macro TUTORIAL_CLOSE_ANIMATION	global.Animation.play(obj_ui_manager, "window_scale", 1, 0.2, ac_close_tutorial, function() { obj_ui_manager.current_ui_state = UIState.HIDDEN; obj_game_manager.game_state = GameState.GAMEPLAY; obj_ui_manager.window_scale = 1; EventBusBroadcast("TooltipAcknowledged", {}); obj_sound_manager.play_background()})
 // --- 1. Переменные состояния UI ---
 current_ui_state = UIState.HIDDEN;
 current_context_id = noone;
@@ -20,12 +20,25 @@ asset_button = [];
 lvl_up_buttons = [];
 
 tooltip_message_to_show = "";
+tooltip_array_to_show = []
+tooltip_array_size = 0
 
 window_scale = 0.8; // Текущий масштаб окна (от 0.0 до 1.0)
-window_alpha = 1; // Текущая прозрачность окна (от 0.0 до 1.0)
+window_alpha = 0.5; // Текущая прозрачность окна (от 0.0 до 1.0)
+
+is_skippable = false
 
 hud_coins_target_x = 0;
 hud_coins_target_y = 0;
+
+dialogue_data_storage = {
+    text_to_draw: "",
+    fading_word: "",
+    fading_word_alpha: 0,
+    is_animating: false
+};
+
+
 
 
 
@@ -58,11 +71,11 @@ function create_tab_bar_buttons(){
 	];*/
 
 	var _button_data = [
-	    { id: "shop",         sprite_index: spr_ico_shop,		label: "Магазин",     color: c_aqua,		callback: function() { show_debug_message("Нажата кнопка: " + self.label); } },
-		{ id: "achievements", sprite_index: spr_ico_achievements,		label: "Достижения",  color: c_fuchsia,	callback: function() { show_debug_message("Нажата кнопка: " + self.label); } },
-		{ id: "home",         sprite_index: spr_ico_home,		label: "Дом",       color: c_green,		callback: function() { WINDOW_CLOSE_ANIMATION } },
-		{ id: "quests",       sprite_index: spr_ico_quests,		label: "Задания",     color: c_yellow,	callback: function() { EventBusBroadcast("RequestQuestsWindow", {});	   } }, 
-		{ id: "help",         sprite_index: spr_ico_help,		label: "Подсказка",   color: c_silver,	callback: function() { show_debug_message("Нажата кнопка: " + self.label); } }
+	    { id: "shop",         sprite_index: spr_ico_shop,		label: "Магазин",     color: c_aqua,		callback: function() { show_debug_message("Нажата кнопка: " + self.label); obj_sound_manager.play_sfx("ui_click_high")} },
+		{ id: "achievements", sprite_index: spr_ico_achievements,		label: "Достижения",  color: c_fuchsia,	callback: function() { show_debug_message("Нажата кнопка: " + self.label); obj_sound_manager.play_sfx("ui_click_high")} },
+		{ id: "home",         sprite_index: spr_ico_home,		label: "Дом",       color: c_green,		callback: function() { WINDOW_CLOSE_ANIMATION} },
+		{ id: "quests",       sprite_index: spr_ico_quests,		label: "Задания",     color: c_yellow,	callback: function() { EventBusBroadcast("RequestQuestsWindow", {})} }, 
+		{ id: "help",         sprite_index: spr_ico_help,		label: "Подсказка",   color: c_silver,	callback: function() { show_debug_message("Нажата кнопка: " + self.label); obj_sound_manager.play_sfx("ui_click_high")} }
 	];
 
 	var _button_count = array_length(_button_data);
@@ -120,7 +133,8 @@ function create_settings_button(){
 	var _button_scale_hover = 1.0; // Сделаем чуть заметнее
 	var _button_scale_pressed = 0.9;	
 	
-	var _callback = function () {show_debug_message(show_debug_message("Нажата кнопка: Настройки"))} 
+	//..var _callback = function () {show_debug_message(show_debug_message("Нажата кнопка: Настройки")) ; obj_sound_manager.play_sfx("ui_click_high")} 
+	var _callback = function () {EventBusBroadcast("RequestSettingsWindow", {})}//show_debug_message(show_debug_message("Нажата кнопка: Настройки")) ; obj_sound_manager.play_sfx("ui_click_high")} 
 	
 	array_push(settings_button, {
 	    id: "settings",
@@ -139,5 +153,6 @@ function create_settings_button(){
 	});	
 	
 }
+
 
 alarm[0] = 1
