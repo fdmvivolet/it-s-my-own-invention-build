@@ -1,7 +1,7 @@
 //--------------------------
 //функции
 function draw_counter(){
-	draw_set_font(fnt_main_normal)
+	draw_set_font(fnt_main_bold)
 
 	
 	var _width = display_get_gui_width()

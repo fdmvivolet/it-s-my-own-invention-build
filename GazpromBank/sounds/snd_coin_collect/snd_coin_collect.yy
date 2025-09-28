@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_coin_collect.ogg",
   "type":0,
-  "volume":0.75,
+  "volume":0.64,
 }

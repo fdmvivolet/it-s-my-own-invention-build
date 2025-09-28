@@ -62,6 +62,8 @@ depth = -y
 image_xscale = 0.1;
 image_yscale = 0.1;
 
+
+
 // 2. Запускаем анимацию с помощью нашего нового движка!
 // Мы просим анимировать свойства "image_xscale" и "image_yscale" этого экземпляра (id)
 // до конечного значения 1.0 за 0.4 секунды, используя нашу кривую ac_ease_out.
@@ -99,3 +101,14 @@ idle_anim_magnitude = 0.02;
 
 after_spawn_anim = false
 alarm[0] = game_get_speed(gamespeed_fps)
+
+/*
+bloom_layer = layer_create(depth - 1, "bloom_layer")
+_blur = fx_create("_effect_gaussian_blur")
+fx_set_parameter(_blur, "g_numDownsamples", 2);
+fx_set_parameter(_blur, "g_numPasses", 2);
+fx_set_single_layer(_blur, true)
+layer_set_fx(bloom_layer, _blur)
+*/
+
+//layer_

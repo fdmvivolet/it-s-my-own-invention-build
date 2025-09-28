@@ -18,6 +18,9 @@ function on_request_shop_window(_event_data) {
 	//obj_game_manager.game_state = GameState.GAMEPLAY;	
 	//TUTORIAL_OPEN_ANIMATION
 	WINDOW_OPEN_ANIMATION
+	with(obj_ui_manager){
+		alarm[1] = 1	
+	}
     //global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window);
     //global.Animation.play(obj_ui_manager, "window_alpha", 1.0, 1, ac_ease_out);	
 	
@@ -76,7 +79,20 @@ function show_next_tutorial_step() {
         var _next_step_message = bus_id.tutorial_queue[0];
         array_delete(bus_id.tutorial_queue, 0, 1); // И сразу удаляем ее из очереди
         
-        show_debug_message("UI Bus Handler: Показ шага обучения: '" + _next_step_message + "'");
+		
+		if is_struct(_next_step_message){
+			
+			obj_ui_manager.current_ui_state = UIState.HIDDEN; 
+			obj_game_manager.game_state = GameState.GAMEPLAY; 
+			obj_ui_manager.window_alpha = 0
+			obj_ui_manager.window_scale = 0.8
+			obj_ui_manager.is_skippable = false			
+			on_show_cta_requested({ asset_key: _next_step_message.cta})
+			//EventBusBroadcast("ShowCTARequested", { asset_key: });
+			exit
+		}
+		
+		show_debug_message("UI Bus Handler: Показ шага обучения: '" + _next_step_message + "'");
         
 		
 		

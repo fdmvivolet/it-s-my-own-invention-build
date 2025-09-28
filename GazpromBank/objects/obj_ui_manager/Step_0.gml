@@ -13,8 +13,20 @@ if (current_ui_state == UIState.TUTORIAL_CLOUD) {
 		
 		if _text_string != tooltip_message_to_show //&& is_skippable
 		{
-			if is_skippable{
-			array_delete(obj_animation_manager.active_tweens, 0, array_length(obj_animation_manager.active_tweens)) //какая-то проблемная хуйня!!!
+			//if is_skippable{
+			//var i = array_length(active_tweens) - 1; i >= 0; i--
+			for (var i = array_length(obj_animation_manager.active_tweens) - 1; i >= 0  ; i--)
+			{
+				if obj_animation_manager.active_tweens[i].property == "tooltip_array_size"//id 
+				{
+					array_delete(obj_animation_manager.active_tweens, i, 1)
+				}
+			//}
+			
+			//array_delete(obj_animation_manager.active_tweens, 0, array_length(obj_animation_manager.active_tweens)) //какая-то проблемная хуйня!!!
+			
+			
+			
 			tooltip_array_size = array_length(tooltip_array_to_show)
 			}
 		}else

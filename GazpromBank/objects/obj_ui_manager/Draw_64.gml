@@ -13,6 +13,7 @@
 
 draw_hud_level_and_xp() 
 draw_tab_bar()
+
 //draw_background("big")
 
 // --- 2. ОТРИСОВКА ОКОН ---

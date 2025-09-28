@@ -45,13 +45,21 @@ function on_purchase_asset_requested(_event_data) {
 			event_name: "AssetPurchased" 
 		}); //подписчики узнают, что была совершена покупка ассета		
 		
+		obj_ui_manager.current_ui_state = UIState.HIDDEN; 
+		obj_game_manager.game_state = GameState.GAMEPLAY; 
+		obj_ui_manager.window_scale = 0.8; 
+		//WINDOW_CLOSE_ANIMATION
+		
         _tile_id.is_empty = false;
         _tile_id.asset_instance_id = _new_asset;
+
+		_tile_id.sprite_index = _new_asset.sprite_index
+		_tile_id.image_alpha = 0
+
 		
+		//EventBusBroadcast("ShowCTARequested", { asset_key: _asset_key });
 		
-		EventBusBroadcast("ShowCTARequested", { asset_key: _asset_key });
-		
-	    show_debug_message("Триггер CTA для ассета '" + string(_asset_key) + "' был успешно отправлен.");
+	    //show_debug_message("Триггер CTA для ассета '" + string(_asset_key) + "' был успешно отправлен.");
 		/*var _tutorial_data = {
 	        tutorial_id: "FirstAssetPurchase" // <-- Это имя должно ТОЧНО совпадать с ключом в game_config
 	    };			
@@ -62,6 +70,8 @@ function on_purchase_asset_requested(_event_data) {
     }
 }
 EventBusSubscribe("PurchaseAssetRequested", id, on_purchase_asset_requested);
+
+global.primitive_surface = -1
 
 
 

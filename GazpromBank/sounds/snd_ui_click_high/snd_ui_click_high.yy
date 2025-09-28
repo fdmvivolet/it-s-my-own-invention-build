@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_ui_click_high.ogg",
   "type":0,
-  "volume":0.77,
+  "volume":0.47,
 }

@@ -41,6 +41,7 @@ function draw_shop_window() {
         
 		var empty_icon = spr_ico_empty_shop
 		
+		
 		draw_sprite_ext(_sprite_card_index, -1, _win_x, _card_y, 
 		1/2*window_scale, 1/2*window_scale, 0, c_white, 1)		
 		
@@ -49,10 +50,19 @@ function draw_shop_window() {
         var _btn_x = _gui_w/2+ _win_width / 2 - sprite_get_width(empty_icon)/2 + 40;
         var _btn_y = _card_y;
         
+		var _is_savings_acc = _asset_config.name == "Накопительный счет"
+		var _is_deposit = _asset_config.name == "Вклад"
+		var _is_bond = _asset_config.name == "Облигация"
+		
         if (_is_unlocked) {
             // Товар доступен
-			draw_sprite_ext(empty_icon, -1, _btn_x, _btn_y - 2, 1/2, 1/2, 0, c_green, 1)
-            draw_set_halign(fa_center);
+			draw_sprite_ext(empty_icon, -1, _btn_x, _btn_y - 2, 1/2, 1/2, 0, c_green, 1)						 			
+			
+			if _is_savings_acc && !instance_exists(obj_savings_account) {draw_sprite_ext(spr_ico_empty_shop_white, -1, _btn_x - 4, _btn_y - 4, 1/2 * white_scale, 1/2 * white_scale, 0, c_white, 0.25)}
+			if _is_deposit && !instance_exists(obj_deposit) {draw_sprite_ext(spr_ico_empty_shop_white, -1, _btn_x - 4, _btn_y - 4, 1/2 * white_scale, 1/2 * white_scale, 0, c_white, 0.25)}
+			if _is_bond && !instance_exists(obj_bond) {draw_sprite_ext(spr_ico_empty_shop_white, -1, _btn_x - 4, _btn_y - 4, 1/2 * white_scale, 1/2 * white_scale, 0, c_white, 0.25)}
+			
+			draw_set_halign(fa_center);
             draw_text(_btn_x, _btn_y, string(_asset_config.cost));
         } else {
             // Товар заблокирован

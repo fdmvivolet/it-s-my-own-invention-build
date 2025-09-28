@@ -25,11 +25,14 @@ tooltip_array_size = 0
 
 window_scale = 0.8; // Текущий масштаб окна (от 0.0 до 1.0)
 window_alpha = 0.5; // Текущая прозрачность окна (от 0.0 до 1.0)
+white_scale = 0
 
 is_skippable = false
 
 hud_coins_target_x = 0;
 hud_coins_target_y = 0;
+
+
 
 dialogue_data_storage = {
     text_to_draw: "",

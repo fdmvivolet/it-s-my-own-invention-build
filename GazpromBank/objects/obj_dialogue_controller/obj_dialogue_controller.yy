@@ -10,8 +10,8 @@
   "name":"obj_dialogue_controller",
   "overriddenProperties":[],
   "parent":{
-    "name":"managers",
-    "path":"folders/managers.yy",
+    "name":"unused",
+    "path":"folders/unused.yy",
   },
   "parentObjectId":null,
   "persistent":false,

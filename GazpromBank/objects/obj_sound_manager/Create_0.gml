@@ -48,6 +48,9 @@ function play_sfx(sfx_struct_key) {
 
 audio_group_load(sfx_group)
 audio_group_load(audiogroup_default)
+
+audio_group_set_gain(sfx_group, 0, 0)
+audio_group_set_gain(audiogroup_default, 0, 0)
  
 function play_background(){
 	show_debug_message("try to play music")

@@ -3,34 +3,46 @@
 
 // 1. Рисуем основной спрайт объекта
 draw_self();
-
+/*
+var _time_elapsed = base_timer_seconds - timer_current;
+var _progress_percent = (_time_elapsed / base_timer_seconds) * 100;
+    
+var _indicator_x = x + 12 * image_xscale;
+var _indicator_y = y - 95 * image_yscale;
+    
+var scale_mult = 71/5; // <--- ПОДБЕРИТЕ ЭТОТ КОЭФФИЦИЕНТ
+    
+draw_elliptical_progress(
+    _indicator_x,
+    _indicator_y,
+    _progress_percent/100,
+    4.9 * scale_mult,  // outer_rx
+    2.85 * scale_mult, // outer_ry
+    2.8 * scale_mult,  // inner_rx
+    1.7 * scale_mult,  // inner_ry
+    #DEE1EE,
+    spr_ring_black
+);
+*/
 // 2. ОТРИСОВКА ПРОГРЕСС-БАРА
 if (timer_current > 0 && !is_ready_to_collect) {
-    
+	
+	
     var _time_elapsed = base_timer_seconds - timer_current;
     var _progress_percent = (_time_elapsed / base_timer_seconds) * 100;
-    
-    var _bar_width = sprite_get_width(sprite_index)*0.4;
-    var _bar_height = 16;
-    
-    var _bar_x1 = x - _bar_width / 2;
-    var _bar_y1 = bbox_top - 32;
-    
-    var _bar_x2 = x + _bar_width / 2;
-    var _bar_y2 = _bar_y1 + _bar_height;
-    
-    // --- ИЗМЕНЕНИЕ ЗДЕСЬ ---
-    // Теперь min и max цвета одинаковые. Градиента не будет.
-    draw_healthbar(
-        _bar_x1, _bar_y1,
-        _bar_x2, _bar_y2,
-        _progress_percent,
-        c_black,  // Цвет фона
-        c_lime,   // Цвет бара на 0%
-        c_lime,   // Цвет бара на 100% (ТЕПЕРЬ ТАКОЙ ЖЕ!)
-        0,
-        true,
-        true
+	var _indicator_x = x + 12 * image_xscale;
+	var _indicator_y = y - 95 * image_yscale;
+    var scale_mult = 71/5; // <--- ПОДБЕРИТЕ ЭТОТ КОЭФФИЦИЕНТ    
+    draw_elliptical_progress(
+        _indicator_x,
+        _indicator_y,
+        _progress_percent/100,
+        4.9 * scale_mult * image_xscale,  // outer_rx
+        2.85 * scale_mult * image_yscale, // outer_ry
+        2.8 * scale_mult * image_xscale,  // inner_rx
+        1.7 * scale_mult * image_yscale,  // inner_ry
+        #DEE1EE,
+		spr_ring_black
     );
 }
 

@@ -35,7 +35,7 @@ function draw_hud_level_and_xp() {
 	var _xp_y = _bar_render_height  - sprite_get_height(spr_coin_icon)/2
 	
 	draw_sprite_ext(spr_xp_window, -1, _xp_x, _xp_y, _width/1080*0.75, 0.75, 0, c_white, 1)
-	
+	//draw_sprite_ext(spr_window_test, -1, _xp_x, _xp_y, _width/1080 * 0.5, 0.75, 0, c_white, 1)	
 	draw_sprite_ext(spr_ico_empty, -1, _lvl_x , _lvl_y, 0.75, 0.75, 0, c_white, 1)
     
     // --- Получаем данные из глобальных структур ---
@@ -59,8 +59,14 @@ function draw_hud_level_and_xp() {
 	
 	draw_set_color(c_black)
     draw_text(_lvl_x, _lvl_y, string(_level));
-    
-	draw_text(_xp_x, _xp_y, string(_current_xp) + "|" + string(_xp_for_next_level))
+
+	draw_text(_xp_x, _xp_y, string(_current_xp) + "   " + string(_xp_for_next_level))
+	draw_set_alpha(0.85)
+	
+	draw_text(_xp_x + string_width(_current_xp) + 5, _xp_y - 3, "/")
+	draw_set_alpha(1)
+	
+	
 	draw_set_color(c_white)
 
 

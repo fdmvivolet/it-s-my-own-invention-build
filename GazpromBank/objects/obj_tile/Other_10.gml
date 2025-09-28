@@ -13,10 +13,13 @@ if (is_empty) {
     var _event_data = { tile_id: id };
 	//show_message("nu")
     EventBusBroadcast("RequestShopWindow", _event_data);
+	
 } else {
+	
     // Если на мне есть актив, я ПРОШУ открыть окно для НЕГО
     if (instance_exists(asset_instance_id)) {
-        
+		
+		//object_set_mask(id, asset_instance_id.sprite_index)
         // --- Логика "быстрого сбора" ---
         // Если актив готов, мы не открываем окно, а сразу собираем доход.
         // Это улучшает UX (пользовательский опыт).

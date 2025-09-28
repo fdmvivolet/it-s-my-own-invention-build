@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_ambient.ogg",
   "type":1,
-  "volume":0.75,
+  "volume":1.0,
 }

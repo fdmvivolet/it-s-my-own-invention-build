@@ -42,6 +42,7 @@ function update_lock_status() {
             // Ячейка разблокирована
             sprite_index = spr_tile; // Меняем на обычный спрайт
             // Можно добавить эффект "появления", анимацию и т.д.
+			alarm[1] = 1
         }
     }
 }
@@ -59,3 +60,5 @@ show_debug_message("Tile " + string(id) + ": Подписка на 'PlayerLevele
 EventBusSubscribe("PlayerLeveledUp", id, on_level_up_callback);
 
 alarm[0] = 1
+
+white_scale = 0
