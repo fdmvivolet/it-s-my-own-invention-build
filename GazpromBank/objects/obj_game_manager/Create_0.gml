@@ -36,6 +36,11 @@ function on_purchase_asset_requested(_event_data) {
 
 		obj_sound_manager.play_sfx("purchase");
 
+		obj_ui_manager.current_ui_state = UIState.HIDDEN; 
+		obj_game_manager.game_state = GameState.GAMEPLAY; 
+		obj_ui_manager.window_scale = 0.8; 
+
+
         var _asset_obj_index = asset_get_index("obj_" + _asset_key);
         var _new_asset = instance_create_layer(_tile_id.x, _tile_id.y, "Instances", _asset_obj_index);
         
@@ -45,9 +50,7 @@ function on_purchase_asset_requested(_event_data) {
 			event_name: "AssetPurchased" 
 		}); //подписчики узнают, что была совершена покупка ассета		
 		
-		obj_ui_manager.current_ui_state = UIState.HIDDEN; 
-		obj_game_manager.game_state = GameState.GAMEPLAY; 
-		obj_ui_manager.window_scale = 0.8; 
+
 		//WINDOW_CLOSE_ANIMATION
 		
         _tile_id.is_empty = false;
@@ -63,10 +66,24 @@ function on_purchase_asset_requested(_event_data) {
 		/*var _tutorial_data = {
 	        tutorial_id: "FirstAssetPurchase" // <-- Это имя должно ТОЧНО совпадать с ключом в game_config
 	    };			
-			
-		trigger_one_time_event("TutorialTriggered", _tutorial_data);		
+		
+		
         */
+
         save_game();
+		
+		if global.game_data.unlocked_tile_count == 9
+		{
+			for(var i = 0; i < instance_number(obj_tile); i++){
+				if instance_find(obj_tile, i).is_empty{
+					return	
+				}
+			}
+			with(obj_quest_manager){
+				alarm[1] = 10 
+			}
+					
+		}
     }
 }
 EventBusSubscribe("PurchaseAssetRequested", id, on_purchase_asset_requested);

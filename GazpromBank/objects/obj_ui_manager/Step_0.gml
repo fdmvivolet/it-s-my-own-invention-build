@@ -1,5 +1,9 @@
 /// @description Обработка кликов по кнопкам в UI
-
+if (current_ui_state == UIState.CHOICES_CLOUD){
+	var _clicked_on_quest = process_buttons_input(choices_buttons);
+	if !_clicked_on_quest {create_quests_button()}
+	exit
+}
 
 // Если никакое окно не открыто, нам нечего делать.
 if (current_ui_state == UIState.TUTORIAL_CLOUD) {
@@ -32,8 +36,7 @@ if (current_ui_state == UIState.TUTORIAL_CLOUD) {
 		}else
 		{
 			
-			tooltip_array_size = 0
-			tooltip_array_to_show = []
+			obj_sound_manager.play_sfx("ui_click_high")
 			TUTORIAL_CLOSE_ANIMATION
 		}
 

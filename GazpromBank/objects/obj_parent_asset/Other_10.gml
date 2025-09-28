@@ -10,7 +10,7 @@ if (is_ready_to_collect) {
     
 	obj_sound_manager.play_sfx("collect_income");
 	
-    var _vfx_count = 5; // Количество монеток
+    var _vfx_count = 3; // Количество монеток
     
     var _target_gui_x = obj_ui_manager.hud_coins_target_x;
     var _target_gui_y = obj_ui_manager.hud_coins_target_y;	
@@ -38,7 +38,9 @@ if (is_ready_to_collect) {
         
         // Дополнительная "сочность": монетки могут исчезать по пути
         global.Animation.play(_vfx_coin, "image_alpha", 0, _duration + 0.1, ac_ease_out, 
-		function () {obj_sound_manager.play_sfx("coin_hud")});
+		function () { 
+			obj_sound_manager.play_sfx("coin_hud")
+			});
     }	
 	alarm[1] = -1; 
 	ease_out_click()

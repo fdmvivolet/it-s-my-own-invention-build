@@ -59,6 +59,20 @@ switch (current_ui_state) {
 		draw_npc_tooltip()
 		//draw_set_alpha(1)
 		break;
+		
+	case UIState.CHOICES_CLOUD:
+		
+		var _gui_w = display_get_gui_width();
+		var _gui_h = display_get_gui_height();
+	
+		draw_set_alpha(0.75)
+		draw_set_color(c_black)
+		draw_rectangle(0, 0, _gui_w, _gui_h, 0)
+		draw_set_color(c_white)
+		draw_set_alpha(1)	
+		
+		draw_choices_buttons()
+		break;
     
 	case UIState.LEVEL_UP_WINDOW:
 		draw_background("")

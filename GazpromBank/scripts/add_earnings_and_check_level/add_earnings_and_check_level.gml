@@ -12,15 +12,15 @@ function add_earnings_and_check_level(amount) {
     global.game_data.player_coins += amount;
     global.game_data.total_earnings += amount;
     
-	if global.game_data.player_coins == 150{
-	    var _tutorial_data = {
-			tutorial_id: "FirstAssetUpgrade" // <-- Это имя должно ТОЧНО совпадать с ключом в game_config
-		};		
-		
-		trigger_one_time_event("FirstAssetUpgrade", _tutorial_data);
+	if global.game_data.player_coins >= 150{
+		trigger_one_time_event("FirstAssetUpgrade", {tutorial_id: "FirstAssetUpgrade"});
 	}
-			
-
+	if global.game_data.player_coins >= 500{
+		trigger_one_time_event("FirstBigIncome", {tutorial_id: "FirstBigIncome"});
+	}
+	if global.game_data.player_coins >= 1000{
+		trigger_one_time_event("FraudCall", {tutorial_id: "FraudCall"});
+	}
 	
     // --- 2. Проверяем повышение уровня (в цикле) ---
     var _leveled_up = false;
@@ -44,8 +44,13 @@ function add_earnings_and_check_level(amount) {
 			global.game_data.unlocked_tile_count++;
 			global.game_data.unlocked_tile_count = clamp(global.game_data.unlocked_tile_count, 1, tile_max_num) // для хакатона огран
 			
+
+			
             global.game_data.player_level++;
             _leveled_up = true;
+			
+
+			
             show_debug_message("Game Manager: УРОВЕНЬ ПОВЫШЕН! Новый уровень: " + string(global.game_data.player_level));
         } else {
             break; // Опыта не хватает, выходим
@@ -81,5 +86,14 @@ function add_earnings_and_check_level(amount) {
 			event_name: "PlayerLeveledUp"
         };
         EventBusBroadcast("PlayerLeveledUp", _event_data);
+		
+		if global.game_data.player_level == 5 && !obj_quest_manager.quest_window_visited{
+			with(obj_quest_manager){
+				alarm[0] = 10	
+			}
+		}
+	
+		
+		
     }
 }

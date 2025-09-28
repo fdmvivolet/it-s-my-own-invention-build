@@ -6,11 +6,13 @@ if room_get_name(room) == "rm_main_game"
 	load_world_from_data();
 	game_state = GameState.GAMEPLAY;
 	
-	var _tutorial_data = {
-		tutorial_id: "FirstAssetPurchase" // <-- Это имя должно ТОЧНО совпадать с ключом в game_config
-	};			
+	////var _tutorial_data = {
+	////	tutorial_id: "FirstAssetPurchase" // <-- Это имя должно ТОЧНО совпадать с ключом в game_config
+	////};			
 	
-	trigger_one_time_event("TutorialTriggered", _tutorial_data);	
+	trigger_one_time_event("FirstAssetPurchase", {tutorial_id: "FirstAssetPurchase"});	
+	
+	//trigger_one_time_event("FraudCall", {tutorial_id : "FraudCall"})
 	
 	//if (!surface_exists(global.primitive_surface)) {
     //global.primitive_surface = surface_create(256, 256);

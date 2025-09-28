@@ -23,9 +23,13 @@ draw_elliptical_progress(
     #DEE1EE,
     spr_ring_black
 );
+
 */
 // 2. ОТРИСОВКА ПРОГРЕСС-БАРА
+var _sfx_id = obj_sfx_manager
+array_delete(_sfx_id.ring_structs, 0, array_length(_sfx_id.ring_structs))
 if (timer_current > 0 && !is_ready_to_collect) {
+
 	
 	
     var _time_elapsed = base_timer_seconds - timer_current;
@@ -33,7 +37,17 @@ if (timer_current > 0 && !is_ready_to_collect) {
 	var _indicator_x = x + 12 * image_xscale;
 	var _indicator_y = y - 95 * image_yscale;
     var scale_mult = 71/5; // <--- ПОДБЕРИТЕ ЭТОТ КОЭФФИЦИЕНТ    
-    draw_elliptical_progress(
+    
+	var ring_struct = {
+		progress : _progress_percent/100,
+		x : _indicator_x,
+		y : _indicator_y,
+		scale : scale_mult * image_xscale
+	}
+	
+	array_push(_sfx_id.ring_structs, ring_struct)
+	
+	draw_elliptical_progress(
         _indicator_x,
         _indicator_y,
         _progress_percent/100,

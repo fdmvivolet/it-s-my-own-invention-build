@@ -86,7 +86,7 @@ function claim_quest_reward(data) {
         //global.game_data.player_coins +=
 		add_earnings_and_check_level(_quest_config.reward_coins)//_quest_config.reward_coins;
         // global.game_data.player_diamonds += _quest_config.reward_diamonds; // Когда добавим алмазы
-        
+        obj_sound_manager.play_sfx("collect_income")
         show_debug_message("Quest Manager: Награда выдана! +" + string(_quest_config.reward_coins) + " монет.");
         
         // --- 3. ОБНОВЛЕНИЕ СТАТУСА ---
@@ -154,5 +154,7 @@ EventBusSubscribe("ClaimQuestRewardRequested", id, claim_quest_reward);
 
 show_debug_message("Quest Manager: Инициализация завершена.");
 
+
+quest_window_visited = false
 // --- obj_quest_manager: User Method "on_game_event" ---
 

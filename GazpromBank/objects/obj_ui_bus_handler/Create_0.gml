@@ -1,6 +1,7 @@
 /// @description Слушает UI-запросы и отложенно передает их UI-менеджеру.
 #macro WINDOW_OPEN_ANIMATION obj_ui_manager.window_scale = 0.8; global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window) obj_sound_manager.play_sfx("ui_click_high") //0.2 sec
 #macro TUTORIAL_OPEN_ANIMATION obj_ui_manager.window_scale = 0.8;   global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.4, ac_open_window, function () {obj_ui_manager.is_skippable = true}) //0.2 sec
+#macro DELETE_TUTORIAL_ORDER array_delete(obj_ui_bus_handler.tutorial_queue, 0 , array_length(obj_ui_bus_handler.tutorial_queue)); obj_ui_manager.current_ui_state = UIState.HIDDEN
 // --- 2. ОБЪЯВЛЕНИЕ функций-обработчиков событий (Callbacks) ---
 // Мы должны сначала объявить функции, и только потом их использовать.
 
@@ -52,6 +53,7 @@ function on_request_quests_window(_event_data) {
 	WINDOW_OPEN_ANIMATION
 	
     // Переключаем состояния, как и для других окон
+	obj_quest_manager.quest_window_visited = true
     obj_ui_manager.current_ui_state = UIState.QUESTS_WINDOW;
     obj_ui_manager.current_context_id = noone; // Контекст не нужен
     obj_game_manager.game_state = GameState.SHOP_OPEN; // Или SHOP_OPEN, как вам удобнее
@@ -82,14 +84,29 @@ function show_next_tutorial_step() {
 		
 		if is_struct(_next_step_message){
 			
-			obj_ui_manager.current_ui_state = UIState.HIDDEN; 
-			obj_game_manager.game_state = GameState.GAMEPLAY; 
-			obj_ui_manager.window_alpha = 0
-			obj_ui_manager.window_scale = 0.8
-			obj_ui_manager.is_skippable = false			
-			on_show_cta_requested({ asset_key: _next_step_message.cta})
-			//EventBusBroadcast("ShowCTARequested", { asset_key: });
-			exit
+			if variable_struct_exists(_next_step_message, "cta"){
+				show_debug_message("UI Bus Handler: Запуск CTA")
+				obj_ui_manager.current_ui_state = UIState.HIDDEN; 
+				obj_game_manager.game_state = GameState.GAMEPLAY; 
+				obj_ui_manager.window_alpha = 0
+				obj_ui_manager.window_scale = 0.8
+				obj_ui_manager.is_skippable = false			
+				on_show_cta_requested({ asset_key: _next_step_message.cta})
+				//EventBusBroadcast("ShowCTARequested", { asset_key: });
+				exit
+			}
+			if variable_struct_exists(_next_step_message, "choice"){
+				//obj_ui_manager.current_ui_state = UIState.HIDDEN; 
+				//obj_game_manager.game_state = GameState.GAMEPLAY; 
+				//obj_ui_manager.window_alpha = 0
+				//obj_ui_manager.window_scale = 0.8
+				obj_ui_manager.is_skippable = false	
+				
+				show_choices_requested({ asset_key : _next_step_message.choice})
+				show_debug_message("UI Bus Handler: Запуск выбора ответов");	
+				exit
+				
+			}else{show_debug_message("UI Bus Handler: Неизвестная структура")}
 		}
 		
 		show_debug_message("UI Bus Handler: Показ шага обучения: '" + _next_step_message + "'");
@@ -97,24 +114,12 @@ function show_next_tutorial_step() {
 		
 		
 		array_delete(obj_ui_manager.tooltip_array_to_show, 0, array_length(obj_ui_manager.tooltip_array_to_show))
-        // Отдаем команду UI Manager'у
-		//obj_ui_manager.window_scale = 1
-		//global.Animation.play(obj_ui_manager, "window_scale", 1, 0.2, ac_close_tutorial)
-		//WINDOW_OPEN_ANIMATION
-
 			
         obj_ui_manager.current_ui_state = UIState.TUTORIAL_CLOUD;
         
-		//show_debug_message(_next_step_message)
-		draw_set_font(fnt_main_normal)
+		draw_set_font(fnt_main_bold_cloud)
 		_next_step_message = string_wrap(_next_step_message, sprite_get_width(spr_text_background)/4 + 300)
-		
-		//show_debug_message(_next_step_message)	
-		
-		
-		//show_debug_message(string_width("Привет! Добро пожаловать в \"Уголок благополучия\". Я буду"))
-		//draw_set_font(fnt_main_normal)
-		//show_debug_message(sprite_get_width(spr_text_background)/4)
+		draw_set_font(fnt_main_normal)
 		
 		obj_ui_manager.tooltip_message_to_show = _next_step_message;
 		
@@ -126,7 +131,6 @@ function show_next_tutorial_step() {
 		    array_push(obj_ui_manager.tooltip_array_to_show, _char);
 		}		
 		
-		//obj_ui_manager.tooltip_array_to_show = string_split(_next_step_message, " ");
 		obj_ui_manager.tooltip_array_size = 0
 		
 		var _array_size = array_length(obj_ui_manager.tooltip_array_to_show)
@@ -142,16 +146,8 @@ function show_next_tutorial_step() {
 	        function() {
 	            show_debug_message("Dialogue Controller: Анимация текста завершена.");
 	        },
-	    );		
-		
-		//obj_ui_manager.tooltip_array_size = _next_step_message;
-        
-		obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир
-		
-		
-		//obj_ui_manager.window_scale = 1
-		//global.Animation.play(obj_ui_manager, "window_scale", 1, 0.2, ac_close_tutorial)		
-		
+	    );		       
+		obj_game_manager.game_state = GameState.SHOP_OPEN; // Блокируем мир	
     }else
 	{
 		obj_ui_manager.current_ui_state = UIState.HIDDEN; 
@@ -173,8 +169,10 @@ function on_tutorial_triggered(data) {
     if (variable_struct_exists(global.game_config.tutorials, _tutorial_id)) {
         
         // Копируем ВЕСЬ массив реплик из конфига в нашу внутреннюю очередь
-		if audio_group_is_loaded(sfx_group) {obj_sound_manager.play_sfx("purchase");} 
+		//if audio_group_is_loaded(sfx_group) {obj_sound_manager.play_sfx("purchase");} 
+		obj_sound_manager.play_sfx("open_tutorial")
 		TUTORIAL_OPEN_ANIMATION
+		
 		//obj_ui_manager.window_scale = 1
 		//global.Animation.play(obj_ui_manager, "window_alpha", 1.0, 2, ac_open_window)
         //bus_id.tutorial_queue = array_clone(global.game_config.tutorials[$ _tutorial_id]);
@@ -214,8 +212,10 @@ function on_player_leveled_up(data) {
         show_debug_message("UI Bus Handler: UI занят, показ окна Level Up отложен (пока проигнорирован).");
         return; 
     }
-	
-    WINDOW_OPEN_ANIMATION
+	obj_ui_manager.window_scale = 0.8; 
+	global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window) 
+	obj_sound_manager.play_sfx("level_up")
+    //WINDOW_OPEN_ANIMATION
     // Отдаем команду UI Manager'у
     obj_ui_manager.current_context_id = data; // Сохраняем все данные (уровень и анлоки)
     obj_ui_manager.current_ui_state = UIState.LEVEL_UP_WINDOW;
@@ -271,14 +271,54 @@ function on_show_cta_requested(data) {
     show_debug_message("Команды на показ CTA для '" + _asset_key + "' успешно переданы.");
 }
 
+/// @description Обрабатывает запрос на показ Облака Выборов-окна. Вызывается по подписке EventBus.
+/// @param {struct} data Пакет данных, отправленный с событием. Ожидаем { asset_key: "..." }.
+function show_choices_requested(data) {	
+	show_debug_message(data)
+	obj_ui_manager.current_ui_state = UIState.HIDDEN
+    if (obj_ui_manager.current_ui_state != UIState.HIDDEN) {
+        show_debug_message("UI занят (текущее состояние: " + string(obj_ui_manager.current_ui_state) + "). Запрос Облака Выборов проигнорирован.");
+        return; 
+    }
+    var _asset_key = data.asset_key;
+    if (!variable_struct_exists(global.game_config.choices, _asset_key)) {
+        show_debug_message("ОШИБКА: Попытка показать Облака Выборов для '" + _asset_key + "', но для него нет записи в global.game_config.choices.");
+        return;
+    }
+    var _choices_content = global.game_config.choices[$ _asset_key];	
+	obj_ui_manager.current_context_data = _choices_content;	
+	//create_cta_buttons()
+	create_choices_buttons()
+	obj_ui_manager.current_ui_state = UIState.CHOICES_CLOUD;
+    obj_game_manager.game_state = GameState.SHOP_OPEN;
+    show_debug_message("Команды на показ Облака Выборов для '" + _asset_key + "' успешно переданы.");
+}
+
 EventBusSubscribe("RequestShopWindow", id, on_request_shop_window);
 EventBusSubscribe("RequestAssetWindow", id, on_request_asset_window);
 EventBusSubscribe("RequestQuestsWindow", id, on_request_quests_window);
 EventBusSubscribe("RequestSettingsWindow", id, on_request_settings_window);
 
 EventBusSubscribe("PlayerLeveledUp", id, on_player_leveled_up);
-EventBusSubscribe("TutorialTriggered", id, on_tutorial_triggered);
-EventBusSubscribe("FirstAssetUpgrade", id, on_tutorial_triggered);
+
+
+var tutorials = struct_get_names(global.game_config.tutorials)
+//show_message(tutorials)
+for (var i = 0; i < array_length(tutorials); i++)
+{
+	var _name = tutorials[i]
+	EventBusSubscribe(_name, id, on_tutorial_triggered);	
+}
+
+//EventBusSubscribe("TutorialTriggered", id, on_tutorial_triggered);
+//EventBusSubscribe("FirstAssetUpgrade", id, on_tutorial_triggered);
+//EventBusSubscribe("FraudCall", id, on_tutorial_triggered);
+//EventBusSubscribe("FraudCallAftermathSuccess", id, on_tutorial_triggered);
+//EventBusSubscribe("FraudCallAftermathFail", id, on_tutorial_triggered);
+//EventBusSubscribe("FraudCallDismissed", id, on_tutorial_triggered)
+
+
+
 EventBusSubscribe("TooltipAcknowledged", id, on_tooltip_acknowledged);
 
 EventBusSubscribe("ShowCTARequested", id, on_show_cta_requested);

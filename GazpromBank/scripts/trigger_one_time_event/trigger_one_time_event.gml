@@ -1,3 +1,5 @@
+
+
 /// @function           trigger_one_time_event(event_name, data)
 /// @param {string}     event_name  Уникальное имя события для проверки и отправки.
 /// @param {struct}     [data]      Необязательная структура с данными для EventBus.
@@ -12,6 +14,7 @@ function trigger_one_time_event(event_name, data = {}) {
         return false;
     }
     
+	DELETE_TUTORIAL_ORDER
     // 2. Если мы здесь, значит, событие происходит впервые.
     show_debug_message("One-Time Event: Впервые срабатывает событие '" + event_name + "'");
     

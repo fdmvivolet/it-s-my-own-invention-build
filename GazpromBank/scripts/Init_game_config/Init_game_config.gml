@@ -1,4 +1,4 @@
-// --- Script: init_game_config ---
+#macro ZWSP chr(0x200B) 
 
 /// @function init_game_config()
 /// @description Инициализирует глобальную структуру с настройками игрового баланса.
@@ -91,60 +91,99 @@ function init_game_config() {
 	// --- НОВЫЙ РАЗДЕЛ: Сценарии обучения ---
 	global.game_config.tutorials = {
     
-	FirstAssetPurchase: [ // Ключ - это ID нашего сценария
+	FirstAssetPurchase: [ //start dialog done
 	    "Привет! Добро пожаловать в \"Уголок благополучия\". Я буду тебе помогать развивать свои финансы!",
 	    "Для начала давай попробуем поставить наш игровой \"Накопительный счет\"."
 	],
-	FirstAssetUpgrade: [
+	FirstAssetUpgrade: [ //150 monet (150 - cost update) done
 		"Ты быстро развиваешься! Теперь давай я помогу тебе увеличить доход с \"Накопительного счета\"!",
-		"ЛЯЛЯЛЯЛЯ"//{cta : "savings_account"},
+		"Собери доход со своего сейфа и нажми на него еще раз, затем просто реинвестируй в свой счет!"//"ЛЯЛЯЛЯЛЯ", {cta : "savings_account"},
 	],
 		
-    FirstDepositPurchase: [
+    FirstDepositPurchase: [ //done
         "Поздравляю с первым Вкладом! Он надежен и стабилен.",
 		{cta : "deposit"},
     ],		
 
-    TasksReminder: [
+    TasksReminder: [ //5 lvl if player dont know || done
         "Кстати, не забывай заглядывать в \"Задания\"!",
         "Там всегда есть цели с приятными бонусами."
     ],
 	
-    AchievementsReminder: [ // НОВОЕ - для баланса 70/30
+    AchievementsReminder: [ // task to achiev
         "Отлично, первое задание выполнено! А если хочешь",
         "ставить себе цели на долгий срок, заглядывай в \"Достижения\"."
     ],	
 	
-    FraudCallAftermathFail: [ // После "Звонка", если игрок ошибся
+	FraudCall: [ //fraudcall on 1000+ coins || done
+		{ choice: "FraudCall_Step1_Choice" }, 
+        "Здравствуйте. Специалист отдела безопасности..." + ZWSP,
+        { choice: "FraudCall_Step2_Choice" },
+        "Нет времени объяснять... Диктуйте код!" + ZWSP,
+        { choice: "FraudCall_Step3_Choice" }
+	],
+	
+    FraudCallDismissed: [ // НОВЫЙ СЦЕНАРИЙ || done 
+        "Может быть, это и был мошенник... Всегда нужно быть осторожным с незнакомыми звонками!",
+    ],	
+	
+    FraudCallAftermathFail: [ // После "Звонка", если игрок ошибся || done
         "Ох, неприятно... Похоже, это был мошенник. Запомни: никогда не сообщай никому коды безопасности!",
 		{cta : "insurance"}
     ],	
 
-    FraudCallAftermathSuccess: [ // После "Звонка", если игрок был прав
+    FraudCallAftermathSuccess: [ // После "Звонка", если игрок был прав || done
         "Браво! Ты моментально раскусил мошенника. Твоя бдительность — лучшая защита для твоих средств!",
 		{cta : "insurance"}
     ],		
 		
 
-    FirstBondPurchase: [
+    FirstBondPurchase: [ //done
         "Ты вышел на новый уровень! Облигации — это уже серьезно. Теперь твой капитал будет расти еще быстрее.",
 		{cta : "bond"},
     ],
 	
-    FirstBigIncome: [
+    FirstBigIncome: [ //500 monet || done
         "Вот это доход! Ты видишь, как твои первые вложения",
         "начинают приносить серьезные плоды. Так держать!"
     ],
-    FirstFieldFull: [
+    FirstFieldFull: [ //done
         "Вот это да! Ты заполнил все доступное пространство.",
         "Теперь ты — настоящий управляющий!"
     ],
-    FirstMajorUpgrade: [
+    FirstMajorUpgrade: [//done
         "Отличная работа! Твой актив достиг 5-го уровня.",
         "Ты мастерски освоил реинвестирование!"
     ]	
 		
 	};	
+
+	global.game_config.choices = {
+		FraudCall_Step1_Choice: {
+		        type: "GREEN_RED_CHOICE",
+		        title: "Служба Безопасности Банка",
+		        options: [
+				{ text: "Сбросить.",						action: "FraudCallDismissed" },
+				{ text: "Ответить.",						action : "CONTINUE"}
+		        ]
+		    },
+		    FraudCall_Step2_Choice: {
+		        type: "DIALOGUE_CHOICE",
+				title: "Служба Безопасности Банка",
+		        options: [
+		            { text: "Что случилось?",				action: "CONTINUE" },
+		            { text: "Вы точно из банка?",			action: "CONTINUE" }
+		        ]
+		    },
+		    FraudCall_Step3_Choice: {
+		        type: "GREEN_RED_CHOICE",
+		        title: "Служба Безопасности Банка",		        
+				options: [
+		            { text: "Да, код 778-192...",		action: "FraudCallAftermathFail"},
+		            { text: "Я кладу трубку...",			action: "FraudCallAftermathSuccess"}
+		        ]
+		    }		
+	}
 	
 	global.game_config.level_thresholds = [
 	    // Чтобы перейти с 0-го уровня (не используется) на 1-й
@@ -224,7 +263,15 @@ function init_game_config() {
                 confirm_text: "Узнать больше",
                 decline_text: "Не сейчас",
 				context_url: "https://www.gazprombank.ru/personal/page/bond/"
-            }
+            },
+			insurance: {
+				title: "Защита от мошенников",	
+				body: "Ваши реальные карты и счета тоже нуждаются в защите. Подключите страховку и будьте спокойны за свои деньги.",
+				question: "",
+				confirm_text: "Узнать о защите",
+				decline_text: "Не сейчас",
+				context_url: "https://www.gazprombank.ru/personal/page/card-protection/",
+			}
 	}
 	
     show_debug_message("CONFIG: Игровой баланс инициализирован.");

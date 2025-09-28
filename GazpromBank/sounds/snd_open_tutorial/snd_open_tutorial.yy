@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"snd_open_tutorial",
+  "audioGroupId":{
+    "name":"sfx_group",
+    "path":"audiogroups/sfx_group",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":0.4722,
+  "name":"snd_open_tutorial",
+  "parent":{
+    "name":"Sounds",
+    "path":"folders/Sounds.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_open_tutorial.wav",
+  "type":0,
+  "volume":0.77,
+}

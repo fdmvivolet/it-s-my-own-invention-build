@@ -13,5 +13,5 @@ base_income = _config.base_income;
 base_timer_seconds = _config.timer_seconds;
 
 timer_current = base_timer_seconds;
-
+trigger_one_time_event("FirstDepositPurchase", {tutorial_id: "FirstDepositPurchase"});		
 show_debug_message("Создан '" + _config.name + "' со временем созревания " + string(timer_current) + " сек.");

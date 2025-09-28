@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_coin_hud.ogg",
   "type":0,
-  "volume":0.43,
+  "volume":0.14,
 }

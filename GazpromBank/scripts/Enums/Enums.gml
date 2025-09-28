@@ -18,7 +18,8 @@ enum UIState {
 	TUTORIAL_CLOUD,
 	LEVEL_UP_WINDOW,
 	CTA_WINDOW,
-	SETTINGS
+	SETTINGS,
+	CHOICES_CLOUD,
 }
 
 enum ButtonState {

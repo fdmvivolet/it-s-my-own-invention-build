@@ -43,11 +43,14 @@ function perform_upgrade() {
         level += 1;
         base_income = base_income*2//next_level_income;
         
+		obj_sound_manager.play_sfx("purchase")
         // Пересчитываем стоимость следующего улучшения
         calculate_next_upgrade();
         
         show_debug_message("УСПЕХ! Актив улучшен до Ур. " + string(level) + ". Новый доход: " + string(base_income));
         save_game();
+		
+		if level == 5 {trigger_one_time_event("FirstMajorUpgrade", {tutorial_id : "FirstMajorUpgrade"})}
         
     } else {
         show_debug_message("НЕУДАЧА! Недостаточно средств для улучшения.");
