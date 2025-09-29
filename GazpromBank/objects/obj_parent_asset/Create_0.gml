@@ -12,7 +12,7 @@ level = 1;
 base_cost = 150;
 base_income = 0;
 base_timer_seconds = 60;
-
+levels_curve = {}
 // --- Переменные логики таймера ---
 // -1 означает, что таймер не запущен
 timer_current = -1; 
@@ -28,12 +28,20 @@ function calculate_next_upgrade() {
     // Простая формула для примера:
     // Стоимость = базо_стоимость * уровень * 1.5
     // Доход = базо_доход * (уровень + 1)
-    upgrade_cost = floor(base_cost * level);
-    next_level_income = base_income * (level + 1);
+   // upgrade_cost = floor(base_cost * level);
+	var lvl = "_" + string(level+1)
+	var chototam = struct_get(levels_curve, lvl)
+    //next_level_income = base_income * (level + 1);
+	//show_message(levels_curve)
+	//show_message(chototam)
+	upgrade_cost = chototam.upgrade_cost
 }
 
 // --- ФУНКЦИЯ ВЫПОЛНЕНИЯ УЛУЧШЕНИЯ ---
 function perform_upgrade() {
+	if upgrade_cost == 0{
+		return	
+	}
     // Проверяем, достаточно ли денег
     if (global.game_data.player_coins >= upgrade_cost) {
         // Списываем деньги
@@ -41,14 +49,21 @@ function perform_upgrade() {
         
         // Повышаем уровень и доход
         level += 1;
-        base_income = base_income*2//next_level_income;
+		
+		var lvl = "_" + string(level)
+		var chototam = struct_get(levels_curve, lvl)
+	    //next_level_income = base_income * (level + 1);
+	
+		//upgrade_cost = 
+		
+        base_income = chototam.income	//next_level_income;
         
 		obj_sound_manager.play_sfx("purchase")
         // Пересчитываем стоимость следующего улучшения
         calculate_next_upgrade();
         
         show_debug_message("УСПЕХ! Актив улучшен до Ур. " + string(level) + ". Новый доход: " + string(base_income));
-        save_game();
+        //save_game();
 		
 		if level == 5 {trigger_one_time_event("FirstMajorUpgrade", {tutorial_id : "FirstMajorUpgrade"})}
         
@@ -58,7 +73,7 @@ function perform_upgrade() {
 }
 
 // Вызываем расчет в первый раз при создании
-calculate_next_upgrade();
+
 
 depth = -y
 

@@ -10,6 +10,7 @@
 message_queue = [];
 tutorial_queue = [];
 
+queue_data = []
 
 function on_request_shop_window(_event_data) {
     show_debug_message("UI Manager: Получен запрос на открытие Магазина для ячейки " + string(_event_data.tile_id));
@@ -182,6 +183,10 @@ function show_next_tutorial_step() {
 
 // МЕТОД №2: Метод-триггер, который ЗАПУСКАЕТ целый сценарий
 function on_tutorial_triggered(data) {
+	if obj_ui_manager.current_ui_state != UIState.HIDDEN{
+		alarm[0] = 10	
+		queue_data = data
+	}
     var _tutorial_id = data.tutorial_id;
     
 	var bus_id = obj_ui_bus_handler.id
@@ -229,8 +234,8 @@ function on_player_leveled_up(data) {
     // которое должно прервать все, но для консистентности лучше проверить).
     if (obj_ui_manager.current_ui_state != UIState.HIDDEN) {
         show_debug_message("UI Bus Handler: UI занят, показ окна Level Up отложен (не-а).");
-		obj_ui_manager.current_ui_state = UIState.HIDDEN
-        //return; 
+		//obj_ui_manager.current_ui_state = UIState.HIDDEN
+        return; 
     }
 	obj_ui_manager.window_scale = 0.8; 
 	global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window) 

@@ -52,7 +52,7 @@ if (is_ready_to_collect) {
     timer_current = base_timer_seconds;
     
     // 3. Сохраняем игру после важного действия
-    save_game();
+    //save_game();
 }
 // --- Если доход НЕ готов ---
 else {

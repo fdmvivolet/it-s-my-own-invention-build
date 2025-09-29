@@ -11,7 +11,9 @@ my_name = _config.name;
 base_cost = _config.cost;
 base_income = _config.base_income;
 base_timer_seconds = _config.timer_seconds;
+levels_curve = _config.levels
 
+calculate_next_upgrade();
 timer_current = base_timer_seconds;
 trigger_one_time_event("FirstDepositPurchase", {tutorial_id: "FirstDepositPurchase"});		
 show_debug_message("Создан '" + _config.name + "' со временем созревания " + string(timer_current) + " сек.");

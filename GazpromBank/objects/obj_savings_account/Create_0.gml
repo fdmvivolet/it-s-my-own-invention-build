@@ -14,6 +14,12 @@ name = _config.name
 base_cost = _config.cost;
 base_income = _config.base_income;
 base_timer_seconds = _config.timer_seconds;
+levels_curve = _config.levels
+
+
+calculate_next_upgrade();
+//show_message("ahahhaha")
+//show_message(_config.levels)
 
 // --- Логика Туториала (Первая сессия) ---
 // В будущем здесь будет проверка, находимся ли мы в туториале.

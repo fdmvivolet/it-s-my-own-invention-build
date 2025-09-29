@@ -15,7 +15,8 @@ sfx = {
 	ui_click_low:		{ id: snd_ui_click_low,		priority  : 2},
 	coin_hud:			{ id: snd_coin_hud,			priority : 1},
 	open_tutorial:		{ id: snd_open_tutorial,	priority : 5},
-	phone_call:			{},
+	phone_call:			{ id: snd_phone_call_fraud, priority : 1},
+	heartbeat:			{ id: snd_heartbeat,		priority : 2}
 	
 };
 
@@ -69,7 +70,7 @@ function start_stop_call(){
 		
 }
 
-alarm[0] = 60
+//alarm[0] = 60
 is_loaded = false
 
 function play_sfx(sfx_struct_key) {

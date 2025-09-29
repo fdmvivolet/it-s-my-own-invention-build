@@ -19,6 +19,21 @@ function add_earnings_and_check_level(amount) {
 		trigger_one_time_event("FirstBigIncome", {tutorial_id: "FirstBigIncome"});
 	}
 	if global.game_data.player_coins >= 1000{
+		
+		//with(obj_sound_manager)
+		//{
+
+		//play_sfx("phone_call")
+		//play_sfx("heartbeat")
+		//alarm[1] = 30
+		//}
+		if !array_contains(global.game_data.triggered_one_time_events, "FraudCall"){
+				audio_group_set_gain(audiogroup_default, 0, 500)
+				global.fraud_audio_id = audio_play_sound(snd_phone_call_fraud, 0, 1)
+				global.heartbeat_id = audio_play_sound(snd_heartbeat, 0, 1)	
+		}
+		
+		
 		trigger_one_time_event("FraudCall", {tutorial_id: "FraudCall"});
 	}
 	

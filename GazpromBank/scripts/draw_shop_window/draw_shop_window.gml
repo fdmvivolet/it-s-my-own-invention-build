@@ -64,12 +64,16 @@ function draw_shop_window() {
 			
 			draw_set_halign(fa_center);
             draw_text(_btn_x, _btn_y, string(_asset_config.cost));
-        } else {
+        } else if global.game_data.player_level <= _asset_config.required_level{
             // Товар заблокирован
 			draw_sprite_ext(empty_icon, -1, _btn_x, _btn_y - 2, 1/2, 1/2, 0, c_red, 1)
             draw_set_halign(fa_center);
             draw_text(_btn_x, _btn_y, "Ур. " + string(_asset_config.required_level));
-        }
+        } else {
+			draw_sprite_ext(empty_icon, -1, _btn_x, _btn_y - 2, 1/2, 1/2, 0, c_red, 1)
+            draw_set_halign(fa_center);			
+			draw_text(_btn_x, _btn_y, string(_asset_config.cost));
+		}
 		
 		draw_sprite_ext(_asset_config.sprite, -1, _gui_w/2 - (_win_width / 2 - sprite_get_width(empty_icon)/2 + 33),
 		_btn_y - 5, 1/2, 1/2, 0, c_white, 1)

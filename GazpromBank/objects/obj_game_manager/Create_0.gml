@@ -70,7 +70,7 @@ function on_purchase_asset_requested(_event_data) {
 		
         */
 
-        save_game();
+        //save_game();
 		
 		if global.game_data.unlocked_tile_count == 9
 		{

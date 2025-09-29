@@ -5,7 +5,7 @@ function draw_asset_window() {
     // --- 1. ПОЛУЧАЕМ ДАННЫЕ ---
     // current_context_id хранит ID актива, для которого открыто окно.
     var _asset_id = obj_ui_manager.current_context_id;
-    
+    //var _asset_config = global.game_config.assets[$ _asset_id];
 	//show_message(_asset_id)
     // Проверка на случай, если актив был удален, пока окно открыто
     if (!instance_exists(_asset_id)) {
@@ -49,9 +49,13 @@ function draw_asset_window() {
     // Информация
 	_time_left = _time_left == -1 ? " готов!" : _time_left
 	
+	var coin_per_hour = int64(60 / _asset_id.base_timer_seconds * _asset_id.base_income * 60)
+	
+	
+	
     draw_text(_win_x, _win_y - _win_height / 2 * 0.3, "Уровень: " + string(_asset_level));
     draw_text(_win_x, _win_y - _win_height / 2 * 0.1,  "Доход за один сбор: " + string(_asset_income));
-    draw_text(_win_x, _win_y + _win_height / 2 * 0.1,  "Доход в час: " + string(_asset_income));
+    draw_text(_win_x, _win_y + _win_height / 2 * 0.1,  "Доход в час: " + string(coin_per_hour));
 	
 	var _sec = _time_left == " готов!" ? "" : " сек."
 	

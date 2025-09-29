@@ -18,7 +18,7 @@ if (was_focused == true && _is_currently_focused == false) {
     // ...это означает, что игра ТОЛЬКО ЧТО потеряла фокус.
     // Это идеальный момент для сохранения!
     show_debug_message("Application lost focus. Saving game...");
-    save_game();
+    //save_game();
 }
 
 // 3. Обновляем состояние для следующего кадра.

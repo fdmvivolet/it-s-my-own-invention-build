@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"snd_phone_call_fraud",
+  "audioGroupId":{
+    "name":"sfx_group",
+    "path":"audiogroups/sfx_group",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":4.785374,
+  "name":"snd_phone_call_fraud",
+  "parent":{
+    "name":"Sounds",
+    "path":"folders/Sounds.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_phone_call_fraud.wav",
+  "type":0,
+  "volume":1.0,
+}

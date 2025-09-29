@@ -19,29 +19,59 @@ function init_game_config() {
             name: "Накопительный счет",
             cost: 100,              // Стоимость покупки Ур. 1
             base_income: 50,        // Базовый доход Ур. 1
-            timer_seconds: 0.5,	    // Время созревания Ур. 1: 5 минут (60*5)
+            timer_seconds: 8,	    // Время созревания Ур. 1: 5 минут (60*5)
 			required_level: 1,
-			sprite: spr_ico_coin
+			sprite: spr_ico_coin,
+			levels: {
+			    _1: { upgrade_cost: 100, income: 50 },
+			    _2: { upgrade_cost: 125, income: 75 },
+			    _3: { upgrade_cost: 150, income: 100 },
+			    _4: { upgrade_cost: 200, income: 125 },
+			    _5: { upgrade_cost: 250, income: 150 },
+			    _6: { upgrade_cost: 0, income: 0 },
+			    _7: { upgrade_cost: 375, income: 200 },
+			    _8: { upgrade_cost: 450, income: 225 },
+			    _9: { upgrade_cost: 550, income: 250 },
+			    _10: { upgrade_cost: 0, income: 275 }
+			    }
         },		
         
         // "Вклад" (Сейф) - стартовый актив
         deposit: {
             name: "Вклад",
-            cost: 100,              // Стоимость покупки (1 ур.): 100 монет
-            base_income: 10,        // Базовый доход (1 ур.): 10 монет
-            timer_seconds: 600,      // Время созревания (1 ур.): 10 минут = 600 секунд
+            cost: 300,              // Стоимость покупки (1 ур.): 100 монет
+            base_income: 150,        // Базовый доход (1 ур.): 10 монет
+            timer_seconds: 18,      // Время созревания (1 ур.): 10 минут = 600 секунд
 			required_level: 4,
-			sprite: spr_ico_dollar
+			sprite: spr_ico_dollar,
+		    levels: {
+			    _1: { upgrade_cost: 300, income: 150 },
+			    _2: { upgrade_cost: 350, income: 200 },
+			    _3: { upgrade_cost: 400, income: 250 },
+			    _4: { upgrade_cost: 500, income: 300 },
+			    _5: { upgrade_cost: 600, income: 400 },
+			    _6: { upgrade_cost: 0, income: 0 },
+			    //_7: { upgrade_cost: 0,	 income: 450 }
+		    }			
+			
         },
         
         // "Облигация" (Свиток) - продвинутый актив
         bond: {
             name: "Облигация",
-            cost: 500,              // Стоимость покупки (1 ур.): 500 монет
-            base_income: 120,       // Базовый доход (1 ур.): 120 монет
-            timer_seconds: 14400,    // Время созревания (1 ур.): 4 часа = 14400 секунд
+            cost: 750,              // Стоимость покупки (1 ур.): 500 монет
+            base_income: 350,       // Базовый доход (1 ур.): 120 монет
+            timer_seconds: 25,    // Время созревания (1 ур.): 4 часа = 14400 секунд
 			required_level: 7,
-			sprite: spr_ico_coin
+			sprite: spr_ico_coin,
+			levels: {
+				_1: { upgrade_cost: 750,	income: 350 },
+				_2: { upgrade_cost: 900,	income: 450 },
+				_3: { upgrade_cost: 1100,	income: 550 },
+				_4: { upgrade_cost: 1350,	income: 650 },
+				_5: { upgrade_cost: 1500,	income: 750 },
+				_6: { upgrade_cost: 0,		income: 0}
+			}			
         }
         
         // В будущем, для добавления "Акции", мы просто добавим сюда новый блок:
@@ -242,15 +272,16 @@ function init_game_config() {
 	    // Чтобы перейти с 0-го уровня (не используется) на 1-й
 	    0,      // [0]
 	    // Чтобы перейти с 1-го уровня на 2-й, нужно заработать 200
-	    100,    // [1]
+	    150,    // [1]
 	    400,    // [2]
-	    800,    // [3]
-	    1500,   // [4] -> 5
-	    2600,   // [5] -> 6
-	    4200,   // [6] -> 7
-	    6800,   // [7] -> 8
-	    10000,   // [8] -> 9
-		15000
+	    2000,    // [3]
+	    3500,   // [4] -> 5
+	    5000,   // [5] -> 6
+	    7500,   // [6] -> 7
+	    10000,   // [7] -> 8
+	    15000,   // [8] -> 9
+		99999
+		//15000
 	];	
 	
 	

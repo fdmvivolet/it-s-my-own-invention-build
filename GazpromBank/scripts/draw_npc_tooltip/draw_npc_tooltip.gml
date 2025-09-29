@@ -142,16 +142,24 @@ function create_choices_buttons(){
 			_callback[i] = method({ name: _name,}, function() { 
 				//
 				trigger_one_time_event(name, {tutorial_id: name})
+				audio_stop_sound(global.fraud_audio_id)
+				audio_stop_sound(global.heartbeat_id)
+				audio_group_set_gain(audiogroup_default, 1, 300)
 				if name == "FraudCallAftermathSuccess" {
 					add_earnings_and_check_level(200)
+					audio_stop_sound(global.heartbeat_id)
+					audio_group_set_gain(audiogroup_default, 1, 300)
+					
 				}else if name == "FraudCallAftermathFail" {
 					global.game_data.player_coins = 600
+					audio_stop_sound(global.heartbeat_id)
+					audio_group_set_gain(audiogroup_default, 1, 300)
 					}
 				
 				})		
 		}
 		else
-		_callback[i] = function() {TUTORIAL_CLOSE_ANIMATION}
+		_callback[i] = function() {TUTORIAL_CLOSE_ANIMATION; audio_stop_sound(global.fraud_audio_id)}
 	}
 	
 	var _button_scale_idle = 1.0;
