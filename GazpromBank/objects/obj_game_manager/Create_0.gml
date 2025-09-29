@@ -42,7 +42,7 @@ function on_purchase_asset_requested(_event_data) {
 
 
         var _asset_obj_index = asset_get_index("obj_" + _asset_key);
-        var _new_asset = instance_create_layer(_tile_id.x, _tile_id.y, "Instances", _asset_obj_index);
+        var _new_asset = instance_create_layer(_tile_id.x, _tile_id.y - 50, "Instances", _asset_obj_index);
         
 		EventBusBroadcast("AssetPurchased", {
 			asset_key: _asset_key,

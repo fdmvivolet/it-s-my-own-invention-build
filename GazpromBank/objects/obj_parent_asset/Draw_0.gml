@@ -2,6 +2,12 @@
 /// @description Отрисовка актива, прогресс-бара и индикатора готовности
 
 // 1. Рисуем основной спрайт объекта
+draw_set_alpha(0.6)
+draw_set_color(c_black)
+draw_sprite_ext(sprite_index, -1, x, y+16, image_xscale, image_yscale, image_angle, c_black, 0.6)
+draw_set_alpha(1)
+draw_set_color(c_white)
+
 draw_self();
 /*
 var _time_elapsed = base_timer_seconds - timer_current;
@@ -34,8 +40,8 @@ if (timer_current > 0 && !is_ready_to_collect) {
 	
     var _time_elapsed = base_timer_seconds - timer_current;
     var _progress_percent = (_time_elapsed / base_timer_seconds) * 100;
-	var _indicator_x = x + 12 * image_xscale;
-	var _indicator_y = y - 95 * image_yscale;
+	var _indicator_x = x + 3 * image_xscale;
+	var _indicator_y = y - 87 * image_yscale;
     var scale_mult = 71/5; // <--- ПОДБЕРИТЕ ЭТОТ КОЭФФИЦИЕНТ    
     
 	var ring_struct = {
@@ -51,10 +57,10 @@ if (timer_current > 0 && !is_ready_to_collect) {
         _indicator_x,
         _indicator_y,
         _progress_percent/100,
-        4.9 * scale_mult * image_xscale,  // outer_rx
-        2.85 * scale_mult * image_yscale, // outer_ry
-        2.8 * scale_mult * image_xscale,  // inner_rx
-        1.7 * scale_mult * image_yscale,  // inner_ry
+        4.85 * scale_mult * image_xscale,  // outer_rx
+        2.80 * scale_mult * image_yscale, // outer_ry
+        2.85 * scale_mult * image_xscale,  // inner_rx
+        1.75 * scale_mult * image_yscale,  // inner_ry
         #DEE1EE,
 		spr_ring_black
     );

@@ -71,6 +71,9 @@ function draw_shop_window() {
             draw_text(_btn_x, _btn_y, "Ур. " + string(_asset_config.required_level));
         }
 		
+		draw_sprite_ext(_asset_config.sprite, -1, _gui_w/2 - (_win_width / 2 - sprite_get_width(empty_icon)/2 + 33),
+		_btn_y - 5, 1/2, 1/2, 0, c_white, 1)
+		
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);		
 		var coin_per_hour = 60 / _asset_config.timer_seconds * _asset_config.base_income * 60

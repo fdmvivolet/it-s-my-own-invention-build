@@ -93,6 +93,33 @@ switch (current_ui_state) {
 		
 		break;
 		
+	case UIState.BONUSES_WINDOW:
+		draw_background("big")
+		
+		var _cancel = quit_button[0];
+		var _current_scale = _cancel.current_scale * window_scale		
+		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos, _cancel.y_pos, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)
+		draw_bonus_shop_window();
+		break;
+		
+	case UIState.ACHIEVEMENTS_WINDOW:
+		draw_background("big")
+		
+		var _cancel = quit_button[0];
+		var _current_scale = _cancel.current_scale * window_scale		
+		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos, _cancel.y_pos, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)
+		draw_achievemnts_window()
+		break;
+		
+	case UIState.KNOWLEDGE_WINDOW:
+		draw_background("big")
+		
+		var _cancel = quit_button[0];
+		var _current_scale = _cancel.current_scale * window_scale		
+		draw_sprite_ext(_cancel.sprite_index, -1, _cancel.x_pos, _cancel.y_pos, 1/2 * _current_scale, 1/2 * _current_scale, 0, c_white, 1)
+		draw_knowledge_window()
+		break;		
+		
 }
 
 /*

@@ -31,7 +31,7 @@ function draw_cta_window() {
 	var _body_y = _title_y + 0.2 * _win_height
 	
 	draw_set_font(fnt_main_normal_big)
-	draw_text_ext(_title_x, _body_y, _context.body, 50 * window_scale, _body_text_width * window_scale);
+	draw_text_ext(_title_x, _body_y, _context.body, 50 * window_scale, sprite_get_width(_sprite_back_index)/2 - 170);
     
 	
 	var _ui = obj_ui_manager.cta_buttons

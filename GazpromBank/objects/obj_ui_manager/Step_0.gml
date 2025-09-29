@@ -103,6 +103,31 @@ switch(current_ui_state)
 		var _clicked_on_cta = process_buttons_input(cta_buttons);
 		if !_clicked_on_cta {create_cta_buttons()}	
 		break;
+		
+	case UIState.BONUSES_WINDOW:
+		_clicked_on_quit = process_buttons_input(quit_button);
+		if !_clicked_on_quit {create_quit_button("big")}		
+		
+		var _clicked_on_bonus = process_buttons_input(quests_window_buttons)
+		if !_clicked_on_bonus {create_bonuses_buttons()}
+		break;
+		
+	case UIState.ACHIEVEMENTS_WINDOW:
+		_clicked_on_quit = process_buttons_input(quit_button);
+		if !_clicked_on_quit {create_quit_button("big")}		
+		
+		var _clicked_on_bonus = process_buttons_input(quests_window_buttons)
+		if !_clicked_on_bonus {create_achievements_buttons()}
+		break;		
+		
+	case UIState.KNOWLEDGE_WINDOW:
+		_clicked_on_quit = process_buttons_input(quit_button);
+		if !_clicked_on_quit {create_quit_button("big")}		
+		
+		var _clicked_on_knowledge = process_buttons_input(quests_window_buttons)
+		if !_clicked_on_knowledge {create_knowledge_buttons()}		
+		
+		break;			
 }
 
 

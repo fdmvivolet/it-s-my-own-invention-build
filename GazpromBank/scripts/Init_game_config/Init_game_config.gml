@@ -20,7 +20,8 @@ function init_game_config() {
             cost: 100,              // Стоимость покупки Ур. 1
             base_income: 50,        // Базовый доход Ур. 1
             timer_seconds: 0.5,	    // Время созревания Ур. 1: 5 минут (60*5)
-			required_level: 1
+			required_level: 1,
+			sprite: spr_ico_coin
         },		
         
         // "Вклад" (Сейф) - стартовый актив
@@ -29,7 +30,8 @@ function init_game_config() {
             cost: 100,              // Стоимость покупки (1 ур.): 100 монет
             base_income: 10,        // Базовый доход (1 ур.): 10 монет
             timer_seconds: 600,      // Время созревания (1 ур.): 10 минут = 600 секунд
-			required_level: 4
+			required_level: 4,
+			sprite: spr_ico_dollar
         },
         
         // "Облигация" (Свиток) - продвинутый актив
@@ -39,6 +41,7 @@ function init_game_config() {
             base_income: 120,       // Базовый доход (1 ур.): 120 монет
             timer_seconds: 14400,    // Время созревания (1 ур.): 4 часа = 14400 секунд
 			required_level: 7,
+			sprite: spr_ico_coin
         }
         
         // В будущем, для добавления "Акции", мы просто добавим сюда новый блок:
@@ -87,6 +90,56 @@ function init_game_config() {
 	    }
     
 	};
+	
+	global.game_config.achievements = {
+	    collect_income_daily: {
+	        type: "ingame",
+	        event_name: "BuyAllArea", 
+			description: "Застроить все ячейки",
+	        target_value: 1,               
+	        reward_diamonds: 0
+	    },
+	    upgrade_assets: {
+	        type: "ingame",
+	        event_name: "UpgradeAsset10Level",
+			description: "Улучшить Актив до Ур.10",
+	        target_value: 1,
+	        reward_diamonds: 0
+	    },
+	    open_deposit: {
+	        type: "outgame",
+	        event_name: "PlayerOpenDeposit", 
+			description: "Открыть Вклад",
+	        target_value: 1,               
+	        reward_diamonds: 5
+	    }
+    
+	};	
+	
+	global.game_config.bonuses = {
+		diamonds:{
+			name: "Алмазы",
+			description: "lorem upsim",
+			cost: "100К",
+			reward: 1,
+			icon: spr_ico_diamond
+		},
+		gazprom_discount:{
+			name: "Промокод",
+			description: "lorem upsim",
+			cost: "5",
+			reward: 1,
+			icon: spr_ico_gaz
+		},
+		gazprom_cashback:{
+			name: "Кэшбек",
+			description: "lorem upsim",
+			cost: "10",
+			reward: 1,
+			icon: spr_ico_gaz
+		}
+	}
+
 	
 	// --- НОВЫЙ РАЗДЕЛ: Сценарии обучения ---
 	global.game_config.tutorials = {
@@ -245,27 +298,30 @@ function init_game_config() {
                 question: "Хотите узнать больше?",
                 confirm_text: "Узнать больше",
                 decline_text: "Не сейчас",
-				context_url: "https://www.gazprombank.ru/accounts/daily-percentage/"
+				context_url: "https://www.gazprombank.ru/accounts/daily-percentage/",
+				sprite: spr_ico_coin
 			},
 		
 		    deposit: {
-                title: "Отлично!",
+                title: "НАДЕЖНЫЕ СБЕРЕЖЕНИЯ!",
                 body: "Ваш игровой 'Вклад' работает так же, как наш Накопительный счет 'Ежедневный процент'.",
                 question: "Хотите узнать больше?",
                 confirm_text: "Узнать больше",
                 decline_text: "Не сейчас",
-				context_url: "https://www.gazprombank.ru/personal/increase/deposits/detail/7582023/"
+				context_url: "https://www.gazprombank.ru/personal/increase/deposits/detail/7582023/",
+				sprite: spr_ico_dollar
             },
             bond: {
-                title: "Шаг вперед!",
+                title: "ПРОСТЫЕ ИНВЕСТИЦИИ!",
                 body: "Игровая 'Облигация' - это упрощенная версия реальных ОФЗ, которые можно купить через 'Газпромбанк Инвестиции'.",
                 question: "Рассказать подробнее?",
                 confirm_text: "Узнать больше",
                 decline_text: "Не сейчас",
-				context_url: "https://www.gazprombank.ru/personal/page/bond/"
+				context_url: "https://www.gazprombank.ru/personal/page/bond/",
+				sprite: spr_ico_coin
             },
 			insurance: {
-				title: "Защита от мошенников",	
+				title: "Защита от мошенников!",	
 				body: "Ваши реальные карты и счета тоже нуждаются в защите. Подключите страховку и будьте спокойны за свои деньги.",
 				question: "",
 				confirm_text: "Узнать о защите",

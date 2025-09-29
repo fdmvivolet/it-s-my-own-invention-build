@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_bond",
-    "path":"sprites/spr_bond/spr_bond.yy",
+    "name":"spr_bond_new",
+    "path":"sprites/spr_bond_new/spr_bond_new.yy",
   },
   "spriteMaskId":null,
   "visible":true,

@@ -8,13 +8,15 @@ sfx = {
     // ВАЖНО: snd_coin_collect, snd_ui_click и т.д. - это имена ваших
     // звуковых ассетов, которые вы должны сначала импортировать в проект.
     
-    collect_income:		{ id: snd_coin_collect,		priority : 3},  // Звук сбора дохода
-    ui_click_high:      { id: snd_ui_click_high,	priority : 2},        // Обычный клик по кнопке
-    purchase:			{ id: snd_purchase,			priority : 4},          // Звук покупки/улучшения
-    level_up:			{ id: snd_level_up,			priority : 5},          // Джингл повышения уровня
+    collect_income:		{ id: snd_coin_collect,		priority : 3},  
+    ui_click_high:      { id: snd_ui_click_high,	priority : 2},       
+    purchase:			{ id: snd_purchase,			priority : 4},         
+    level_up:			{ id: snd_level_up,			priority : 5},        
 	ui_click_low:		{ id: snd_ui_click_low,		priority  : 2},
 	coin_hud:			{ id: snd_coin_hud,			priority : 1},
-	open_tutorial:		{ id: snd_open_tutorial,	priority : 5}
+	open_tutorial:		{ id: snd_open_tutorial,	priority : 5},
+	phone_call:			{},
+	
 };
 
 
@@ -61,6 +63,10 @@ function play_background(){
 		audio_play_sound(snd_ambient, 1, true)
 		is_loaded = true
 	}	
+}
+
+function start_stop_call(){
+		
 }
 
 alarm[0] = 60

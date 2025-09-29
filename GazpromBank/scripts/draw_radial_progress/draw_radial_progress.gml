@@ -96,7 +96,7 @@ function draw_elliptical_progress(x, y, progress, outer_rx, outer_ry, inner_rx, 
         var _xscale = (outer_rx * 2) / _spr_w;
         var _yscale = (outer_ry * 2) / _spr_h;
         //draw_sprite_ext(bg_sprite, 0, x, y, _xscale, _yscale, 0, c_white, 1);
-		draw_sprite_ext(bg_sprite, 0, x, y, image_xscale,image_xscale, 0, c_white, 0.5);
+		draw_sprite_ext(bg_sprite, 0, x, y, image_xscale * 0.99,image_xscale * 0.99, 0, c_white, 0.5);
     }
     
     // --- 2. Подготовка к рисованию "заливки" ---

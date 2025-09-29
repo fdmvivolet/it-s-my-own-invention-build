@@ -60,6 +60,13 @@ function draw_quests_window() {
         var _button_x = _win_x + _card_width / 4 - _sprite_button_width/2;
         var _button_y = _card_y;
         
+		var _coin_x = _win_x - _card_width / 4 + _sprite_button_width/2;
+		draw_sprite_ext(spr_ico_coin, -1, _coin_x, _card_y, 1/2, 1/2, 0, c_white, 1)
+		draw_set_font(fnt_main_bold)
+		draw_set_color(c_black)
+		draw_text(_coin_x, _card_y, _config.reward_coins)
+		draw_set_color(c_white)
+		draw_set_font(fnt_main_normal)
 		//draw_sprite_ext(_sprite_button_index, -1, _button_x, _button_y, 1/2, 1/2, 0, c_white, 1)
 		
     }

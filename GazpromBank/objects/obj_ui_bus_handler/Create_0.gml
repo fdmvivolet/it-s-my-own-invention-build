@@ -45,6 +45,27 @@ function on_request_asset_window(_event_data) {
     obj_game_manager.game_state = GameState.SHOP_OPEN;
 }
 
+function on_request_bonuses_window(_event_data) {
+    show_debug_message("UI Manager: Получен запрос на открытие Магазина Бонусов")
+	create_bonuses_buttons()
+	WINDOW_OPEN_ANIMATION	
+	obj_ui_manager.current_ui_state = UIState.BONUSES_WINDOW;
+    obj_game_manager.game_state = GameState.SHOP_OPEN;
+}
+
+function on_request_achievements_window(_event_data) {
+    show_debug_message("UI Manager: Получен запрос на открытие Достижений")
+	WINDOW_OPEN_ANIMATION	
+	obj_ui_manager.current_ui_state = UIState.ACHIEVEMENTS_WINDOW;
+    obj_game_manager.game_state = GameState.SHOP_OPEN;
+}
+
+function on_request_knowledge_window(_event_data) {
+    show_debug_message("UI Manager: Получен запрос на открытие Базы Знаний")
+	WINDOW_OPEN_ANIMATION	
+	obj_ui_manager.current_ui_state = UIState.KNOWLEDGE_WINDOW;
+    obj_game_manager.game_state = GameState.SHOP_OPEN;
+}
 // В obj_ui_manager, где объявлены другие методы-обработчики
 
 function on_request_quests_window(_event_data) {
@@ -207,10 +228,9 @@ function on_player_leveled_up(data) {
     // (Логика очереди здесь не нужна, т.к. level up - важное событие,
     // которое должно прервать все, но для консистентности лучше проверить).
     if (obj_ui_manager.current_ui_state != UIState.HIDDEN) {
-        // В идеале, левел ап не должен происходить, пока открыты окна,
-        // но эта проверка - хорошая защита. Пока просто выйдем.
-        show_debug_message("UI Bus Handler: UI занят, показ окна Level Up отложен (пока проигнорирован).");
-        return; 
+        show_debug_message("UI Bus Handler: UI занят, показ окна Level Up отложен (не-а).");
+		obj_ui_manager.current_ui_state = UIState.HIDDEN
+        //return; 
     }
 	obj_ui_manager.window_scale = 0.8; 
 	global.Animation.play(obj_ui_manager, "window_scale", 1.0, 0.2, ac_open_window) 
@@ -298,24 +318,21 @@ EventBusSubscribe("RequestShopWindow", id, on_request_shop_window);
 EventBusSubscribe("RequestAssetWindow", id, on_request_asset_window);
 EventBusSubscribe("RequestQuestsWindow", id, on_request_quests_window);
 EventBusSubscribe("RequestSettingsWindow", id, on_request_settings_window);
+EventBusSubscribe("RequestBonusesWindow", id, on_request_bonuses_window);
+EventBusSubscribe("RequestAchievementsWindow", id, on_request_achievements_window);
+EventBusSubscribe("RequestKnowledgeWindow", id, on_request_knowledge_window);
 
 EventBusSubscribe("PlayerLeveledUp", id, on_player_leveled_up);
 
 
 var tutorials = struct_get_names(global.game_config.tutorials)
-//show_message(tutorials)
 for (var i = 0; i < array_length(tutorials); i++)
 {
 	var _name = tutorials[i]
 	EventBusSubscribe(_name, id, on_tutorial_triggered);	
 }
 
-//EventBusSubscribe("TutorialTriggered", id, on_tutorial_triggered);
-//EventBusSubscribe("FirstAssetUpgrade", id, on_tutorial_triggered);
-//EventBusSubscribe("FraudCall", id, on_tutorial_triggered);
-//EventBusSubscribe("FraudCallAftermathSuccess", id, on_tutorial_triggered);
-//EventBusSubscribe("FraudCallAftermathFail", id, on_tutorial_triggered);
-//EventBusSubscribe("FraudCallDismissed", id, on_tutorial_triggered)
+
 
 
 
@@ -324,4 +341,11 @@ EventBusSubscribe("TooltipAcknowledged", id, on_tooltip_acknowledged);
 EventBusSubscribe("ShowCTARequested", id, on_show_cta_requested);
 
 show_debug_message("UI Bus Handler: Подписка на триггеры обучения...");
+
+//EventBusSubscribe("TutorialTriggered", id, on_tutorial_triggered);
+//EventBusSubscribe("FirstAssetUpgrade", id, on_tutorial_triggered);
+//EventBusSubscribe("FraudCall", id, on_tutorial_triggered);
+//EventBusSubscribe("FraudCallAftermathSuccess", id, on_tutorial_triggered);
+//EventBusSubscribe("FraudCallAftermathFail", id, on_tutorial_triggered);
+//EventBusSubscribe("FraudCallDismissed", id, on_tutorial_triggered)
 

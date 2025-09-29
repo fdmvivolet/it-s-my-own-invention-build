@@ -2,8 +2,8 @@
   "$GMSound":"",
   "%Name":"snd_open_tutorial_new",
   "audioGroupId":{
-    "name":"audiogroup_default",
-    "path":"audiogroups/audiogroup_default",
+    "name":"sfx_group",
+    "path":"audiogroups/sfx_group",
   },
   "bitDepth":1,
   "bitRate":128,

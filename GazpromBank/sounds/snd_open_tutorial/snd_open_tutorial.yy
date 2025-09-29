@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_open_tutorial.wav",
   "type":0,
-  "volume":0.77,
+  "volume":0.2,
 }

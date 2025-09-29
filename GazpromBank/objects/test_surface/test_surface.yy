@@ -8,8 +8,8 @@
   "name":"test_surface",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"unused",
+    "path":"folders/unused.yy",
   },
   "parentObjectId":null,
   "persistent":false,

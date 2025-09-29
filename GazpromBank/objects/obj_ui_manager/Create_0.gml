@@ -75,11 +75,11 @@ function create_tab_bar_buttons(){
 	];*/
 
 	var _button_data = [
-	    { id: "shop",         sprite_index: spr_ico_shop,		label: "Магазин",     color: c_aqua,		callback: function() { show_debug_message("Нажата кнопка: " + self.label); obj_sound_manager.play_sfx("ui_click_high")} },
-		{ id: "achievements", sprite_index: spr_ico_achievements,		label: "Достижения",  color: c_fuchsia,	callback: function() { show_debug_message("Нажата кнопка: " + self.label); obj_sound_manager.play_sfx("ui_click_high")} },
+	    { id: "shop",         sprite_index: spr_ico_shop,		label: "Магазин",     color: c_aqua,		callback: function() { EventBusBroadcast("RequestBonusesWindow", {})}  },
+		{ id: "achievements", sprite_index: spr_ico_achievements,		label: "Достижения",  color: c_fuchsia,	callback: function() { EventBusBroadcast("RequestAchievementsWindow", {})}  },
 		{ id: "home",         sprite_index: spr_ico_home,		label: "Дом",       color: c_green,		callback: function() { WINDOW_CLOSE_ANIMATION} },
 		{ id: "quests",       sprite_index: spr_ico_quests,		label: "Задания",     color: c_yellow,	callback: function() { EventBusBroadcast("RequestQuestsWindow", {})} }, 
-		{ id: "help",         sprite_index: spr_ico_help,		label: "Подсказка",   color: c_silver,	callback: function() { show_debug_message("Нажата кнопка: " + self.label); obj_sound_manager.play_sfx("ui_click_high")} }
+		{ id: "help",         sprite_index: spr_ico_help,		label: "Подсказка",   color: c_silver,	callback: function() { EventBusBroadcast("RequestKnowledgeWindow", {})} }
 	];
 
 	var _button_count = array_length(_button_data);

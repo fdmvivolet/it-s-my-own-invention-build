@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_deposit",
-    "path":"sprites/spr_deposit/spr_deposit.yy",
+    "name":"spr_deposit_new",
+    "path":"sprites/spr_deposit_new/spr_deposit_new.yy",
   },
   "spriteMaskId":null,
   "visible":true,
