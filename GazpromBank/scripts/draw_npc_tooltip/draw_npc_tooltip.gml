@@ -8,9 +8,7 @@ function draw_npc_tooltip() {
     var _gui_w = display_get_gui_width() ;
     var _gui_h = display_get_gui_height();	
 	
-	draw_sprite_ext(spr_ico_helper, -1, 115, _gui_h  - 150 * window_scale, 1/2, 1/2, 0, c_white, 1)
-	//draw_sprite_ext(spr_text_background, -1, 600, _gui_h - 300 * window_scale, 1/2, 1/2, 0, c_white, 1)
-	draw_sprite_ext(spr_call_window, -1, 600, _gui_h - 300 * window_scale, 1/2, 1/2, 0, c_white, 1)
+
     
     // 1. Устанавливаем общие параметры текста
     draw_set_color(c_black);
@@ -32,9 +30,7 @@ function draw_npc_tooltip() {
 	if string_pos(ZWSP, _text_string){ _text_string = string_replace(_text_string, ZWSP, "") }
 	
 	//draw_text_ext(_text_x + 15, _text_y + 10, _text_string, 60, sprite_get_width(spr_text_background)/2 - 40)
-	draw_set_font(fnt_main_bold_cloud)
-    draw_text(_text_x + 15, _text_y + 35, _text_string)
-	draw_set_font(fnt_main_normal)
+
 	// --- Сброс настроек (не меняется) ---
     draw_set_color(c_white);
     draw_set_halign(fa_left);
@@ -46,13 +42,25 @@ function draw_npc_tooltip() {
 	var _title_y = _gui_h - 430 * window_scale
 	draw_set_font(fnt_main_bold)
 	if !string_pos(ZWSP, tooltip_message_to_show) {
+		draw_sprite_ext(spr_ico_helper, -1, 115, _gui_h  - 150 * window_scale, 1/2, 1/2, 0, c_white, 1)
+		draw_sprite_ext(spr_call_window, -1, 600, _gui_h - 300 * window_scale, 1/2, 1/2, 0, c_white, 1)	
 		draw_text(_title_x, _title_y, "Финансовый помощник")
-		
 	}else{
-	
+		draw_sprite_ext(spr_ico_scamer, -1, 115, _gui_h  - 150 * window_scale, 1/2, 1/2, 0, c_white, 1)
+		draw_sprite_ext(spr_call_window, -1, 600, _gui_h - 300 * window_scale, 1/2, 1/2, 0, c_white, 1)		
 		draw_text(_title_x, _title_y, "Служба Безопасности Банка")
 	}//_text_string
+	
+
+	//draw_sprite_ext(spr_text_background, -1, 600, _gui_h - 300 * window_scale, 1/2, 1/2, 0, c_white, 1)
+    draw_set_color(c_black);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+
+	draw_set_font(fnt_main_bold_cloud)
+    draw_text(_text_x + 15, _text_y + 35, _text_string)
 	draw_set_font(fnt_main_normal)
+
 }
 
 function draw_choices_buttons(){
@@ -66,7 +74,7 @@ function draw_choices_buttons(){
 	var _call_w_x = 600
 	var _call_w_y = _gui_h - 350// * window_scale
 	
-	draw_sprite_ext(spr_ico_helper, -1, 115, _gui_h  - 150 * window_scale, 1/2, 1/2, 0, c_white, 1)
+	draw_sprite_ext(spr_ico_scamer, -1, 115, _gui_h  - 150 * window_scale, 1/2, 1/2, 0, c_white, 1)
 	//draw_sprite_ext(spr_call_window, -1, _call_w_x, _call_w_y, 1/2, 1/2, 0, c_white, 1)
 	draw_sprite_ext(spr_call_window, -1, 600, _gui_h - 300 * window_scale, 1/2, 1/2, 0, c_white, 1)
 	
@@ -146,7 +154,7 @@ function create_choices_buttons(){
 				audio_stop_sound(global.heartbeat_id)
 				audio_group_set_gain(audiogroup_default, 1, 300)
 				if name == "FraudCallAftermathSuccess" {
-					add_earnings_and_check_level(200)
+					add_earnings_and_check_level(150)
 					audio_stop_sound(global.heartbeat_id)
 					audio_group_set_gain(audiogroup_default, 1, 300)
 					

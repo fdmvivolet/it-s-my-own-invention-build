@@ -9,10 +9,10 @@ function start_new_game() {
     show_debug_message("SYSTEM: Сохранение не найдено. Создание новой игры.");
     
     global.game_data = {
-        player_level: 1,
-        total_earnings: 0, //вместо xp
-        player_coins: 125,
-		unlocked_tile_count: 1,
+        player_level: 8,
+        total_earnings: 12000, //вместо xp
+        player_coins: 10000,
+		unlocked_tile_count: 8,
         last_save_timestamp: 0,
         // Создаем пустой массив для хранения данных об активах на 10 ячейках
         assets_on_tiles: array_create(10, noone), 

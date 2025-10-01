@@ -5,14 +5,14 @@ function draw_hud_level_and_xp() {
 	var _width = display_get_gui_width()
 	var _height = display_get_gui_height()
 	var _white = make_color_rgb(217, 217, 217)
-	draw_set_alpha(0.15)
+	draw_set_alpha(0.25)
 	var _bar_render_height = 250 + 100;
 
 	//draw_roundrect_color_ext(0, -_bar_render_height, _width, _bar_render_height, 128, 128, _white, _white, false)
 
 	draw_roundrect_color_ext(0, -_bar_render_height, _width, _bar_render_height, 128, 128, c_black, c_black, false)
 
-	draw_set_alpha(0.15)
+	draw_set_alpha(0.25)
 	draw_set_color(c_black)
 	draw_roundrect_ext(0, -_bar_render_height, _width, _bar_render_height, 128, 128, true)
 	draw_set_color(c_white)
@@ -51,20 +51,23 @@ function draw_hud_level_and_xp() {
 	_current_xp -= _to_del
     
     // 1. Рисуем текст уровня
-    draw_set_halign(fa_left);
+    draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
-	
-	
-	_lvl_x = _width*0.305
-	
 	draw_set_color(c_black)
-    draw_text(_lvl_x, _lvl_y, string(_level));
-
-	draw_text(_xp_x, _xp_y, string(_current_xp) + "   " + string(_xp_for_next_level))
-	draw_set_alpha(0.85)
+	draw_text(_width/2 + _width*1/16, _lvl_y, string(_current_xp) + "/" + string(_xp_for_next_level))
+	//_lvl_x = _width*0.305
 	
-	draw_text(_xp_x + string_width(_current_xp) + 5, _xp_y - 3, "/")
-	draw_set_alpha(1)
+	
+	
+	
+    draw_text(_width*0.312, _lvl_y, string(_level));
+
+	//draw_text(_xp_x, _xp_y, string(_current_xp) + "   " + string(_xp_for_next_level))
+	//draw_set_alpha(0.85)
+	
+	//draw_text(_xp_x + string_width(_current_xp) + 5, _xp_y - 3, "/")
+	//draw_set_alpha(1)
+	
 	
 	
 	draw_set_color(c_white)

@@ -102,7 +102,7 @@ function add_earnings_and_check_level(amount) {
         };
         EventBusBroadcast("PlayerLeveledUp", _event_data);
 		
-		if global.game_data.player_level == 5 && !obj_quest_manager.quest_window_visited{
+		if global.game_data.player_level == 6 && !obj_quest_manager.quest_window_visited{
 			with(obj_quest_manager){
 				alarm[0] = 10	
 			}
